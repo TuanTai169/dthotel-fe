@@ -1,0 +1,42 @@
+[
+	{
+		"display_name": "Dashboard",
+		"route": "/admin",
+		"icon": "bx bx-category-alt"
+	},
+	{
+		"display_name": "Room Diagram",
+		"route": "/admin/room-diagram",
+		"icon": "bx bx-dialpad"
+	},
+	{
+		"display_name": "Customers",
+		"route": "/admin/customers",
+		"icon": "bx bx-user"
+	},
+	{
+		"display_name": "Users",
+		"route": "/admin/users",
+		"icon": "bx bxs-user-rectangle"
+	},
+	{
+		"display_name": "Services",
+		"route": "/admin/services",
+		"icon": "bx bx-gift"
+	},
+	{
+		"display_name": "Income management",
+		"route": "/admin/receipts",
+		"icon": "bx bx-cart"
+	},
+	{
+		"display_name": "Statistic",
+		"route": "/admin/statistic",
+		"icon": "bx bx-line-chart"
+	},
+	{
+		"display_name": "about",
+		"route": "/admin/about",
+		"icon": "bx bx-cog"
+	}
+]
