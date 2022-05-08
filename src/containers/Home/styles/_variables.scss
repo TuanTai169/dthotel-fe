@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+$Montserrat: 'Montserrat', sans-serif;
+$DancingScript: 'Dancing Script', cursive;
+
+//colors
+$yellow: #ffce6a;
+$dark-blue: #001f3c;
+$white: #fff;
+$black: #000;
+
+@mixin breakpoint($point) {
+  @if $point == md {
+    // 768px
+    @media (min-width: 48em) {
+      @content;
+    }
+  }
+}

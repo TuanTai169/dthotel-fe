@@ -1,0 +1,66 @@
+@import './../styles/_variables';
+@import './../styles/mixin';
+
+.header {
+	width: 100%;
+
+	&__nav {
+		width: 100%;
+		position: fixed;
+		background-color: $dark-blue;
+		z-index: 1000;
+
+		&__content {
+			font-weight: 500;
+			padding: 20px 10px 0 0;
+
+			&__items {
+				font-size: 1.4vw;
+				list-style: none;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				align-items: center;
+				padding: 0 20px;
+
+				@include maxWidth(1200px) {
+					font-size: 18px;
+				}
+				&-link {
+					color: $yellow;
+
+					&::after {
+						content: '';
+						width: 0%;
+						height: 2px;
+						background: $yellow;
+						display: block;
+						margin-top: 0;
+						transition: 0.5s;
+					}
+
+					&:hover::after {
+						width: 100%;
+						margin-top: 5px;
+						text-decoration: none;
+					}
+				}
+
+				&__logo {
+					width: 12vw;
+					height: auto;
+					margin: 0 40px;
+					@include maxWidth(1200px) {
+						width: 180px;
+					}
+				}
+			}
+		}
+
+		&__toggle {
+			display: none;
+			@include maxWidth(768px) {
+			}
+		}
+	}
+}
