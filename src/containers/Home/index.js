@@ -1,7 +1,6 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import Navbar from './Navbar/Navbar';
-import header_img from './../../assets/images/Home__backgroungimg.png';
 import DGV from './../../assets/images/rooms_images/DGV.png';
 import './index.scss';
 import { Link } from 'react-router-dom';

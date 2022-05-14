@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Layout from './components/Layout';
 import Admin from './containers/Admin';
 import Home from './containers/Home';
-import Login from './containers/Admin/Login';
-import ForgotPassword from './containers/Admin/Login/ForgotPassword';
-import ResetPassword from './containers/Admin/Login/ResetPassword';
-import ProtectedRoute from './routing/ProtectedRoute';
-import BookingPage from './containers/Home/Booking';
+import BookingPage from './containers/Home/Room';
 import ServicesPage from './containers/Home/Services';
 import GalleryPage from './containers/Home/Gallery';
 import AboutPage from './containers/Home/AboutUs';

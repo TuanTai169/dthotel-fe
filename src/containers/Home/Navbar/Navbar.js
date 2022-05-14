@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BiMenuAltRight } from 'react-icons/bi';
 import logo from './../../../assets/images/LogoSwiss.png';
-import BookingPage from './../index';
 import './Navbar.scss';
 
 const Navbar = () => {
