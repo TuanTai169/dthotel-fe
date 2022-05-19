@@ -1,0 +1,147 @@
+@import './styles/variables';
+@import './styles/mixin';
+
+.home {
+	font-family: $Montserrat;
+
+	&__header {
+		position: relative;
+		background-image: url('./../../assets/images/Home__backgroungimg.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+		height: 100vh;
+		width: 100vw;
+
+		&__slogan {
+			position: absolute;
+			color: $white;
+			top: 25vh;
+			left: 0;
+			width: 50vw;
+			text-align: center;
+			margin: 1vw 0 0 1vw;
+
+			&__title {
+				font-size: 2.8vw;
+				font-weight: 700;
+			}
+
+			&__description {
+				width: 50vw;
+				font-size: 1.3vw;
+				margin-top: 1vh;
+				font-style: italic;
+			}
+		}
+
+		&__background-img {
+			width: 100%;
+			position: absolute;
+			z-index: -1;
+		}
+	}
+
+	&__cards {
+		z-index: 1000;
+		background-color: $dark-blue;
+		width: 100vw;
+		height: 150vh;
+
+		&__title {
+			position: relative;
+
+			&__background {
+				width: 100%;
+				text-align: center;
+				font-family: $DancingScript;
+				font-size: 14vw;
+				color: rgba($color: #fff, $alpha: 0.19);
+				z-index: -1;
+			}
+
+			&__text {
+				width: fit-content;
+				position: absolute;
+				text-align: center;
+				color: $yellow;
+				font-size: 2.8vw;
+				font-weight: 600;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+
+		&__container {
+			width: 100vw;
+
+			&__description {
+				color: $white;
+				text-align: center;
+			}
+
+			&__roomslider {
+				width: 500px;
+				height: 300px;
+				background-color: #fff;
+			}
+
+			&__items {
+				position: relative;
+				display: flex;
+				justify-content: space-around;
+				padding: 0 10vw;
+
+				.card-item {
+					width: fit-content;
+					background-color: $white;
+					padding: 1.5vw;
+					border-radius: 0.4rem;
+					margin-top: 7vh;
+					transition: box-shadow 0.5s, transform 0.25s;
+
+					&:hover {
+						box-shadow: 5px 3px rgba(255, 217, 0, 0.5), 10px 6px rgba(255, 217, 0, 0.4),
+							15px 9px rgba(255, 217, 0, 0.3), 20px 12px rgba(255, 217, 0, 0.2),
+							25px 15px rgba(255, 217, 0, 0.1);
+						transition: box-shadow 0.75s, transform 0.375s;
+					}
+
+					&__image {
+						width: 20vw;
+						object-fit: cover;
+						border-radius: 0.4rem;
+					}
+
+					&__information {
+						&__title {
+							padding-top: 2vh;
+							font-size: 1.8vw;
+							text-align: center;
+							font-weight: 600;
+							color: $yellow;
+							border-radius: 3px;
+						}
+
+						&__description {
+							width: 20vw;
+							text-align: justify;
+							color: $dark-blue;
+						}
+					}
+				}
+			}
+
+			&__button {
+				text-decoration: none;
+				width: 200px;
+				height: 50px;
+				background-color: $dark-blue;
+				color: $yellow;
+				border-radius: 4px;
+				text-align: center;
+				box-shadow: 5px 5px 10px;
+			}
+		}
+	}
+}

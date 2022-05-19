@@ -1,13 +1,11 @@
 import React from 'react';
 import { Form, Modal, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
-import { convertBirthDate } from '../../../utils/convertDateTime';
 
 function DetailCustomerModal(props) {
 	const { show, handlerModalClose, customer } = props;
 
-	const { name, email, phone, gender, address, cmnd, birthDate, note } = customer;
+	const { name, email, phone, address, idNumber, numberOfPeople } = customer;
 
-	const formatBirthDate = convertBirthDate(birthDate);
 	return (
 		<>
 			<Modal show={show} onHide={handlerModalClose} animation={false}>
@@ -16,67 +14,69 @@ function DetailCustomerModal(props) {
 				</Modal.Header>
 				<Form>
 					<Modal.Body>
-						<FloatingLabel controlId='floatingName' label='Name' className='mb-3'>
+						<FloatingLabel controlId='floatingTextarea' label='Name' className='mb-3'>
 							<Form.Control
 								type='text'
 								placeholder='Name'
 								name='name'
 								value={name || ''}
-								required
 								disabled
 							/>
 						</FloatingLabel>
 						<FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
-							<Form.Control type='text' name='email' value={email || ''} disabled required />
+							<Form.Control
+								type='text'
+								placeholder='Email'
+								name='email'
+								value={email || ''}
+								disabled
+							/>
 						</FloatingLabel>
 
 						<Row>
 							<Col>
-								<FloatingLabel controlId='floatingPhone' label='Phone Number' className='mb-3'>
+								<FloatingLabel controlId='floatingPhone' label='Phone' className='mb-3'>
 									<Form.Control
 										type='text'
 										placeholder='Phone Number'
 										name='phone'
 										value={phone || ''}
 										disabled
-										required
 									/>
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel controlId='floatingCnnd' label='Id Number' className='mb-3'>
+								<FloatingLabel controlId='floatingIdNumber' label='Id Number' className='mb-3'>
 									<Form.Control
 										type='text'
-										name='cmnd'
 										placeholder='Id Number'
-										value={cmnd || ''}
+										name='idNumber'
+										value={idNumber || ''}
 										disabled
-										required
 									/>
 								</FloatingLabel>
 							</Col>
 						</Row>
 						<Row>
 							<Col>
-								<FloatingLabel controlId='floatingBirthDate' label='Date of birth' className='mb-3'>
+								<FloatingLabel controlId='floatingAdult' label='Adult' className='mb-3'>
 									<Form.Control
-										type='date'
-										name='birthDate'
-										value={formatBirthDate || ''}
+										type='number'
+										placeholder='Adult'
+										name='adult'
+										value={numberOfPeople.adult > 0 ? numberOfPeople.adult : 0}
 										disabled
-										required
 									/>
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel controlId='floatingGender' label='Gender' className='mb-3'>
+								<FloatingLabel controlId='floatingChild' label='Child' className='mb-3'>
 									<Form.Control
-										type='text'
-										placeholder='Gender'
-										name='gender'
-										value={gender || ''}
+										type='number'
+										placeholder='Child'
+										name='child'
+										value={numberOfPeople.child > 0 ? numberOfPeople.child : 0}
 										disabled
-										required
 									/>
 								</FloatingLabel>
 							</Col>
@@ -88,17 +88,6 @@ function DetailCustomerModal(props) {
 								placeholder='Address'
 								value={address || ''}
 								disabled
-								required
-							/>
-						</FloatingLabel>
-						<FloatingLabel controlId='floatingNote' label='Note' className='mb-3'>
-							<Form.Control
-								as='textarea'
-								name='note'
-								placeholder='Note'
-								value={note || ''}
-								disabled
-								required
 							/>
 						</FloatingLabel>
 					</Modal.Body>

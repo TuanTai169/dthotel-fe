@@ -45,6 +45,7 @@
 	margin: 0;
 	box-sizing: border-box;
 	-webkit-tap-highlight-color: transparent;
+	text-decoration: none;
 }
 
 body {
@@ -97,6 +98,12 @@ td {
 .page-header {
 	margin-bottom: 40px;
 	text-transform: capitalize;
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .card {
@@ -184,6 +191,12 @@ td {
 }
 .modal-60w {
 	max-width: 60%;
+}
+.modal-50w {
+	max-width: 50%;
+}
+.modal-40w {
+	max-width: 40%;
 }
 .form-label {
 	display: flex;
