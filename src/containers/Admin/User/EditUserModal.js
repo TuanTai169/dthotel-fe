@@ -8,21 +8,15 @@ import {
 	nameValidation,
 	textValidation,
 } from '../../../utils/validation';
+import { userRoles } from '../../../assets/app/constanst';
 
 function EditUserModal(props) {
 	const { show, handlerModalClose, user } = props;
 
 	const dispatch = useDispatch();
-	const role = useSelector((state) => state.auth.user.roles);
+	const currentRole = useSelector((state) => state.auth.user.roles);
 
-	const [editUser, setEditUser] = useState({
-		name: user.name,
-		email: user.email,
-		phone: user.phone,
-		address: user.address,
-		image: user.image,
-		roles: user.roles,
-	});
+	const [editUser, setEditUser] = useState(user);
 
 	const onChangeNewForm = (event) =>
 		setEditUser({
@@ -45,17 +39,10 @@ function EditUserModal(props) {
 
 	const resetAddPostData = () => {
 		handlerModalClose();
-		setEditUser({
-			name: user.name,
-			email: user.email,
-			phone: user.phone,
-			address: user.address,
-			image: user.image,
-			roles: user.roles,
-		});
+		setEditUser(user);
 	};
 
-	const { name, email, phone, address, roles } = editUser;
+	const { name, email, password, phone, address, role } = editUser;
 
 	return (
 		<div>
@@ -101,12 +88,14 @@ function EditUserModal(props) {
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel controlId='floatingRoles' label='Roles' className='mb-3'>
-									<Form.Select name='roles' value={roles || ''} onChange={onChangeNewForm} required>
+								<FloatingLabel controlId='floatingRole' label='Role' className='mb-3'>
+									<Form.Select name='role' value={role || ''} onChange={onChangeNewForm} required>
 										<option value=''>--</option>
-										{role === 'ADMIN' && <option value='ADMIN'>ADMIN</option>}
-										<option value='MANAGER'>MANAGER</option>
-										<option value='EMPLOYEE'>EMPLOYEE</option>
+										{currentRole === userRoles.Admin.name && (
+											<option value={userRoles.Admin.name}>{userRoles.Admin.name}</option>
+										)}
+										<option value={userRoles.Manager.name}>{userRoles.Manager.name}</option>
+										<option value={userRoles.Employee.name}>{userRoles.Employee.name}</option>
 									</Form.Select>
 								</FloatingLabel>
 							</Col>

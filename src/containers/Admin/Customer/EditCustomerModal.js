@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Form, Modal, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { updateCustomer } from '../../../redux/actions/customer';
-import { convertBirthDate } from '../../../utils/convertDateTime';
 import {
 	phoneValidation,
 	IdNumberValidation,
 	emailValidation,
+	numberValidation,
 	nameValidation,
 	textValidation,
 } from '../../../utils/validation';
@@ -14,34 +14,31 @@ import {
 function EditCustomerModal(props) {
 	const { show, handlerModalClose, customer } = props;
 	const dispatch = useDispatch();
-	const changeBirthDate = convertBirthDate(customer.birthDate);
 
-	const [editCustomer, setEditCustomer] = useState({
-		name: customer.name,
-		email: customer.email,
-		phone: customer.phone,
-		gender: customer.gender,
-		address: customer.address,
-		cmnd: customer.cmnd,
-		birthDate: changeBirthDate,
-		note: customer.note,
-	});
+	const [editCustomer, setEditCustomer] = useState(customer);
 
 	const onChangeNewForm = (event) =>
 		setEditCustomer({
 			...editCustomer,
 			[event.target.name]: event.target.value,
 		});
-
+	const onChangeNumberOfPeople = (event) => {
+		let newNumberOfPeople = {
+			...editCustomer.numberOfPeople,
+			[event.target.name]: event.target.value,
+		};
+		setEditCustomer({ ...editCustomer, numberOfPeople: newNumberOfPeople });
+	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (
 			nameValidation(editCustomer.name) &&
 			emailValidation(editCustomer.email) &&
 			phoneValidation(editCustomer.phone) &&
-			IdNumberValidation(editCustomer.cmnd) &&
+			IdNumberValidation(editCustomer.idNumber) &&
 			textValidation(editCustomer.address) &&
-			textValidation(editCustomer.note)
+			numberValidation(editCustomer.numberOfPeople.adult) &&
+			numberValidation(editCustomer.numberOfPeople.child)
 		) {
 			dispatch(updateCustomer(editCustomer, customer._id));
 			resetAddPostData();
@@ -50,18 +47,9 @@ function EditCustomerModal(props) {
 
 	const resetAddPostData = () => {
 		handlerModalClose();
-		setEditCustomer({
-			name: customer.name,
-			email: customer.email,
-			phone: customer.phone,
-			gender: customer.gender,
-			address: customer.address,
-			cmnd: customer.cmnd,
-			birthDate: changeBirthDate,
-			note: customer.note,
-		});
+		setEditCustomer(customer);
 	};
-	const { name, email, phone, gender, address, cmnd, birthDate, note } = editCustomer;
+	const { name, email, phone, address, idNumber, numberOfPeople } = editCustomer;
 
 	return (
 		<div>
@@ -71,7 +59,7 @@ function EditCustomerModal(props) {
 				</Modal.Header>
 				<Form onSubmit={handleSubmit}>
 					<Modal.Body>
-						<FloatingLabel controlId='floatingName' label='Name' className='mb-3'>
+						<FloatingLabel controlId='floatingTextarea' label='Name' className='mb-3'>
 							<Form.Control
 								type='text'
 								placeholder='Name'
@@ -84,12 +72,12 @@ function EditCustomerModal(props) {
 						<FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
 							<Form.Control
 								type='text'
-								placeholder='email'
+								placeholder='Email'
 								name='email'
 								value={email || ''}
 								onChange={onChangeNewForm}
-								disabled
 								required
+								disabled
 							/>
 						</FloatingLabel>
 
@@ -107,12 +95,12 @@ function EditCustomerModal(props) {
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel controlId='floatingCmnd' label='Id Number' className='mb-3'>
+								<FloatingLabel controlId='floatingIdNumber' label='Id Number' className='mb-3'>
 									<Form.Control
 										type='text'
 										placeholder='Id Number'
-										name='cmnd'
-										value={cmnd || ''}
+										name='idNumber'
+										value={idNumber || ''}
 										onChange={onChangeNewForm}
 										required
 									/>
@@ -121,22 +109,27 @@ function EditCustomerModal(props) {
 						</Row>
 						<Row>
 							<Col>
-								<FloatingLabel controlId='floatingBirthDate' label='Date of birth' className='mb-3'>
+								<FloatingLabel controlId='floatingAdult' label='Adult' className='mb-3'>
 									<Form.Control
-										type='date'
-										name='birthDate'
-										value={birthDate || ''}
-										onChange={onChangeNewForm}
+										type='number'
+										placeholder='Adult'
+										name='adult'
+										value={numberOfPeople.adult > 0 ? numberOfPeople.adult : 0}
+										onChange={onChangeNumberOfPeople}
+										required
 									/>
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel controlId='floatingGender' label='Gender' className='mb-3'>
-									<Form.Select name='gender' value={gender || ''} onChange={onChangeNewForm}>
-										<option>--</option>
-										<option value='male'>Male</option>
-										<option value='female'>Female</option>
-									</Form.Select>
+								<FloatingLabel controlId='floatingChild' label='Child' className='mb-3'>
+									<Form.Control
+										type='number'
+										placeholder='Child'
+										name='child'
+										value={numberOfPeople.child > 0 ? numberOfPeople.child : 0}
+										onChange={onChangeNumberOfPeople}
+										required
+									/>
 								</FloatingLabel>
 							</Col>
 						</Row>
@@ -146,16 +139,6 @@ function EditCustomerModal(props) {
 								name='address'
 								placeholder='Address'
 								value={address || ''}
-								onChange={onChangeNewForm}
-								required
-							/>
-						</FloatingLabel>
-						<FloatingLabel controlId='floatingNote' label='Note' className='mb-3'>
-							<Form.Control
-								as='textarea'
-								name='note'
-								placeholder='Note'
-								value={note || ''}
 								onChange={onChangeNewForm}
 								required
 							/>
