@@ -9,12 +9,14 @@ $yellow: #ffce6a;
 $dark-blue: #001f3c;
 $white: #fff;
 $black: #000;
+$main-text-color: #ffce6a;
+$main-bg-color: #001f3c;
 
 @mixin breakpoint($point) {
-  @if $point == md {
-    // 768px
-    @media (min-width: 48em) {
-      @content;
-    }
-  }
+	@if $point == md {
+		// 768px
+		@media (min-width: 48em) {
+			@content;
+		}
+	}
 }

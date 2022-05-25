@@ -37,7 +37,12 @@
 	--sidebar-width: 300px;
 	--border-radius: 15px;
 	--topnav-height: 110px;
-	--transition-cubic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	--transition-cubic: cubic-bezier(
+		0.175,
+		0.885,
+		0.32,
+		1.275
+	);
 }
 
 * {
@@ -55,7 +60,8 @@ body {
 	letter-spacing: 0.7px;
 
 	.admin {
-		background: url('../../assets/images/background.jpg') no-repeat center center/cover;
+		background: url('../../assets/images/background.jpg')
+			no-repeat center center/cover;
 		height: 100vh;
 		overflow: hidden;
 	}

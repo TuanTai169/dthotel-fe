@@ -1,10 +1,16 @@
 @import './../styles/_variables';
 @import './../styles/mixin';
 
+Link:hover {
+	color: $main-text-color;
+}
+
 .header {
 	width: 100%;
+	font-family: $Montserrat;
 
 	&__nav {
+		transform: translateY(50%);
 		width: 100%;
 		position: fixed;
 		background-color: $dark-blue;
@@ -27,7 +33,7 @@
 					font-size: 18px;
 				}
 				&-link {
-					color: $yellow;
+					color: $main-text-color;
 
 					&::after {
 						content: '';
@@ -43,6 +49,7 @@
 						width: 100%;
 						margin-top: 5px;
 						text-decoration: none;
+						color: $main-text-color;
 					}
 				}
 
