@@ -101,7 +101,7 @@ const InfoRoomModal = (props) => {
 				show={show}
 				onHide={handlerModalClose}
 				size={booking.length > 0 && 'lg'}
-				dialogClassName='modal-60w'
+				dialogClassName='modal-50w'
 				animation={false}
 			>
 				<Modal.Header closeButton>

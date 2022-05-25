@@ -6,15 +6,17 @@ import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { RoomStatus } from '../../../assets/app/constanst';
 import CustomerForm from '../FormBooking/CustomerForm';
 import { totalRoomCharge } from '../../../utils/calculateRoomPrice';
 import { getAllBooking, addBooking } from '../../../redux/actions/booking';
 import { checkStatusRoom, numberValidation } from '../../../utils/validation';
 import ViewAllRoomModal from '../Room/ViewAllRoomModal';
 import ViewAllServiceModal from '../Service/ViewAllServiceModal';
+import { BsDash, BsPlus } from 'react-icons/bs';
 
 const BookingModal = (props) => {
-	const { show, handlerModalClose, handlerParentModalClose, currentRoom } = props;
+	const { show, handlerModalClose, handlerParentModalClose, currentRoom, status } = props;
 	const dispatch = useDispatch();
 	let navigate = useNavigate();
 
@@ -23,6 +25,7 @@ const BookingModal = (props) => {
 	const listRoom = useSelector((state) => state.roomReducer.rooms);
 	const listService = useSelector((state) => state.serviceReducer.services);
 	const listBooking = useSelector((state) => state.bookingReducer.bookings);
+	// const listCoupon = useSelector((state) => state.couponReducer.bookings);
 
 	// useState
 	const [startDate, setStartDate] = useState(new Date());
@@ -33,22 +36,31 @@ const BookingModal = (props) => {
 	const [customer, setCustomer] = useState({});
 	const [arrayRoom, setArrayRoom] = useState(
 		listRoom
-			.filter((room) => room.status === 'READY' && room._id !== currentRoom._id)
+			.filter((room) => room.status === RoomStatus.Ready.name && room._id !== currentRoom._id)
 			.sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1))
 	);
 	const [rooms, setRooms] = useState([currentRoom]);
+	const [arrayService, setArrayService] = useState(
+		listService.map((service) => {
+			return {
+				...service,
+				amount: 1,
+			};
+		})
+	);
 	const [services, setServices] = useState([]);
-	const [arrayService, setArrayService] = useState(listService.map((service) => service));
+	const [products, setProducts] = useState([]);
 	const [totalPrice, setTotalPrice] = useState(currentRoom.price);
 
 	const [newBooking, setNewBooking] = useState({
 		checkInDate: moment(startDate).format('YYYY-MM-DD HH:mm'),
 		checkOutDate: moment(endDate).format('YYYY-MM-DD HH:mm'),
 		deposit: 0,
-		discount: 0,
+		discount: '626159f984a2249a562eaa95',
 		rooms: [currentRoom._id],
 		customer: '',
 		services: [],
+		products: [],
 	});
 
 	const [openViewRoom, setOpenViewRoom] = useState(false);
@@ -84,8 +96,8 @@ const BookingModal = (props) => {
 
 	const handlerSubmit = (e) => {
 		e.preventDefault();
-		if (numberValidation(newBooking.discount) && numberValidation(newBooking.deposit)) {
-			dispatch(addBooking(newBooking, 'book'));
+		if (numberValidation(newBooking.deposit)) {
+			dispatch(addBooking(newBooking, status));
 			setTimeout(() => dispatch(getAllBooking()), 3000);
 			resetDataBooking();
 		}
@@ -105,6 +117,7 @@ const BookingModal = (props) => {
 			rooms: [currentRoom._id],
 			customer: '',
 			services: [],
+			products: [],
 		});
 	};
 
@@ -140,30 +153,81 @@ const BookingModal = (props) => {
 		});
 	};
 
-	const onChangeService = (selectService) => {
-		let newArrayService = [...services, selectService];
-		setServices(newArrayService);
-		setArrayService(arrayService.filter((service) => service._id !== selectService._id));
+	const onChangeService = (listSelected) => {
+		const newService = listSelected.filter((s) => s.isProduct === false);
+		const newProduct = listSelected.filter((s) => s.isProduct === true);
+
+		setServices([...newService]);
+		setProducts([...newProduct]);
 		setNewBooking({
 			...newBooking,
-			services: newArrayService.map((service) => service._id),
+			services: newService.map((s) => {
+				return {
+					service: s._id,
+					amount: s.amount,
+				};
+			}),
+			products: newProduct.map((s) => {
+				return {
+					product: s._id,
+					amount: s.amount,
+				};
+			}),
 		});
 	};
 
-	const onRemoveService = (e, selectService) => {
+	const onAddService = (e, service) => {
+		console.log(service.amount);
 		e.preventDefault();
-
-		let newArrayService = services.filter((service) => service._id !== selectService._id);
-		setServices(newArrayService);
-		setArrayService([...arrayService, selectService]);
+		const findIndex = arrayService.findIndex((x) => x._id === service._id);
+		if (findIndex > -1) {
+			arrayService[findIndex].amount = service.amount + 1;
+		}
+		setArrayService(arrayService);
 		setNewBooking({
 			...newBooking,
-			services: newArrayService.map((service) => service._id),
+			services: services.map((s) => {
+				return {
+					service: s._id,
+					amount: s.amount,
+				};
+			}),
+			products: products.map((s) => {
+				return {
+					product: s._id,
+					amount: s.amount,
+				};
+			}),
+		});
+	};
+
+	const onSubtractService = (e, service) => {
+		e.preventDefault();
+
+		const findIndex = arrayService.findIndex((x) => x._id === service._id);
+		if (findIndex > -1) {
+			arrayService[findIndex].amount = service.amount - 1;
+		}
+		setArrayService(arrayService);
+		setNewBooking({
+			...newBooking,
+			services: services.map((s) => {
+				return {
+					service: s._id,
+					amount: s.amount,
+				};
+			}),
+			products: products.map((s) => {
+				return {
+					product: s._id,
+					amount: s.amount,
+				};
+			}),
 		});
 	};
 
 	//Render room Table
-	const tableRoomHead = ['No#', 'Number', 'Floor', 'Type', 'Price (USD)', ''];
+	const tableRoomHead = ['No#', 'Number', 'Floor', 'Price (USD)', ''];
 	const renderRoomHead = tableRoomHead.map((item, index) => {
 		return (
 			<th key={index} style={{ fontWeight: 500 }}>
@@ -173,7 +237,7 @@ const BookingModal = (props) => {
 	});
 
 	//Render Service Table
-	const tableServiceHead = ['No#', 'Name', 'Price (USD)'];
+	const tableServiceHead = ['No#', 'Name', 'Price (USD)', 'Amount'];
 	const renderServiceHead = tableServiceHead.map((item, index) => {
 		return (
 			<th key={index} style={{ fontWeight: 500 }}>
@@ -183,11 +247,12 @@ const BookingModal = (props) => {
 	});
 
 	const { deposit, discount } = newBooking;
+
 	return (
 		<>
 			<Modal show={show} onHide={resetDataBooking} animation={false} size='lg'>
 				<Modal.Header closeButton>
-					<Modal.Title>New Booking</Modal.Title>
+					<Modal.Title>{status === 'book' ? 'New Booking' : 'New Check-in'}</Modal.Title>
 				</Modal.Header>
 				<Form onSubmit={handlerSubmit}>
 					<Modal.Body>
@@ -234,16 +299,6 @@ const BookingModal = (props) => {
 									dateFormat='dd/MM/yyyy HH:mm'
 								/>
 							</Form.Group>
-							<Form.Group as={Col} controlId='formGridDiscount'>
-								<Form.Label>Discount (%)</Form.Label>
-								<Form.Control
-									type='number'
-									value={discount}
-									onChange={(e) => {
-										setNewBooking({ ...newBooking, discount: e.target.value });
-									}}
-								/>
-							</Form.Group>
 							<Form.Group as={Col} controlId='formGridDeposit'>
 								<Form.Label>Deposit</Form.Label>
 								<Form.Control
@@ -254,6 +309,16 @@ const BookingModal = (props) => {
 									}}
 								/>
 							</Form.Group>
+							{/* <Form.Group as={Col} controlId='formGridDiscount'>
+								<Form.Label>Discount (%)</Form.Label>
+								<Form.Control
+									type='number'
+									value={discount}
+									onChange={(e) => {
+										setNewBooking({ ...newBooking, discount: e.target.value });
+									}}
+								/>
+							</Form.Group> */}
 						</Row>
 						<Row>
 							<Col sm={3}>
@@ -299,9 +364,7 @@ const BookingModal = (props) => {
 											<td>{index + 1}</td>
 											<td>{room.roomNumber}</td>
 											<td>{room.floor}</td>
-											<td>{room.roomType}</td>
 											<td>{room.price}</td>
-
 											<td>
 												<button onClick={(e) => onRemoveRoom(e, room)} className='btn-remove'>
 													x
@@ -319,16 +382,8 @@ const BookingModal = (props) => {
 							/>
 						</Row>
 						<Row>
-							<Col sm={3}>
-								<h5>Service</h5>
-							</Col>
-							<Col sm={6}>
-								<Select
-									options={arrayService}
-									onChange={onChangeService}
-									getOptionLabel={(option) => option.name}
-									getOptionValue={(option) => option.name}
-								/>
+							<Col sm={9}>
+								<h5>Service and Product</h5>
 							</Col>
 							<Col sm={3}>
 								<Button
@@ -339,20 +394,48 @@ const BookingModal = (props) => {
 									Add New Service
 								</Button>
 							</Col>
+
+							<Form.Group className='mb-3' controlId='formBasicService'>
+								<Select
+									isMulti
+									name='services'
+									options={arrayService}
+									getOptionLabel={(option) => option.name}
+									getOptionValue={(option) => option._id}
+									onChange={onChangeService}
+									className='basic-multi-select'
+									classNamePrefix='select service or product'
+								/>
+							</Form.Group>
+							{/* <Select
+									options={arrayService}
+									onChange={onChangeService}
+									getOptionLabel={(option) => option.name}
+									getOptionValue={(option) => option.name}
+								/> */}
+
 							<Table striped>
 								<thead>
 									<tr>{renderServiceHead}</tr>
 								</thead>
 								<tbody>
-									{services.map((service, index) => (
+									{[...services, ...products].map((service, index) => (
 										<tr key={service._id}>
 											<td>{index + 1}</td>
 											<td>{service.name}</td>
 											<td>{service.price}</td>
-											<td>
-												<button onClick={(e) => onRemoveService(e, service)} className='btn-remove'>
-													x
-												</button>
+											<td>{service.amount}</td>
+											<td className='d-flex align-items-center justify-content-around'>
+												<Button onClick={(e) => onAddService(e, service)}>
+													<BsPlus />
+												</Button>
+												<Button
+													variant='danger'
+													onClick={(e) => onSubtractService(e, service)}
+													disabled={!!(service.amount < 2)}
+												>
+													<BsDash />
+												</Button>
 											</td>
 										</tr>
 									))}
