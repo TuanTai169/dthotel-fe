@@ -6,6 +6,8 @@ import bookingReducer from './booking';
 import customerReducer from './customer';
 import userReducer from './user';
 import receiptReducer from './receipt';
+import typeReducer from './typeOfRoom';
+import convenienceReducer from './convenience';
 
 import { combineReducers } from 'redux';
 
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
 	customerReducer,
 	userReducer,
 	receiptReducer,
+	types: typeReducer,
+	convenience: convenienceReducer,
 	auth: authReducer,
 });
 

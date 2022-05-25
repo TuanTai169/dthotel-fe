@@ -7,6 +7,7 @@ import CheckInModal from '../Booking/CheckInModal';
 import ViewAllRoomModal from './ViewAllRoomModal';
 import DialogChange from '../../../components/Dialog/DialogChange';
 import CheckOutModal from '../Receipt/CheckOutModal';
+import { RoomStatus } from '../../../assets/app/constanst';
 
 const RoomActionButton = (props) => {
 	const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const RoomActionButton = (props) => {
 		<>
 			<ButtonToolbar>
 				{/* CHECK OUT */}
-				{status !== 'FIXING' && status !== 'OCCUPIED' && (
+				{status !== RoomStatus.Fixing.name && status !== RoomStatus.Occupied.name && (
 					<Button
 						variant='secondary'
 						style={{ marginLeft: '4px' }}
@@ -52,7 +53,7 @@ const RoomActionButton = (props) => {
 					</Button>
 				)}
 				{/* READY */}
-				{(status === 'CLEANING' || status === 'FIXING') && (
+				{(status === RoomStatus.Cleaning.name || status === RoomStatus.Fixing.name) && (
 					<Button
 						variant='success'
 						style={{ marginLeft: '4px' }}
@@ -74,7 +75,7 @@ const RoomActionButton = (props) => {
           </Button>
         )} */}
 				{/* BOOKING */}
-				{status !== 'CLEANING' && status !== 'FIXING' && (
+				{status !== RoomStatus.Cleaning.name && status !== RoomStatus.Fixing.name && (
 					<>
 						<Button
 							variant='info'
@@ -94,24 +95,26 @@ const RoomActionButton = (props) => {
 				)}
 
 				{/* CHECK IN */}
-				{status !== 'OCCUPIED' && status !== 'CLEANING' && status !== 'FIXING' && (
-					<>
-						<Button
-							variant='primary'
-							style={{ marginLeft: '4px' }}
-							onClick={() => setIsOpenCheckIn(true)}
-						>
-							<i className='bx bxs-user-check'></i>
-							<span>&ensp;Check in</span>
-						</Button>
-						<CheckInModal
-							show={isOpenCheckIn}
-							handlerModalClose={handlerCloseCheckInModal}
-							currentRoom={room}
-							handlerParentModalClose={handlerModalClose}
-						/>
-					</>
-				)}
+				{status !== RoomStatus.Occupied.name &&
+					status !== RoomStatus.Cleaning.name &&
+					status !== RoomStatus.Fixing.name && (
+						<>
+							<Button
+								variant='primary'
+								style={{ marginLeft: '4px' }}
+								onClick={() => setIsOpenCheckIn(true)}
+							>
+								<i className='bx bxs-user-check'></i>
+								<span>&ensp;Check in</span>
+							</Button>
+							<CheckInModal
+								show={isOpenCheckIn}
+								handlerModalClose={handlerCloseCheckInModal}
+								currentRoom={room}
+								handlerParentModalClose={handlerModalClose}
+							/>
+						</>
+					)}
 
 				{/* CHECK OUT */}
 				{/* {status === "OCCUPIED" && (
@@ -132,7 +135,7 @@ const RoomActionButton = (props) => {
             />
           </>
         )} */}
-				{status === 'OCCUPIED' && (
+				{status === RoomStatus.Occupied.name && (
 					<>
 						<Button
 							variant='danger'

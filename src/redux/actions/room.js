@@ -50,7 +50,7 @@ export const addRoom = (newRoom) => {
 			if (response.data.success) {
 				dispatch({
 					type: types.ADD_ROOM,
-					payload: response.data.room,
+					payload: response.data.newRoom,
 				});
 				dispatch({ type: types.SET_ROOM_LOADING, payload: false });
 				toast.success(response.data.message);
@@ -117,6 +117,33 @@ export const changeStatusRoom = (id, status) => {
 			if (response.data.success) {
 				dispatch({
 					type: types.UPDATE_ROOM,
+					payload: response.data.updatedRoom,
+				});
+				dispatch({ type: types.SET_ROOM_LOADING, payload: false });
+				toast.success(response.data.message);
+			}
+		} catch (error) {
+			console.log(error);
+			dispatch({ type: types.SET_ROOM_LOADING, payload: false });
+			error.response && toast.error(error.response.data.message);
+		}
+	};
+};
+
+//GET READY
+export const uploadImage = (id, formData) => {
+	return async (dispatch) => {
+		try {
+			dispatch({ type: types.SET_ROOM_LOADING, payload: true });
+
+			const response = await axios.put(`${HOST_API_URL}/room/upload-img/${id}`, formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			});
+			if (response.data.success) {
+				dispatch({
+					type: types.UPLOAD_IMAGE,
 					payload: response.data.updatedRoom,
 				});
 				dispatch({ type: types.SET_ROOM_LOADING, payload: false });

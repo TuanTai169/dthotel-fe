@@ -7,12 +7,13 @@ import Layout from '../../components/Layout';
 import Login from './Login';
 import ForgotPassword from './Login/ForgotPassword';
 import ResetPassword from './Login/ResetPassword';
+import './styles.scss';
 
 const Admin = () => {
 	return (
 		<div className='admin'>
 			<Routes>
-				<Route path='/login' element={<Login />} exact />
+				<Route path='login' element={<Login />} exact />
 				<Route
 					path='/*'
 					element={
@@ -21,8 +22,8 @@ const Admin = () => {
 						</ProtectedRoute>
 					}
 				>
-					<Route exact path='forgot-password' element={<ForgotPassword />} />
-					<Route exact path='reset-password/:token' element={<ResetPassword />} />
+					<Route path='forgot-password' element={<ForgotPassword />} />
+					<Route path='reset-password/:token' element={<ResetPassword />} />
 				</Route>
 			</Routes>
 

@@ -23,6 +23,8 @@ import { getAllRoom } from '../../redux/actions/room';
 import { getAllService } from '../../redux/actions/service';
 import { getAllUser } from '../../redux/actions/user';
 import { getAllReceipt } from '../../redux/actions/receipt';
+import { getAllTypes } from '../../redux/actions/typeOfRoom';
+import { getAllConveniences } from '../../redux/actions/convenience';
 ///import { getStatistic } from './../../redux/actions/receipt';
 
 const Layout = () => {
@@ -41,6 +43,8 @@ const Layout = () => {
 		dispatch(getAllService());
 		dispatch(getAllUser());
 		dispatch(getAllReceipt());
+		dispatch(getAllTypes());
+		dispatch(getAllConveniences());
 		//dispatch(getStatistic());
 	}, [dispatch]);
 
@@ -52,7 +56,7 @@ const Layout = () => {
 					<TopNav />
 					<div className='layout__content-main'>
 						<Routes>
-							<Route path='/admin' element={<Dashboard />} />
+							<Route path='/' element={<Dashboard />} />
 							<Route path='/customers' element={<Customers />} />
 							<Route path='/services' element={<Services />} />
 							<Route path='/room-diagram' element={<Rooms />} />
@@ -60,7 +64,7 @@ const Layout = () => {
 							<Route path='/profile' element={<Profile />} />
 							<Route path='/receipts' element={<Receipt />} />
 							<Route path='/statistic' element={<Statistics />} />
-							<Route path='/about' element={<About />} />
+							<Route path='about' element={<About />} />
 							<Route path='/*' element={<NotFound />} />
 						</Routes>
 					</div>
