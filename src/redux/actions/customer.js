@@ -54,7 +54,7 @@ export const addCustomer = (newCustomer) => {
 			if (response.data.success) {
 				dispatch({
 					type: types.ADD_CUSTOMER,
-					payload: response.data.customer,
+					payload: response.data.newCustomer,
 				});
 				dispatch({ type: types.SET_CUSTOMER_LOADING, payload: false });
 				toast.success(response.data.message);
