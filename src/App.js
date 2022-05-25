@@ -11,7 +11,7 @@ import Login from './containers/Admin/Login';
 import ForgotPassword from './containers/Admin/Login/ForgotPassword';
 import ResetPassword from './containers/Admin/Login/ResetPassword';
 import ProtectedRoute from './routing/ProtectedRoute';
-import BookingPage from './containers/Home/Booking';
+// import BookingPage from './containers/Home/Booking';
 import RoomDetail from './containers/Home/RoomDetail';
 import ServicesPage from './containers/Home/Services';
 import GalleryPage from './containers/Home/Gallery';
@@ -44,7 +44,7 @@ function App() {
 						element={<Admin />}
 						exact
 					></Route>
-					<Route path='/rooms' element={<BookingPage />} />
+					{/* <Route path='/rooms' element={<BookingPage />} /> */}
 					<Route
 						path='/rooms-detail'
 						element={<RoomDetail />}
