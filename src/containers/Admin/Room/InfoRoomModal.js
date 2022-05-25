@@ -14,7 +14,7 @@ import { RoomStatus, BookingStatus, userRoles } from '../../../assets/app/consta
 const InfoRoomModal = (props) => {
 	const dispatch = useDispatch();
 	const { show, handlerModalClose, room } = props;
-	const { roomNumber, price, roomType, convenience, _id, capacity } = room;
+	const { roomNumber, price, roomType, convenience, _id, capacity, status } = room;
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 	const [conformDialog, setConformDialog] = useState({
 		isOpenDialog: false,
@@ -28,27 +28,17 @@ const InfoRoomModal = (props) => {
 	const typesList = useSelector((state) => state.types.types);
 
 	const booking = bookings.filter((item) =>
-		item.rooms.find(
-			(room) => room.roomNumber === roomNumber && room.status === RoomStatus.Occupied.name
-		)
+		item.rooms.find((room) => room.room === _id && status === RoomStatus.Occupied.name)
 	);
 
 	const getBooking = booking.filter((item) => item.status === BookingStatus.checkIn.name);
 
 	const renderTable = getBooking.map((item) => {
-		const {
-			code,
-			customer,
-			services,
-			checkInDate,
-			checkOutDate,
-			deposit,
-			serviceCharge,
-			totalPrice,
-		} = item;
+		const { code, customer, services, rooms, deposit, serviceCharge, totalPrice } = item;
 
-		const checkInDateConvert = convertStringToDate(checkInDate);
-		const checkOutDateConvert = convertStringToDate(checkOutDate);
+		const roomSelected = rooms.find((r) => r.room === _id);
+		const checkInDateConvert = convertStringToDate(roomSelected.checkInDate);
+		const checkOutDateConvert = convertStringToDate(roomSelected.checkOutDate);
 
 		return (
 			<Form key={item._id}>
@@ -74,6 +64,7 @@ const InfoRoomModal = (props) => {
 						</FloatingLabel>
 					</Col>
 				</Row>
+
 				<Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 					<Form.Group controlId='formGridCustomer'>
 						<h5>Customer</h5>
@@ -110,7 +101,7 @@ const InfoRoomModal = (props) => {
 				show={show}
 				onHide={handlerModalClose}
 				size={booking.length > 0 && 'lg'}
-				dialogClassName='modal-50w'
+				dialogClassName='modal-60w'
 				animation={false}
 			>
 				<Modal.Header closeButton>

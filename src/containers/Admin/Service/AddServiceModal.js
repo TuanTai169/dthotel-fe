@@ -11,6 +11,7 @@ const AddServiceModal = (props) => {
 	const [newService, setNewService] = useState({
 		name: '',
 		price: 0,
+		isProduct: false,
 	});
 
 	const onChangeNewForm = (event) =>
@@ -20,12 +21,14 @@ const AddServiceModal = (props) => {
 		e.preventDefault();
 		if (nameValidation(newService.name) && numberValidation(newService.price)) {
 			resetAddPostData();
-			dispatch(addService(newService));
+			dispatch(
+				addService({ ...newService, isProduct: newService.isProduct === '1' ? true : false })
+			);
 		}
 	};
 
 	const resetAddPostData = () => {
-		setNewService({ name: '', price: 0 });
+		setNewService({ name: '', price: 0, isProduct: false });
 		handlerModalClose();
 	};
 	const { name, price } = newService;
@@ -57,6 +60,17 @@ const AddServiceModal = (props) => {
 								onChange={onChangeNewForm}
 								required
 							/>
+						</FloatingLabel>
+						<FloatingLabel controlId='floatingSelect' label='Select type'>
+							<Form.Select
+								aria-label='Floating label select example'
+								name='isProduct'
+								onChange={onChangeNewForm}
+							>
+								<option>--</option>
+								<option value='0'>Service</option>
+								<option value='1'>Product</option>
+							</Form.Select>
 						</FloatingLabel>
 					</Modal.Body>
 					<Modal.Footer>
