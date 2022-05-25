@@ -9,8 +9,8 @@ $yellow: #ffce6a;
 $dark-blue: #001f3c;
 $white: #fff;
 $black: #000;
+$main-text-color: #ffce6a;
 $main-bg-color: #001f3c;
-$main-txt-color: #ffce6a;
 
 @mixin breakpoint($point) {
 	@if $point == md {

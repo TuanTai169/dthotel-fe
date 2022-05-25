@@ -1,0 +1,58 @@
+@import './../styles/variables';
+@import './../styles/mixin';
+
+.header {
+	width: 100vw;
+	background-color: $main-bg-color;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&__title {
+		font-family: $DancingScript;
+		color: $main-text-color;
+		font-size: 10vw;
+		padding: 15vw 0 8vw;
+	}
+}
+
+.body {
+	font-family: $Montserrat;
+	&__roominfo {
+		&__title {
+			&__fill {
+				color: $main-text-color;
+				font-size: 3.5vw;
+				font-weight: 700;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 4vh 0 4vh;
+			}
+		}
+
+		&__description {
+			font-size: 1.5vw;
+			font-weight: 500;
+			padding-bottom: 2vh;
+			margin: 0 5vw 0;
+			border-bottom: solid 0.3vh black;
+		}
+
+		&__detail {
+			width: 100vw;
+			display: inline-flex;
+			justify-content: space-between;
+			padding: 2vh 5vw;
+
+			&__item {
+				font-size: 1.5vw;
+				font-weight: 500;
+			}
+		}
+
+		&__container {
+			scroll-snap-type: y proximity;
+		}
+	}
+}

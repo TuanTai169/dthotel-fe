@@ -1,0 +1,82 @@
+@import './../../styles/variables';
+@import './../../styles/mixin';
+
+.footer {
+	padding-top: 5vh;
+	width: 100vw;
+	background-color: $dark-blue;
+	color: $white;
+
+	&__container {
+		width: 100vw;
+		display: inline-flex;
+		justify-content: center;
+
+		&__img {
+			width: 4vw;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex: 1;
+			padding-left: 4vw;
+			padding-right: 4vw;
+
+			img {
+				width: 25vw;
+			}
+		}
+
+		&__infoterm {
+			flex: 1;
+
+			&__title {
+				font-size: 1.8vw;
+				font-weight: 600;
+				padding-bottom: 1.4vh;
+				padding-left: 2vw;
+			}
+			&__items {
+				padding-left: 2vw;
+				display: flex;
+				flex-direction: column;
+			}
+
+			&__item {
+				padding-top: 1.4vw;
+			}
+		}
+
+		&__infoterm2 {
+			flex: 1;
+
+			&__title {
+				font-size: 1.8vw;
+				font-weight: 600;
+				padding-bottom: 1.4vh;
+			}
+			&__items {
+				display: flex;
+				flex-direction: column;
+			}
+
+			&__item {
+				padding-top: 1.4vw;
+			}
+		}
+	}
+
+	&__line {
+		background-color: $main-text-color;
+		height: 0.3vh;
+		margin: 2.5vw 3vw 1.5vw;
+	}
+
+	&__otherinfor {
+		color: $main-text-color;
+		width: 100vw;
+		display: inline-flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 6vw 1.5vw 4vw;
+	}
+}
