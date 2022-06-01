@@ -99,10 +99,8 @@ a:hover {
 					transition: box-shadow 0.5s, transform 0.25s;
 
 					&:hover {
-						box-shadow: 5px 3px rgba(255, 217, 0, 0.5),
-							10px 6px rgba(255, 217, 0, 0.4),
-							15px 9px rgba(255, 217, 0, 0.3),
-							20px 12px rgba(255, 217, 0, 0.2),
+						box-shadow: 5px 3px rgba(255, 217, 0, 0.5), 10px 6px rgba(255, 217, 0, 0.4),
+							15px 9px rgba(255, 217, 0, 0.3), 20px 12px rgba(255, 217, 0, 0.2),
 							25px 15px rgba(255, 217, 0, 0.1);
 						transition: box-shadow 0.75s, transform 0.375s;
 					}
@@ -148,12 +146,10 @@ a:hover {
 					background-color: $main-bg-color;
 					color: $main-text-color;
 					border-radius: 4px;
-					box-shadow: 5px 5px 4px #000d19,
-						-5px -5px 4px #003e78;
+					box-shadow: 5px 5px 4px #000d19, -5px -5px 4px #003e78;
 
 					&:hover {
-						box-shadow: inset 5px 5px 4px #000d19,
-							inset -5px -5px 4px #003e78;
+						box-shadow: inset 5px 5px 4px #000d19, inset -5px -5px 4px #003e78;
 					}
 				}
 			}

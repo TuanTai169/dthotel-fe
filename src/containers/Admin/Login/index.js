@@ -58,7 +58,7 @@ const Login = () => {
 				</Button>
 			</Form>
 			<div style={{ marginTop: '12px' }}>
-				<Link to='forgot-password'>Forgot your password?</Link>
+				<Link to='/admin/forgot-password'>Forgot your password?</Link>
 			</div>
 		</div>
 	);
