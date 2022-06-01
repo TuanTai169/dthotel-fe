@@ -1,269 +1,24 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SelectNumberPeople from './components/selectNumberPeople';
 import AvailableRoom from './components/availableRoom';
 import { BiChevronDown } from 'react-icons/bi';
-import './style.scss';
 
-const listRoom = [
-	{
-		capacity: {
-			adult: 2,
-			child: 2,
-		},
-		_id: '6273fc21f862387b043a3ac0',
-		roomNumber: '301',
-		floor: 3,
-		price: 350,
-		desc: 'Room 301',
-		roomType: [
-			{
-				nameTag: 'Standard',
-				type: 'STD',
-			},
-			{
-				nameTag: 'Single ',
-				type: 'SGL',
-			},
-		],
-		convenience: [
-			{
-				name: 'air conditioning',
-				desc: 'air conditioning',
-			},
-			{
-				name: 'en-suite bathroom',
-				desc: 'en-suite bathroom',
-			},
-			{
-				name: 'internet access',
-				desc: 'internet access',
-			},
-		],
-		status: 'Ready',
-		images: [
-			{
-				src: 'https://drive.google.com/thumbnail?id=1wssym_RCzfAETooYk690s0mlcAv_CVhw',
-				alt: 'default-img',
-			},
-		],
-	},
-	{
-		capacity: {
-			adult: 2,
-			child: 2,
-		},
-		_id: '625eed00ff5def9afc488963',
-		roomNumber: '201',
-		floor: 2,
-		price: 550,
-		desc: 'Room 201',
-		roomType: [
-			{
-				nameTag: 'Standard',
-				type: 'STD',
-			},
-			{
-				nameTag: 'Single ',
-				type: 'SGL',
-			},
-		],
-		convenience: [
-			{
-				name: 'air conditioning',
-				desc: 'air conditioning',
-			},
-			{
-				name: 'en-suite bathroom',
-				desc: 'en-suite bathroom',
-			},
-			{
-				name: 'internet access',
-				desc: 'internet access',
-			},
-		],
-		status: 'Ready',
-		images: [
-			{
-				src: 'https://drive.google.com/thumbnail?id=1wssym_RCzfAETooYk690s0mlcAv_CVhw',
-				alt: 'default-img',
-			},
-		],
-	},
-	{
-		capacity: {
-			adult: 2,
-			child: 2,
-		},
-		_id: '625eed00ff5def9afc488963',
-		roomNumber: '201',
-		floor: 2,
-		price: 550,
-		desc: 'Room 201',
-		roomType: [
-			{
-				nameTag: 'Standard',
-				type: 'STD',
-			},
-			{
-				nameTag: 'Single ',
-				type: 'SGL',
-			},
-		],
-		convenience: [
-			{
-				name: 'air conditioning',
-				desc: 'air conditioning',
-			},
-			{
-				name: 'en-suite bathroom',
-				desc: 'en-suite bathroom',
-			},
-			{
-				name: 'internet access',
-				desc: 'internet access',
-			},
-		],
-		status: 'Ready',
-		images: [
-			{
-				src: 'https://drive.google.com/thumbnail?id=1wssym_RCzfAETooYk690s0mlcAv_CVhw',
-				alt: 'default-img',
-			},
-		],
-	},
-	{
-		capacity: {
-			adult: 2,
-			child: 2,
-		},
-		_id: '625eed00ff5def9afc48896378',
-		roomNumber: '201',
-		floor: 2,
-		price: 550,
-		desc: 'Room 201',
-		roomType: [
-			{
-				nameTag: 'Standard',
-				type: 'STD',
-			},
-			{
-				nameTag: 'Single ',
-				type: 'SGL',
-			},
-		],
-		convenience: [
-			{
-				name: 'air conditioning',
-				desc: 'air conditioning',
-			},
-			{
-				name: 'en-suite bathroom',
-				desc: 'en-suite bathroom',
-			},
-			{
-				name: 'internet access',
-				desc: 'internet access',
-			},
-		],
-		status: 'Ready',
-		images: [
-			{
-				src: 'https://drive.google.com/thumbnail?id=1wssym_RCzfAETooYk690s0mlcAv_CVhw',
-				alt: 'default-img',
-			},
-		],
-	},
-	{
-		capacity: {
-			adult: 2,
-			child: 2,
-		},
-		_id: '625eed00ff5def9afc48896356',
-		roomNumber: '201',
-		floor: 2,
-		price: 550,
-		desc: 'Room 201',
-		roomType: [
-			{
-				nameTag: 'Standard',
-				type: 'STD',
-			},
-			{
-				nameTag: 'Single ',
-				type: 'SGL',
-			},
-		],
-		convenience: [
-			{
-				name: 'air conditioning',
-				desc: 'air conditioning',
-			},
-			{
-				name: 'en-suite bathroom',
-				desc: 'en-suite bathroom',
-			},
-			{
-				name: 'internet access',
-				desc: 'internet access',
-			},
-		],
-		status: 'Ready',
-		images: [
-			{
-				src: 'https://drive.google.com/thumbnail?id=1wssym_RCzfAETooYk690s0mlcAv_CVhw',
-				alt: 'default-img',
-			},
-		],
-	},
-	{
-		capacity: {
-			adult: 2,
-			child: 2,
-		},
-		_id: '625eed00ff5def9afc48896345',
-		roomNumber: '201',
-		floor: 2,
-		price: 550,
-		desc: 'Room 201',
-		roomType: [
-			{
-				nameTag: 'Standard',
-				type: 'STD',
-			},
-			{
-				nameTag: 'Single ',
-				type: 'SGL',
-			},
-		],
-		convenience: [
-			{
-				name: 'air conditioning',
-				desc: 'air conditioning',
-			},
-			{
-				name: 'en-suite bathroom',
-				desc: 'en-suite bathroom',
-			},
-			{
-				name: 'internet access',
-				desc: 'internet access',
-			},
-		],
-		status: 'Ready',
-		images: [
-			{
-				src: 'https://drive.google.com/thumbnail?id=1wssym_RCzfAETooYk690s0mlcAv_CVhw',
-				alt: 'default-img',
-			},
-		],
-	},
-];
+import './style.scss';
+import { getAllRoom } from './../../../redux/actions/room';
 
 const BookingPage = () => {
 	const [dateRange, setDateRange] = useState([null, null]);
 	const [startDate, endDate] = dateRange;
+
+	const dispatch = useDispatch();
+	const listRoom = useSelector((state) => state.roomReducer.rooms);
+
+	useEffect(() => {
+		dispatch(getAllRoom());
+	}, [dispatch]);
 
 	const capacityDefault = {
 		adult: { name: 'Adults', number: 2 },
@@ -276,7 +31,6 @@ const BookingPage = () => {
 			<BiChevronDown />
 		</button>
 	));
-
 	return (
 		<div className='booking-page'>
 			<section className='row select-booking'>
@@ -308,7 +62,7 @@ const BookingPage = () => {
 				</div>
 			</section>
 			<section className='available-room'>
-				<div className='list-available flex-center flex-column'>
+				<div className='list-available row justify-content-around'>
 					{listRoom.map((room) => (
 						<AvailableRoom room={room} key={room._id} />
 					))}

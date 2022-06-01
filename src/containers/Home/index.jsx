@@ -23,9 +23,10 @@ import ScrollToTop from 'react-scroll-to-top';
 const Home = () => {
 	return (
 		<div className='home'>
-			<Navbar />
-			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a' }} />
-			<div className='container'>
+			<div className='home__navbar'>
+				<Navbar />
+			</div>
+			<div className='home__container'>
 				<Routes>
 					<Route path='/' element={<LandingPage />} />
 					<Route path='rooms' element={<BookingPage />} />
@@ -42,7 +43,11 @@ const Home = () => {
 					<Route path='contact' element={<ContactPage />} />
 				</Routes>
 			</div>
-			<Footer />
+			<div className='home__footer'>
+				<Footer />
+			</div>
+
+			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a' }} />
 		</div>
 	);
 };

@@ -7,7 +7,10 @@ a:hover {
 
 .home {
 	font-family: $Montserrat;
-
+	overflow-y: hidden;
+	&__container {
+		margin-top: 17vh;
+	}
 	&__header {
 		position: relative;
 		background-image: url('./../../assets/images/Home__backgroungimg.png');

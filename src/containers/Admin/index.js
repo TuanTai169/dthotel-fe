@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import ProtectedRoute from '../../routing/ProtectedRoute';
@@ -8,7 +8,12 @@ import ForgotPassword from './Login/ForgotPassword';
 import ResetPassword from './Login/ResetPassword';
 import './styles.scss';
 
+import { loadUser } from '../../redux/actions/auth';
+import { useDispatch } from 'react-redux';
+
 const Admin = () => {
+	const dispatch = useDispatch();
+	useEffect(() => dispatch(loadUser()), [dispatch]);
 	return (
 		<div className='admin'>
 			<Routes>
