@@ -8,7 +8,7 @@ import {
 	nameValidation,
 	textValidation,
 } from '../../../utils/validation';
-import { userRoles } from '../../../assets/app/constanst';
+import { userRoles } from '../../../assets/app/constants';
 
 function EditUserModal(props) {
 	const { show, handlerModalClose, user } = props;

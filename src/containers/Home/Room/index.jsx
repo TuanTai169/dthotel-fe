@@ -9,7 +9,7 @@ import { BiChevronDown } from 'react-icons/bi';
 import './style.scss';
 import { getAllRoom } from './../../../redux/actions/room';
 
-const BookingPage = () => {
+const RoomPage = () => {
 	const [dateRange, setDateRange] = useState([null, null]);
 	const [startDate, endDate] = dateRange;
 
@@ -32,7 +32,7 @@ const BookingPage = () => {
 		</button>
 	));
 	return (
-		<div className='booking-page'>
+		<div className='room-page'>
 			<section className='row select-booking'>
 				<div className='col-6 flex-center'>
 					<span className='web-name'>Rooms</span>
@@ -62,15 +62,12 @@ const BookingPage = () => {
 				</div>
 			</section>
 			<section className='available-room'>
-				<div className='list-available row justify-content-around'>
-					{listRoom.map((room) => (
-						<AvailableRoom room={room} key={room._id} />
-					))}
-				</div>
-				<div className='pagination'></div>
+				{listRoom.map((room) => (
+					<AvailableRoom room={room} key={room._id} />
+				))}
 			</section>
 		</div>
 	);
 };
 
-export default BookingPage;
+export default RoomPage;

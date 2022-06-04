@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RoomStatus } from '../../../assets/app/constanst';
+import { RoomStatus } from '../../../assets/app/constants';
 import CustomerForm from '../FormBooking/CustomerForm';
 import { totalRoomCharge } from '../../../utils/calculateRoomPrice';
 import { getAllBooking, addBooking } from '../../../redux/actions/booking';

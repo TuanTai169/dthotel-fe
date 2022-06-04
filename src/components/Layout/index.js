@@ -64,8 +64,7 @@ const Layout = () => {
 							<Route path='/profile' element={<Profile />} />
 							<Route path='/receipts' element={<Receipt />} />
 							<Route path='/statistic' element={<Statistics />} />
-							<Route path='about' element={<About />} />
-							<Route path='/*' element={<NotFound />} />
+							<Route path='/about' element={<About />} />
 						</Routes>
 					</div>
 				</div>

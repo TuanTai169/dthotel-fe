@@ -3,8 +3,9 @@ import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
 
 import LandingPage from './LandingPage';
-import BookingPage from './Room';
+import RoomPage from './Room';
 import RoomDetail from './RoomDetail';
+import BookingPage from './Booking';
 import ServicesPage from './Services';
 import GalleryPage from './Gallery';
 import AboutPage from './AboutUs';
@@ -29,7 +30,7 @@ const Home = () => {
 			<div className='home__container'>
 				<Routes>
 					<Route path='/' element={<LandingPage />} />
-					<Route path='rooms' element={<BookingPage />} />
+					<Route path='rooms' element={<RoomPage />} />
 					<Route path='rooms-detail' element={<RoomDetail />} />
 					<Route path='services' element={<ServicesPage />} />
 					<Route path='gallery' element={<GalleryPage />} />
@@ -41,6 +42,7 @@ const Home = () => {
 					<Route path='book-cancel' element={<BookandCancelPolicyPage />} />
 					<Route path='web-term' element={<WebsiteTermPage />} />
 					<Route path='contact' element={<ContactPage />} />
+					<Route path='booking' element={<BookingPage />} />
 				</Routes>
 			</div>
 			<div className='home__footer'>

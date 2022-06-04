@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { convertStringToDate } from '../../../utils/convertDateTime';
 import CustomerForm from '../FormBooking/CustomerForm';
 import ServiceForm from '../FormBooking/ServiceForm';
-import { RoomStatus, BookingStatus, userRoles } from '../../../assets/app/constanst';
+import { RoomStatus, BookingStatus, userRoles } from '../../../assets/app/constants';
 
 const InfoRoomModal = (props) => {
 	const dispatch = useDispatch();
