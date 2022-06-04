@@ -7,7 +7,7 @@ import CheckInModal from '../Booking/CheckInModal';
 import ViewAllRoomModal from './ViewAllRoomModal';
 import DialogChange from '../../../components/Dialog/DialogChange';
 import CheckOutModal from '../Receipt/CheckOutModal';
-import { RoomStatus } from '../../../assets/app/constanst';
+import { RoomStatus } from '../../../assets/app/constants';
 
 const RoomActionButton = (props) => {
 	const dispatch = useDispatch();
@@ -24,6 +24,8 @@ const RoomActionButton = (props) => {
 		title: '',
 		message: '',
 	});
+
+	const [statusBooking, setStatusBooking] = useState('book');
 
 	const handlerCloseBookingModal = () => setIsOpenBooking(false);
 	const handlerCloseCheckInModal = () => setIsOpenCheckIn(false);
@@ -80,7 +82,10 @@ const RoomActionButton = (props) => {
 						<Button
 							variant='info'
 							style={{ marginLeft: '4px', color: '#fff' }}
-							onClick={() => setIsOpenBooking(true)}
+							onClick={() => {
+								setStatusBooking('book');
+								setIsOpenBooking(true);
+							}}
 						>
 							<i className='bx bxs-user-x'></i>
 							<span>&ensp;Booking</span>
@@ -90,6 +95,7 @@ const RoomActionButton = (props) => {
 							handlerModalClose={handlerCloseBookingModal}
 							currentRoom={room}
 							handlerParentModalClose={handlerModalClose}
+							status={statusBooking}
 						/>
 					</>
 				)}
@@ -102,17 +108,27 @@ const RoomActionButton = (props) => {
 							<Button
 								variant='primary'
 								style={{ marginLeft: '4px' }}
-								onClick={() => setIsOpenCheckIn(true)}
+								onClick={() => {
+									setStatusBooking('check-in');
+									setIsOpenBooking(true);
+								}}
 							>
 								<i className='bx bxs-user-check'></i>
 								<span>&ensp;Check in</span>
 							</Button>
-							<CheckInModal
+							<BookingModal
+								show={isOpenBooking}
+								handlerModalClose={handlerCloseBookingModal}
+								currentRoom={room}
+								handlerParentModalClose={handlerModalClose}
+								status={statusBooking}
+							/>
+							{/* <CheckInModal
 								show={isOpenCheckIn}
 								handlerModalClose={handlerCloseCheckInModal}
 								currentRoom={room}
 								handlerParentModalClose={handlerModalClose}
-							/>
+							/> */}
 						</>
 					)}
 

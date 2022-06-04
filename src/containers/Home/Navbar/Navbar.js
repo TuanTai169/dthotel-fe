@@ -30,17 +30,17 @@ const Navbar = () => {
 								<img src={logo} alt='Swiss Logo' className='header__nav__content__items__logo' />
 							</li>
 							<li>
-								<Link className='header__nav__content__items-link' to='/about-us'>
+								<Link className='header__nav__content__items-link' to='about-us'>
 									ABOUT US
 								</Link>
 							</li>
 							<li>
-								<Link className='header__nav__content__items-link' to='/gallery'>
+								<Link className='header__nav__content__items-link' to='gallery'>
 									GALLERY
 								</Link>
 							</li>
 							<li>
-								<Link className='header__nav__content__items-link' to='/blogs'>
+								<Link className='header__nav__content__items-link' to='blogs'>
 									BLOGS
 								</Link>
 							</li>

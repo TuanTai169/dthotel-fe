@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonToolbar, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import lodash from 'lodash';
 
-import { RoomStatus } from '../../../assets/app/constanst';
+import { RoomStatus } from '../../../assets/app/constants';
 import RoomItem from './RoomItem';
 import AddRoomModal from './AddRoomModal';
 import ViewAllBookingModal from '../Booking/ViewAllBookingModal';

@@ -10,6 +10,7 @@ Link:hover {
 	font-family: $Montserrat;
 
 	&__nav {
+		left: 0;
 		transform: translateY(50%);
 		width: 100%;
 		position: fixed;
