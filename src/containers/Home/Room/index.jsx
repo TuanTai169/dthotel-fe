@@ -57,7 +57,7 @@ const RoomPage = () => {
 						</div>
 					</div>
 					<div className='flex-center'>
-						<span className='btn-check-available'>Check availability</span>
+						<span className='btn-home'>Check availability</span>
 					</div>
 				</div>
 			</section>

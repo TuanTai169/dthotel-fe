@@ -48,7 +48,6 @@ const Home = () => {
 			<div className='home__footer'>
 				<Footer />
 			</div>
-
 			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a' }} />
 		</div>
 	);

@@ -3,14 +3,14 @@
 
 .footer {
 	bottom: 0;
-	width: 100vw;
 	background-color: $dark-blue;
 	color: $white;
 
 	&__container {
-		width: 100vw;
+		width: 100%;
 		display: inline-flex;
-		justify-content: center;
+		justify-content: space-around;
+		align-items: center;
 
 		&__img {
 			width: 4vw;
@@ -73,7 +73,6 @@
 
 	&__otherinfor {
 		color: $main-text-color;
-		width: 100vw;
 		display: inline-flex;
 		justify-content: space-between;
 		align-items: center;
