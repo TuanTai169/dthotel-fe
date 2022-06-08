@@ -42,6 +42,11 @@ const roomReducer = (state = initialState, action) => {
 				...state,
 				rooms: newRooms,
 			};
+		case types.CHECK_AVAILABLE:
+			return {
+				...state,
+				rooms: payload,
+			};
 		case types.FIND_ROOM:
 			return {
 				...state,
