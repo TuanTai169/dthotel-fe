@@ -12,8 +12,9 @@ $black: #000;
 $main-text-color: #ffce6a;
 $main-bg-color: #001f3c;
 
-$direction: left, right, top, bottom, center;
+$directions: left, right, top, bottom, center;
 $displays: flex, inline-block, block, grid;
+$positions: relative, absolute, fixed;
 $widths: (
 	0: 0px,
 	16: 16px,
@@ -40,7 +41,8 @@ $margins: (
 	20: 20px,
 	24: 24px,
 	32: 32px,
-	58: 58px,
+	40: 40px,
+	85: 85px,
 	'1em': 1em,
 	'2em': 2em,
 	'auto': auto,
@@ -158,6 +160,12 @@ $font-sizes: (
 @each $display in $displays {
 	.d-#{$display} {
 		display: $display;
+	}
+}
+
+@each $position in $positions {
+	.pos-#{$position} {
+		position: $position;
 	}
 }
 

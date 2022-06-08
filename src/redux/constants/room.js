@@ -7,3 +7,4 @@ export const FIND_ROOM = 'FIND_ROOM';
 export const UPDATE_ROOM = 'UPDATE_ROOM';
 export const DELETE_ROOM = 'DELETE_ROOM';
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+export const CHECK_AVAILABLE = 'CHECK_AVAILABLE';

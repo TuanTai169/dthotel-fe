@@ -4,6 +4,7 @@
 	font-family: $Montserrat;
 	text-transform: uppercase;
 	overflow: hidden;
+	position: relative;
 }
 
 .web-name {
@@ -97,11 +98,22 @@
 			padding: 10px 0;
 			text-align: justify;
 			font-size: 1rem;
-			text-transform: capitalize;
+			text-transform: initial;
 		}
 		&__special {
-			text-transform: capitalize;
+			text-transform: initial;
 			font-size: 1rem;
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			margin-bottom: 10px;
+
+			&-item {
+				padding: 8px;
+				border: 1px solid $main-text-color;
+				border-radius: 8px;
+				margin: 4px;
+			}
 		}
 		&__capacity {
 			display: flex;
@@ -125,8 +137,47 @@
 				border-bottom: 2px solid #fff;
 			}
 		}
+		&__choose {
+			.switch {
+				position: relative;
+				cursor: pointer;
+				width: 4rem;
+				height: 2rem;
+				display: block;
+				margin: 0 auto;
+				overflow: hidden;
+				box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+				background-color: $main-bg-color;
+				border: 2px solid $main-text-color;
+				border-radius: 100rem;
+				transition: background-color 0.25s linear;
+			}
+
+			.switch:after {
+				content: '';
+				position: absolute;
+				width: 1.7rem;
+				height: 1.7em;
+				border-radius: 2rem;
+				background-color: #fff;
+				transition: background-color 0.25s linear, transform 0.25s linear;
+			}
+
+			.switch-input {
+				display: none;
+			}
+
+			.switch-input:checked + .switch {
+				background-color: $main-text-color;
+			}
+
+			.switch-input:checked + .switch:after {
+				transform: translateX(2rem);
+				background-color: white;
+			}
+		}
 	}
-	.booking {
+	.btn-booking {
 		text-align: center;
 
 		button {
@@ -142,6 +193,13 @@
 				background-color: $main-bg-color;
 				border: 2px solid $main-text-color;
 				color: $main-text-color;
+			}
+			&:disabled {
+				opacity: 0.7;
+				border: 2px solid $main-bg-color;
+				color: $main-bg-color;
+				background-color: transparent;
+				cursor: not-allowed;
 			}
 		}
 		p {

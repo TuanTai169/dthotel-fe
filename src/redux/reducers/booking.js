@@ -3,6 +3,7 @@ import * as types from '../constants/booking';
 const initialState = {
 	bookings: [],
 	booking: null,
+	currentBooking: null,
 	isBookingLoading: false,
 };
 const bookingReducer = (state = initialState, action) => {
@@ -41,6 +42,11 @@ const bookingReducer = (state = initialState, action) => {
 			return {
 				...state,
 				bookings: state.bookings.filter((booking) => booking._id !== payload),
+			};
+		case types.SET_BOOKING:
+			return {
+				...state,
+				currentBooking: payload,
 			};
 		default:
 			return state;
