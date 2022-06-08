@@ -46,6 +46,27 @@ export const addBooking = (newBooking, status) => {
 	};
 };
 
+// BOOKING/CHECK IN
+export const addBookingInWeb = (newBooking, status) => {
+	return async (dispatch) => {
+		try {
+			dispatch({ type: types.SET_BOOKING_LOADING, payload: true });
+			const response = await axios.post(`${HOST_API_URL}/booking`, newBooking);
+			if (response.data.success) {
+				dispatch({
+					type: types.BOOKING_CHECK_IN,
+					payload: response.data.booking,
+				});
+				dispatch({ type: types.SET_BOOKING_LOADING, payload: false });
+				toast.success(response.data.message);
+			}
+		} catch (error) {
+			console.log(error);
+			error.response && toast.error(error.response.data.message);
+		}
+	};
+};
+
 // UPDATE BOOKING
 export const updateBooking = (updateBooking) => {
 	return async (dispatch) => {
@@ -110,6 +131,25 @@ export const changeRoom = (bookingId, startRoom, endRoom) => {
 		} catch (error) {
 			console.log(error);
 			error.response && toast.error(error.response.data.message);
+			dispatch({ type: types.SET_BOOKING_LOADING, payload: false });
+		}
+	};
+};
+
+//CHANGE ROOM
+export const setBooking = (data) => {
+	return async (dispatch) => {
+		try {
+			dispatch({ type: types.SET_BOOKING_LOADING, payload: true });
+
+			if (data) {
+				dispatch({
+					type: types.SET_BOOKING,
+					payload: data,
+				});
+				dispatch({ type: types.SET_BOOKING_LOADING, payload: false });
+			}
+		} catch (error) {
 			dispatch({ type: types.SET_BOOKING_LOADING, payload: false });
 		}
 	};
