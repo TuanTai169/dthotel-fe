@@ -1,7 +1,8 @@
 import React from 'react';
+import './style.scss';
 
 const index = () => {
-	return <div>Services</div>;
+	return <div className='service-page'></div>;
 };
 
 export default index;

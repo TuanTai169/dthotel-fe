@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import InfoRoomModal from './InfoRoomModal';
-import { RoomStatus } from '../../../assets/app/constanst';
+import { RoomStatus } from '../../../assets/app/constants';
 
 const RoomItem = (props) => {
 	const [isInfoOpen, setIsInfoOpen] = useState(false);

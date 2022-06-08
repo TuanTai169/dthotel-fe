@@ -10,6 +10,7 @@ Link:hover {
 	font-family: $Montserrat;
 
 	&__nav {
+		left: 0;
 		transform: translateY(50%);
 		width: 100%;
 		position: fixed;
@@ -44,7 +45,9 @@ Link:hover {
 						margin-top: 0;
 						transition: 0.5s;
 					}
-
+					&:hover {
+						color: $main-text-color;
+					}
 					&:hover::after {
 						width: 100%;
 						margin-top: 5px;

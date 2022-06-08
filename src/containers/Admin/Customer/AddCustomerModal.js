@@ -10,13 +10,13 @@ import {
 	numberValidation,
 	textValidation,
 } from '../../../utils/validation';
-import { customerDefault } from '../../../assets/app/constanst';
+import { customerDefault } from '../../../assets/app/constants';
 
 const AddCustomerModal = (props) => {
 	const { show, handlerModalClose } = props;
 	const dispatch = useDispatch();
 
-	const [newCustomer, setNewCustomer] = useState(customerDefault);
+	const [newCustomer, setNewCustomer] = useState({ ...customerDefault });
 	const onChangeNewForm = (event) =>
 		setNewCustomer({
 			...newCustomer,
@@ -113,7 +113,7 @@ const AddCustomerModal = (props) => {
 										type='number'
 										placeholder='Adult'
 										name='adult'
-										value={numberOfPeople.adult > 0 ? numberOfPeople.adult : 0}
+										value={numberOfPeople?.adult > 0 ? numberOfPeople.adult : 0}
 										onChange={onChangeNumberOfPeople}
 										required
 									/>
@@ -125,7 +125,7 @@ const AddCustomerModal = (props) => {
 										type='number'
 										placeholder='Child'
 										name='child'
-										value={numberOfPeople.child > 0 ? numberOfPeople.child : 0}
+										value={numberOfPeople?.child > 0 ? numberOfPeople.child : 0}
 										onChange={onChangeNumberOfPeople}
 										required
 									/>

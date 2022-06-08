@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { addRoom } from '../../../redux/actions/room';
 import { numberValidation } from '../../../utils/validation';
-import { roomDefault } from '../../../assets/app/constanst';
+import { roomDefault } from '../../../assets/app/constants';
 
 const AddRoomModal = (props) => {
 	const { show, handlerModalClose } = props;

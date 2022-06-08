@@ -12,6 +12,155 @@ $black: #000;
 $main-text-color: #ffce6a;
 $main-bg-color: #001f3c;
 
+$direction: left, right, top, bottom, center;
+$displays: flex, inline-block, block, grid;
+$widths: (
+	0: 0px,
+	16: 16px,
+	24: 24px,
+	32: 32px,
+	'25p': 25%,
+	'100p': 100%,
+);
+$heights: (
+	0: 0px,
+	16: 16px,
+	24: 24px,
+	32: 32px,
+	'25p': 25%,
+	'100p': 100%,
+);
+
+$margins: (
+	0: 0px,
+	4: 4px,
+	8: 8px,
+	10: 10px,
+	16: 16px,
+	20: 20px,
+	24: 24px,
+	32: 32px,
+	58: 58px,
+	'1em': 1em,
+	'2em': 2em,
+	'auto': auto,
+);
+
+$paddings: (
+	0: 0px,
+	4: 4px,
+	8: 8px,
+	10: 10px,
+	16: 16px,
+	20: 20px,
+	24: 24px,
+	32: 32px,
+	'1em': 1em,
+	'2em': 2em,
+	'auto': auto,
+);
+
+$font-sizes: (
+	10: 10px,
+	12: 12px,
+	16: 16px,
+	20: 20px,
+	24: 24px,
+	32: 32px,
+	40: 40px,
+	'1em': 1em,
+	'2em': 2em,
+	'auto': auto,
+);
+
+@each $name, $width in $widths {
+	.w-#{$name} {
+		width: $width !important;
+	}
+	.min-w-#{$name} {
+		min-width: $width;
+	}
+	.max-w-#{$name} {
+		max-width: $width;
+	}
+}
+
+@each $name, $height in $heights {
+	.w-#{$name} {
+		height: $height !important;
+	}
+	.min-w-#{$name} {
+		min-height: $height;
+	}
+	.max-w-#{$name} {
+		max-height: $height;
+	}
+}
+
+@each $name, $margin in $margins {
+	.m-#{$name} {
+		margin: $margin !important;
+	}
+	.ml-#{$name} {
+		margin-left: $margin !important;
+	}
+	.mr-#{$name} {
+		margin-right: $margin !important;
+	}
+	.mt-#{$name} {
+		margin-top: $margin !important;
+	}
+	.mb-#{$name} {
+		margin-bottom: $margin !important;
+	}
+	.mx-#{$name} {
+		margin-left: $margin;
+		margin-right: $margin;
+	}
+	.my-#{$name} {
+		margin-top: $margin;
+		margin-bottom: $margin;
+	}
+}
+
+@each $name, $padding in $paddings {
+	.p-#{$name} {
+		padding: $padding !important;
+	}
+	.pl-#{$name} {
+		padding-left: $padding !important;
+	}
+	.pr-#{$name} {
+		padding-right: $padding !important;
+	}
+	.pt-#{$name} {
+		padding-top: $padding !important;
+	}
+	.pb-#{$name} {
+		padding-bottom: $padding !important;
+	}
+	.px-#{$name} {
+		padding-left: $padding;
+		padding-right: $padding;
+	}
+	.py-#{$name} {
+		padding-top: $padding;
+		padding-bottom: $padding;
+	}
+}
+
+@each $name, $font-size in $font-sizes {
+	.text-#{$name} {
+		font-size: $font-size !important;
+	}
+}
+
+@each $display in $displays {
+	.d-#{$display} {
+		display: $display;
+	}
+}
+
 @mixin breakpoint($point) {
 	@if $point == md {
 		// 768px

@@ -46,7 +46,6 @@ function ForgotPassword() {
 			</Button>
 			<div style={{ marginTop: '12px' }}>
 				<Link to='/admin/login'>
-					{' '}
 					<i className='bx bx-left-arrow-alt'></i>Login
 				</Link>
 			</div>
