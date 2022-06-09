@@ -1,18 +1,18 @@
-import { useState } from "react"
+import React, { Component, useState } from 'react';
 
 const usePasswordToggle = () => {
-  const [visible, setVisible] = useState(false)
+	const [visible, setVisible] = useState(false);
 
-  const Icon = (
-    <i
-      className={visible ? "bx bx-hide" : "bx bx-show"}
-      onClick={() => setVisible((visible) => !visible)}
-    ></i>
-  )
+	const Icon = (
+		<i
+			className={visible ? 'bx bx-hide' : 'bx bx-show'}
+			onClick={() => setVisible((visible) => !visible)}
+		></i>
+	);
 
-  const InputType = visible ? "text" : "password"
+	const InputType = visible ? 'text' : 'password';
 
-  return [InputType, Icon]
-}
+	return [InputType, Icon];
+};
 
-export default usePasswordToggle
+export default usePasswordToggle;
