@@ -9,7 +9,7 @@ import './assets/scss/index.scss';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-document.title = 'DTHSOFT';
+document.title = 'DTH SOFT';
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
