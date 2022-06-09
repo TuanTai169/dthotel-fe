@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6cc0a912.css",
+    "main.js": "/static/js/main.c59fe421.js",
+    "static/js/787.d2ebead4.chunk.js": "/static/js/787.d2ebead4.chunk.js",
+    "static/media/Home__backgroungimg.png": "/static/media/Home__backgroungimg.7546a91432acb20cff49.png",
+    "static/media/boxicons.svg": "/static/media/boxicons.c17adb11d64fadd1cd5a.svg",
+    "static/media/pinebranch1.png": "/static/media/pinebranch1.91a242964e466b32f517.png",
+    "static/media/spa.png": "/static/media/spa.b3d56bd5678540dcd554.png",
+    "static/media/background.jpg": "/static/media/background.ce68db117ab478b32a2b.jpg",
+    "static/media/DGV.png": "/static/media/DGV.a10ed9dbdab9ff50226b.png",
+    "static/media/adventure.png": "/static/media/adventure.fdb43f272571afffd9cf.png",
+    "static/media/pinebranch2.png": "/static/media/pinebranch2.7596521295dc8520ef06.png",
+    "static/media/boxicons.eot": "/static/media/boxicons.092b78589f3f53e60030.eot",
+    "static/media/boxicons.woff": "/static/media/boxicons.0f4528cf3c75a4b361c0.woff",
+    "static/media/boxicons.ttf": "/static/media/boxicons.cbd149c55e2396cb52e7.ttf",
+    "static/media/boxicons.woff2": "/static/media/boxicons.8d765747a5588f36ff61.woff2",
+    "static/media/logo.png": "/static/media/logo.af600f00e7862b2a1122.png",
+    "index.html": "/index.html",
+    "static/media/loading.svg": "/static/media/loading.cadb4040d1868cc315e2d0718edaf22a.svg",
+    "main.6cc0a912.css.map": "/static/css/main.6cc0a912.css.map",
+    "main.c59fe421.js.map": "/static/js/main.c59fe421.js.map",
+    "787.d2ebead4.chunk.js.map": "/static/js/787.d2ebead4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6cc0a912.css",
+    "static/js/main.c59fe421.js"
+  ]
+}
