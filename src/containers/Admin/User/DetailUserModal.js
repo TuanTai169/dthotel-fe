@@ -7,7 +7,7 @@ function DetailUserModal(props) {
 
 	return (
 		<>
-			<Modal show={show} onHide={handlerModalClose} animation={false}>
+			<Modal show={show} onHide={handlerModalClose} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>View {name} </Modal.Title>
 				</Modal.Header>

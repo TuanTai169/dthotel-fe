@@ -25,6 +25,7 @@ import { getAllUser } from '../../redux/actions/user';
 import { getAllReceipt } from '../../redux/actions/receipt';
 import { getAllTypes } from '../../redux/actions/typeOfRoom';
 import { getAllConveniences } from '../../redux/actions/convenience';
+import { getAllCoupon } from './../../redux/actions/coupon';
 ///import { getStatistic } from './../../redux/actions/receipt';
 
 const Layout = () => {
@@ -45,6 +46,7 @@ const Layout = () => {
 		dispatch(getAllReceipt());
 		dispatch(getAllTypes());
 		dispatch(getAllConveniences());
+		dispatch(getAllCoupon());
 		//dispatch(getStatistic());
 	}, [dispatch]);
 

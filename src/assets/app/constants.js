@@ -86,15 +86,26 @@ module.exports = {
 	},
 	roomDefault: {
 		roomNumber: '',
-		floor: 0,
+		floor: 1,
+		name: '',
 		price: 0,
 		capacity: {
 			adult: 1,
 			child: 0,
 		},
-		desc: '',
-		roomType: [],
-		convenience: [],
+		roomType: '',
+		detail: {
+			bedRoom: 0,
+			bathRoom: 0,
+			livingRoom: 0,
+			kitchen: 0,
+			desc: '',
+		},
+		bed: {
+			single: 0,
+			double: 0,
+		},
+		convenience: ['', ''],
 	},
 	customerDefault: {
 		name: '',

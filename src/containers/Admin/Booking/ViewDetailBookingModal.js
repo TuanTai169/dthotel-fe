@@ -27,7 +27,13 @@ const ViewDetailBookingModal = (props) => {
 
 	return (
 		<>
-			<Modal show={show} onHide={handlerModalClose} animation={false} size='lg'>
+			<Modal
+				show={show}
+				onHide={handlerModalClose}
+				animation={false}
+				size='lg'
+				dialogClassName='admin-modal'
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>{code}</Modal.Title>
 				</Modal.Header>

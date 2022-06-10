@@ -10,6 +10,8 @@ import { RoomStatus } from '../../../assets/app/constants';
 import CustomerForm from '../FormBooking/CustomerForm';
 import { totalRoomCharge } from '../../../utils/calculateRoomPrice';
 import { getAllBooking, addBooking } from '../../../redux/actions/booking';
+import { getAllRoom } from './../../../redux/actions/room';
+
 import { checkStatusRoom, numberValidation } from '../../../utils/validation';
 import ViewAllRoomModal from '../Room/ViewAllRoomModal';
 import ViewAllServiceModal from '../Service/ViewAllServiceModal';
@@ -25,7 +27,7 @@ const BookingModal = (props) => {
 	const listRoom = useSelector((state) => state.roomReducer.rooms);
 	const listService = useSelector((state) => state.serviceReducer.services);
 	const listBooking = useSelector((state) => state.bookingReducer.bookings);
-	// const listCoupon = useSelector((state) => state.couponReducer.bookings);
+	const listCoupon = useSelector((state) => state.couponReducer.coupons);
 
 	// useState
 	const [startDate, setStartDate] = useState(new Date());
@@ -36,7 +38,7 @@ const BookingModal = (props) => {
 	const [customer, setCustomer] = useState({});
 	const [arrayRoom, setArrayRoom] = useState(
 		listRoom
-			.filter((room) => room.status === RoomStatus.Ready.name && room._id !== currentRoom._id)
+			.filter((room) => room.status === RoomStatus.Ready.name)
 			.sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1))
 	);
 	const [rooms, setRooms] = useState([currentRoom]);
@@ -56,7 +58,7 @@ const BookingModal = (props) => {
 		checkInDate: moment(startDate).format('YYYY-MM-DD HH:mm'),
 		checkOutDate: moment(endDate).format('YYYY-MM-DD HH:mm'),
 		deposit: 0,
-		discount: '626159f984a2249a562eaa95',
+		discount: null,
 		rooms: [currentRoom._id],
 		customer: '',
 		services: [],
@@ -67,7 +69,7 @@ const BookingModal = (props) => {
 	const [openViewService, setOpenViewService] = useState(false);
 
 	useEffect(() => {
-		const { checkInDate, checkOutDate, deposit, discount } = newBooking;
+		const { checkInDate, checkOutDate, deposit, discount, services, products } = newBooking;
 
 		const checkExcludeDate = checkStatusRoom(rooms, listBooking);
 		const exclude = checkExcludeDate.map((item) => new Date(item));
@@ -75,32 +77,58 @@ const BookingModal = (props) => {
 
 		const calculatorPrice = () => {
 			const RoomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate);
-
+			let priceDiscount = 0;
+			const coupon = listCoupon.find((x) => x._id === discount);
+			if (coupon) {
+				priceDiscount = coupon.discount;
+			}
 			const sumServicesPrice = services
+				.map((item) => item.price)
+				.reduce((prev, curr) => prev + curr, 0);
+
+			const sumProductsPrice = products
 				.map((item) => item.price)
 				.reduce((prev, curr) => prev + curr, 0);
 
 			const VAT = 10;
 			return (
-				(RoomCharge + sumServicesPrice) * (1 + VAT / 100 - discount / 100) -
+				(RoomCharge + sumServicesPrice + sumProductsPrice) * (1 + VAT / 100 - priceDiscount / 100) -
 				deposit
 			).toFixed();
 		};
 		setTotalPrice(calculatorPrice);
-	}, [newBooking, rooms, services, listBooking]);
+	}, [newBooking, rooms, services, products, listBooking]);
 
 	// Handler
 	const handlerCustomer = () => {
-		navigate('/customers');
+		navigate('/admin/customers');
 	};
 
 	const handlerSubmit = (e) => {
 		e.preventDefault();
-		if (numberValidation(newBooking.deposit)) {
-			dispatch(addBooking(newBooking, status));
-			setTimeout(() => dispatch(getAllBooking()), 3000);
-			resetDataBooking();
-		}
+
+		const data = {
+			...newBooking,
+			products: newBooking.products.map((x) => {
+				return {
+					product: x.product,
+					amount: x.amount,
+				};
+			}),
+			services: newBooking.services.map((x) => {
+				return {
+					service: x.service,
+					amount: x.amount,
+				};
+			}),
+		};
+
+		dispatch(addBooking(data, status));
+		setTimeout(() => {
+			dispatch(getAllBooking());
+			dispatch(getAllRoom());
+		}, 3000);
+		resetDataBooking();
 	};
 
 	const closeViewRoomModal = () => setOpenViewRoom(false);
@@ -130,13 +158,19 @@ const BookingModal = (props) => {
 		});
 	};
 
-	const onChangeRoom = (selectRoom) => {
-		let newArrayRoom = [...rooms, selectRoom];
-		setRooms(newArrayRoom);
-		setArrayRoom(arrayRoom.filter((room) => room._id !== selectRoom._id));
+	const onChangeCoupon = (selectItem) => {
 		setNewBooking({
 			...newBooking,
-			rooms: newArrayRoom.map((room) => room._id),
+			discount: selectItem._id,
+		});
+	};
+
+	const onChangeRoom = (listRoom) => {
+		setRooms(listRoom);
+		// setArrayRoom(arrayRoom.filter((room) => room._id !== selectRoom._id));
+		setNewBooking({
+			...newBooking,
+			rooms: listRoom.map((room) => room._id),
 		});
 	};
 
@@ -165,19 +199,20 @@ const BookingModal = (props) => {
 				return {
 					service: s._id,
 					amount: s.amount,
+					price: s.price * s.amount,
 				};
 			}),
 			products: newProduct.map((s) => {
 				return {
 					product: s._id,
 					amount: s.amount,
+					price: s.price * s.amount,
 				};
 			}),
 		});
 	};
 
 	const onAddService = (e, service) => {
-		console.log(service.amount);
 		e.preventDefault();
 		const findIndex = arrayService.findIndex((x) => x._id === service._id);
 		if (findIndex > -1) {
@@ -190,12 +225,14 @@ const BookingModal = (props) => {
 				return {
 					service: s._id,
 					amount: s.amount,
+					price: s.price * s.amount,
 				};
 			}),
 			products: products.map((s) => {
 				return {
 					product: s._id,
 					amount: s.amount,
+					price: s.price * s.amount,
 				};
 			}),
 		});
@@ -215,12 +252,14 @@ const BookingModal = (props) => {
 				return {
 					service: s._id,
 					amount: s.amount,
+					price: s.price * s.amount,
 				};
 			}),
 			products: products.map((s) => {
 				return {
 					product: s._id,
 					amount: s.amount,
+					price: s.price * s.amount,
 				};
 			}),
 		});
@@ -246,11 +285,17 @@ const BookingModal = (props) => {
 		);
 	});
 
-	const { deposit, discount } = newBooking;
+	const { deposit } = newBooking;
 
 	return (
 		<>
-			<Modal show={show} onHide={resetDataBooking} animation={false} size='lg'>
+			<Modal
+				show={show}
+				onHide={resetDataBooking}
+				animation={false}
+				size='lg'
+				dialogClassName='admin-modal'
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>{status === 'book' ? 'New Booking' : 'New Check-in'}</Modal.Title>
 				</Modal.Header>
@@ -303,22 +348,25 @@ const BookingModal = (props) => {
 								<Form.Label>Deposit</Form.Label>
 								<Form.Control
 									type='number'
+									name='deposit'
 									value={deposit}
 									onChange={(e) => {
 										setNewBooking({ ...newBooking, deposit: e.target.value });
 									}}
 								/>
 							</Form.Group>
-							{/* <Form.Group as={Col} controlId='formGridDiscount'>
-								<Form.Label>Discount (%)</Form.Label>
-								<Form.Control
-									type='number'
-									value={discount}
-									onChange={(e) => {
-										setNewBooking({ ...newBooking, discount: e.target.value });
-									}}
+							<Form.Group as={Col} controlId='formGridDiscount'>
+								<Form.Label>Discount </Form.Label>
+								<Select
+									name='discount'
+									options={listCoupon}
+									getOptionLabel={(option) => option.code}
+									getOptionValue={(option) => option._id}
+									onChange={onChangeCoupon}
+									className='basic-select'
+									classNamePrefix='select coupon'
 								/>
-							</Form.Group> */}
+							</Form.Group>
 						</Row>
 						<Row>
 							<Col sm={3}>
@@ -345,15 +393,18 @@ const BookingModal = (props) => {
 							</Col>
 							<Col sm={6}>
 								<Select
+									isMulti
+									name='rooms'
 									options={arrayRoom}
 									onChange={onChangeRoom}
+									defaultValue={arrayRoom.filter((x) => currentRoom._id === x._id)}
 									getOptionLabel={(option) => option.roomNumber}
-									getOptionValue={(option) => option.roomNumber}
+									getOptionValue={(option) => option._id}
 								/>
 							</Col>
-							<Col sm={3}>
+							{/* <Col sm={3}>
 								<Button onClick={() => setOpenViewRoom(true)}>Add New Room</Button>
-							</Col>
+							</Col> */}
 							<Table striped>
 								<thead>
 									<tr>{renderRoomHead}</tr>
@@ -374,18 +425,18 @@ const BookingModal = (props) => {
 									))}
 								</tbody>
 							</Table>
-							<ViewAllRoomModal
+							{/* <ViewAllRoomModal
 								show={openViewRoom}
 								handlerModalClose={closeViewRoomModal}
 								roomChoose={currentRoom}
 								getRoom={onChangeRoom}
-							/>
+							/> */}
 						</Row>
 						<Row>
 							<Col sm={9}>
 								<h5>Service and Product</h5>
 							</Col>
-							<Col sm={3}>
+							{/* <Col sm={3}>
 								<Button
 									variant='warning'
 									style={{ color: '#fff' }}
@@ -393,7 +444,7 @@ const BookingModal = (props) => {
 								>
 									Add New Service
 								</Button>
-							</Col>
+							</Col> */}
 
 							<Form.Group className='mb-3' controlId='formBasicService'>
 								<Select
@@ -407,13 +458,6 @@ const BookingModal = (props) => {
 									classNamePrefix='select service or product'
 								/>
 							</Form.Group>
-							{/* <Select
-									options={arrayService}
-									onChange={onChangeService}
-									getOptionLabel={(option) => option.name}
-									getOptionValue={(option) => option.name}
-								/> */}
-
 							<Table striped>
 								<thead>
 									<tr>{renderServiceHead}</tr>

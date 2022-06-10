@@ -20,7 +20,13 @@ function DetailReceiptModal(props) {
 
 	return (
 		<>
-			<Modal show={show} onHide={handlerModalClose} animation={false} size='lg'>
+			<Modal
+				show={show}
+				onHide={handlerModalClose}
+				animation={false}
+				size='lg'
+				dialogClassName='admin-modal'
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>{booking.code}</Modal.Title>
 					<div style={{ marginLeft: '30%', fontSize: '20px' }}>

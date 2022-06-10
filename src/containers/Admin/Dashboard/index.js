@@ -68,16 +68,16 @@ const Dashboard = () => {
 	// RECEIPT
 	let receiptData = receipts.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1)).slice(0, 5);
 
-	let latestReceipt = receiptData.map((item) => {
-		let receipt = {
-			id: item.booking.code,
-			customer: item.booking.customer.name,
-			createdAt: convertStringToDate(item.createdAt),
-			modeOfPayment: item.modeOfPayment,
-			price: item.booking.totalPrice,
-		};
-		return receipt;
-	});
+	// let latestReceipt = receiptData.map((item) => {
+	// 	let receipt = {
+	// 		id: item.booking.code,
+	// 		customer: item.booking.customer.name,
+	// 		createdAt: convertStringToDate(item.createdAt),
+	// 		modeOfPayment: item.modeOfPayment,
+	// 		price: item.booking.totalPrice,
+	// 	};
+	// 	return receipt;
+	// });
 
 	// CHART
 
@@ -323,7 +323,7 @@ const Dashboard = () => {
 											</tr>
 										</thead>
 									)}
-									{latestReceipt ? (
+									{/* {latestReceipt ? (
 										<tbody>
 											{latestReceipt.map((item, index) => (
 												<tr key={index}>
@@ -344,7 +344,7 @@ const Dashboard = () => {
 												</tr>
 											))}
 										</tbody>
-									) : null}
+									) : null} */}
 								</table>
 							</div>
 						</div>
