@@ -53,7 +53,7 @@ function EditCustomerModal(props) {
 
 	return (
 		<div>
-			<Modal show={show} onHide={resetAddPostData} animation={false}>
+			<Modal show={show} onHide={resetAddPostData} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Edit Customer</Modal.Title>
 				</Modal.Header>

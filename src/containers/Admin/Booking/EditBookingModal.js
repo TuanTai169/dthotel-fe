@@ -199,7 +199,13 @@ const EditBookingModal = (props) => {
 
 	return (
 		<>
-			<Modal show={show} onHide={resetDataBooking} animation={false} size='lg'>
+			<Modal
+				show={show}
+				onHide={resetDataBooking}
+				animation={false}
+				size='lg'
+				dialogClassName='admin-modal'
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>Edit {code}</Modal.Title>
 				</Modal.Header>

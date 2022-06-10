@@ -34,7 +34,7 @@ const AddServiceModal = (props) => {
 	const { name, price } = newService;
 	return (
 		<>
-			<Modal show={show} onHide={resetAddPostData} animation={false}>
+			<Modal show={show} onHide={resetAddPostData} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Add Service</Modal.Title>
 				</Modal.Header>
