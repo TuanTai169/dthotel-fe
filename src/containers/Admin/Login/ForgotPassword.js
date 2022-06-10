@@ -26,7 +26,7 @@ function ForgotPassword() {
 	return (
 		<div className='login-page'>
 			<div className='company-logo'>
-				<Link to='/'>
+				<Link to='/admin'>
 					<img src={logo} alt='company logo' />
 				</Link>
 			</div>
@@ -45,8 +45,7 @@ function ForgotPassword() {
 				Verify your email
 			</Button>
 			<div style={{ marginTop: '12px' }}>
-				<Link to='/login'>
-					{' '}
+				<Link to='/admin/login'>
 					<i className='bx bx-left-arrow-alt'></i>Login
 				</Link>
 			</div>

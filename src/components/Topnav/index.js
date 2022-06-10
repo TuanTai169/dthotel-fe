@@ -20,7 +20,7 @@ const TopNav = () => {
 		dispatch(logout());
 	};
 	const handlerToProfile = () => {
-		navigate('/profile');
+		navigate('/admin/profile');
 	};
 
 	return (

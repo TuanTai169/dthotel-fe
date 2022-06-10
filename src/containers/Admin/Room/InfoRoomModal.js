@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
+import Select from 'react-select';
 import EditRoomModal from './EditRoomModal';
 import RoomActionButton from './RoomActionButton';
 import DialogDelete from '../../../components/Dialog/DialogDelete';
@@ -8,10 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { convertStringToDate } from '../../../utils/convertDateTime';
 import CustomerForm from '../FormBooking/CustomerForm';
 import ServiceForm from '../FormBooking/ServiceForm';
+import { RoomStatus, BookingStatus, userRoles } from '../../../assets/app/constants';
 
 const InfoRoomModal = (props) => {
+	const dispatch = useDispatch();
 	const { show, handlerModalClose, room } = props;
-	const { roomNumber, price, roomType, _id } = room;
+	const { roomNumber, price, roomType, convenience, _id, capacity, status } = room;
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 	const [conformDialog, setConformDialog] = useState({
 		isOpenDialog: false,
@@ -21,29 +24,21 @@ const InfoRoomModal = (props) => {
 
 	const role = useSelector((state) => state.auth.user.roles);
 	const bookings = useSelector((state) => state.bookingReducer.bookings);
-
-	const dispatch = useDispatch();
+	const convenienceList = useSelector((state) => state.convenience.conveniences);
+	const typesList = useSelector((state) => state.types.types);
 
 	const booking = bookings.filter((item) =>
-		item.rooms.find((room) => room.roomNumber === roomNumber && room.status === 'OCCUPIED')
+		item.rooms.find((room) => room.room === _id && status === RoomStatus.Occupied.name)
 	);
 
-	const getBooking = booking.filter((item) => item.status === 'CHECK IN');
+	const getBooking = booking.filter((item) => item.status === BookingStatus.checkIn.name);
 
 	const renderTable = getBooking.map((item) => {
-		const {
-			code,
-			customer,
-			services,
-			checkInDate,
-			checkOutDate,
-			deposit,
-			serviceCharge,
-			totalPrice,
-		} = item;
+		const { code, customer, services, rooms, deposit, serviceCharge, totalPrice } = item;
 
-		const checkInDateConvert = convertStringToDate(checkInDate);
-		const checkOutDateConvert = convertStringToDate(checkOutDate);
+		const roomSelected = rooms.find((r) => r.room === _id);
+		const checkInDateConvert = convertStringToDate(roomSelected.checkInDate);
+		const checkOutDateConvert = convertStringToDate(roomSelected.checkOutDate);
 
 		return (
 			<Form key={item._id}>
@@ -69,6 +64,7 @@ const InfoRoomModal = (props) => {
 						</FloatingLabel>
 					</Col>
 				</Row>
+
 				<Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 					<Form.Group controlId='formGridCustomer'>
 						<h5>Customer</h5>
@@ -98,12 +94,14 @@ const InfoRoomModal = (props) => {
 	const handlerDelete = (id) => {
 		dispatch(deleteRoom(id));
 	};
+
 	return (
 		<>
 			<Modal
 				show={show}
 				onHide={handlerModalClose}
 				size={booking.length > 0 && 'lg'}
+				dialogClassName='modal-50w'
 				animation={false}
 			>
 				<Modal.Header closeButton>
@@ -111,21 +109,76 @@ const InfoRoomModal = (props) => {
 				</Modal.Header>
 				<Modal.Body>
 					<Row>
-						<Col>
-							<FloatingLabel controlId='floatingRoomType' label='RoomType' className='mb-3'>
-								<Form.Control type='text' value={roomType} disabled />
-							</FloatingLabel>
-						</Col>
-						<Col>
-							<FloatingLabel controlId='floatingPrice' label='Price (USD)' className='mb-3'>
-								<Form.Control type='text' value={price} disabled />
-							</FloatingLabel>
-						</Col>
+						<Form.Group className='col-6 mb-3' controlId='formBasicPrice'>
+							<Form.Label>Price(USD)</Form.Label>
+							<Form.Control
+								type='number'
+								placeholder='0'
+								name='price'
+								value={price || ''}
+								required
+								disabled
+							/>
+						</Form.Group>
+						<Form.Group className='col-3 mb-3' controlId='formBasicAdult'>
+							<Form.Label>Adult</Form.Label>
+							<Form.Control
+								type='number'
+								placeholder='0'
+								name='adult'
+								value={capacity.adult > 0 ? capacity.adult : 1 || 1}
+								required
+								disabled
+							/>
+						</Form.Group>
+						<Form.Group className='col-3 mb-3' controlId='formBasicChildren'>
+							<Form.Label>Children</Form.Label>
+							<Form.Control
+								type='number'
+								placeholder='0'
+								name='child'
+								value={capacity.child > -1 ? capacity.child : 0 || 0}
+								required
+								disabled
+							/>
+						</Form.Group>
 					</Row>
+					<Form.Group className='mb-3' controlId='formBasicType'>
+						<Form.Label>Types</Form.Label>
+						<Select
+							isMulti
+							name='types'
+							options={typesList}
+							defaultValue={typesList.filter((x) => {
+								if (roomType.findIndex((item) => item._id === x._id) > -1) return x;
+							})}
+							getOptionLabel={(option) => option.nameTag}
+							getOptionValue={(option) => option._id}
+							className='basic-multi-select'
+							classNamePrefix='select type'
+							isDisabled
+						/>
+					</Form.Group>
+					<Form.Group className='mb-3' controlId='formBasicConvenience'>
+						<Form.Label>Convenience</Form.Label>
+						<Select
+							isMulti
+							name='convenience'
+							options={convenienceList}
+							defaultValue={convenienceList.filter((x) => {
+								if (convenience.findIndex((item) => item._id === x._id) > -1) return x;
+							})}
+							getOptionLabel={(option) => option.name}
+							getOptionValue={(option) => option._id}
+							className='basic-multi-select'
+							classNamePrefix='select convenience'
+							isDisabled
+						/>
+					</Form.Group>
 					{booking.length > 0 && renderTable}
 				</Modal.Body>
 				<Modal.Footer>
-					{role !== 'EMPLOYEE' && (
+					{role !== userRoles.Employee.name && (
 						<>
 							<Button variant='outline-warning' onClick={() => setIsOpenEditModal(true)}>
 								Edit
@@ -136,7 +189,7 @@ const InfoRoomModal = (props) => {
 									setConformDialog({
 										isOpenDialog: true,
 										title: 'Delete room',
-										message: 'Are you sure delete this record?',
+										message: 'Are you sure delete this room?',
 										onConform: () => handlerDelete(_id),
 									})
 								}

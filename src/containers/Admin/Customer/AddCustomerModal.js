@@ -7,38 +7,38 @@ import {
 	IdNumberValidation,
 	emailValidation,
 	nameValidation,
+	numberValidation,
 	textValidation,
 } from '../../../utils/validation';
+import { customerDefault } from '../../../assets/app/constants';
 
 const AddCustomerModal = (props) => {
 	const { show, handlerModalClose } = props;
 	const dispatch = useDispatch();
 
-	const [newCustomer, setNewCustomer] = useState({
-		name: '',
-		email: '',
-		phone: '',
-		address: '',
-		cmnd: '',
-		gender: '',
-		birthDate: '',
-		note: '',
-	});
+	const [newCustomer, setNewCustomer] = useState({ ...customerDefault });
 	const onChangeNewForm = (event) =>
 		setNewCustomer({
 			...newCustomer,
 			[event.target.name]: event.target.value,
 		});
-
+	const onChangeNumberOfPeople = (event) => {
+		let newNumberOfPeople = {
+			...newCustomer.numberOfPeople,
+			[event.target.name]: event.target.value,
+		};
+		setNewCustomer({ ...newCustomer, numberOfPeople: newNumberOfPeople });
+	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (
 			nameValidation(newCustomer.name) &&
 			emailValidation(newCustomer.email) &&
 			phoneValidation(newCustomer.phone) &&
-			IdNumberValidation(newCustomer.cmnd) &&
+			IdNumberValidation(newCustomer.idNumber) &&
 			textValidation(newCustomer.address) &&
-			textValidation(newCustomer.note)
+			numberValidation(newCustomer.numberOfPeople.adult) &&
+			numberValidation(newCustomer.numberOfPeople.child)
 		) {
 			dispatch(addCustomer(newCustomer));
 			resetAddPostData();
@@ -46,20 +46,11 @@ const AddCustomerModal = (props) => {
 	};
 
 	const resetAddPostData = () => {
-		setNewCustomer({
-			name: '',
-			email: '',
-			phone: '',
-			address: '',
-			cmnd: '',
-			gender: '',
-			birthDate: '',
-			note: '',
-		});
+		setNewCustomer(customerDefault);
 		handlerModalClose();
 	};
 
-	const { name, email, phone, address, cmnd, gender, birthDate, note } = newCustomer;
+	const { name, email, phone, address, idNumber, numberOfPeople } = newCustomer;
 	return (
 		<>
 			<Modal show={show} onHide={resetAddPostData} animation={false}>
@@ -81,7 +72,7 @@ const AddCustomerModal = (props) => {
 						<FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
 							<Form.Control
 								type='text'
-								placeholder='email'
+								placeholder='Email'
 								name='email'
 								value={email || ''}
 								onChange={onChangeNewForm}
@@ -103,12 +94,12 @@ const AddCustomerModal = (props) => {
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel controlId='floatingCmnd' label='Id Number' className='mb-3'>
+								<FloatingLabel controlId='floatingIdNumber' label='Id Number' className='mb-3'>
 									<Form.Control
 										type='text'
 										placeholder='Id Number'
-										name='cmnd'
-										value={cmnd || ''}
+										name='idNumber'
+										value={idNumber || ''}
 										onChange={onChangeNewForm}
 										required
 									/>
@@ -117,22 +108,27 @@ const AddCustomerModal = (props) => {
 						</Row>
 						<Row>
 							<Col>
-								<FloatingLabel controlId='floatingBirthDate' label='Date of birth' className='mb-3'>
+								<FloatingLabel controlId='floatingAdult' label='Adult' className='mb-3'>
 									<Form.Control
-										type='date'
-										name='birthDate'
-										value={birthDate || ''}
-										onChange={onChangeNewForm}
+										type='number'
+										placeholder='Adult'
+										name='adult'
+										value={numberOfPeople?.adult > 0 ? numberOfPeople.adult : 0}
+										onChange={onChangeNumberOfPeople}
+										required
 									/>
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel controlId='floatingGender' label='Gender' className='mb-3'>
-									<Form.Select name='gender' value={gender || ''} onChange={onChangeNewForm}>
-										<option>--</option>
-										<option value='male'>Male</option>
-										<option value='female'>Female</option>
-									</Form.Select>
+								<FloatingLabel controlId='floatingChild' label='Child' className='mb-3'>
+									<Form.Control
+										type='number'
+										placeholder='Child'
+										name='child'
+										value={numberOfPeople?.child > 0 ? numberOfPeople.child : 0}
+										onChange={onChangeNumberOfPeople}
+										required
+									/>
 								</FloatingLabel>
 							</Col>
 						</Row>
@@ -142,16 +138,6 @@ const AddCustomerModal = (props) => {
 								name='address'
 								placeholder='Address'
 								value={address || ''}
-								onChange={onChangeNewForm}
-								required
-							/>
-						</FloatingLabel>
-						<FloatingLabel controlId='floatingNote' label='Note' className='mb-3'>
-							<Form.Control
-								as='textarea'
-								name='note'
-								placeholder='Note'
-								value={note || ''}
 								onChange={onChangeNewForm}
 								required
 							/>

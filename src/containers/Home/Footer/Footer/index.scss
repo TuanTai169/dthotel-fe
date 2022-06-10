@@ -4,6 +4,7 @@
 .footer {
 	padding-top: 5vh;
 	width: 100%;
+	bottom: 0;
 	background-color: $dark-blue;
 	color: $white;
 	font-family: $Montserrat;
@@ -11,7 +12,8 @@
 	&__container {
 		width: 100%;
 		display: inline-flex;
-		justify-content: center;
+		justify-content: space-around;
+		align-items: center;
 
 		&__img {
 			width: 4vw;

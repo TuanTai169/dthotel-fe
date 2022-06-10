@@ -36,10 +36,16 @@ const roomReducer = (state = initialState, action) => {
 			};
 
 		case types.UPDATE_ROOM:
+		case types.UPLOAD_IMAGE:
 			const newRooms = state.rooms.map((room) => (room._id === payload._id ? payload : room));
 			return {
 				...state,
 				rooms: newRooms,
+			};
+		case types.CHECK_AVAILABLE:
+			return {
+				...state,
+				rooms: payload,
 			};
 		case types.FIND_ROOM:
 			return {

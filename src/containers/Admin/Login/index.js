@@ -36,6 +36,7 @@ const Login = () => {
 						name='email'
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
+						autoComplete={'off'}
 						required
 					/>
 				</FloatingLabel>
@@ -46,6 +47,7 @@ const Login = () => {
 						name='password'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
+						autoComplete={'current-password'}
 						required
 					/>
 					<span className='password-toggle-icon'>{toggleIcon}</span>
@@ -54,10 +56,10 @@ const Login = () => {
 				<Button className='login-btn-submit' type='submit'>
 					Login
 				</Button>
-				<div style={{ marginTop: '12px' }}>
-					<Link to='/forgot_password'>Forgot your password?</Link>
-				</div>
 			</Form>
+			<div style={{ marginTop: '12px' }}>
+				<Link to='/admin/forgot-password'>Forgot your password?</Link>
+			</div>
 		</div>
 	);
 };
