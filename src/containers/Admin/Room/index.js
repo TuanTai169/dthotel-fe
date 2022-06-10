@@ -135,15 +135,23 @@ const Rooms = () => {
 										Add Room
 									</Button>
 								)}
-								{/* <ViewAllBookingModal
-									show={isOpenBookingModal}
-									handlerModalClose={handlerCloseBookingModal}
-								/> */}
-								<AddRoomModal show={isOpenAddModal} handlerModalClose={handlerCloseAddModal} />
-								<ReservationCalendar
-									show={isOpenStatusRoomModal}
-									handlerModalClose={handlerCloseStatusRoomModal}
-								/>
+								{isOpenBookingModal && (
+									<ViewAllBookingModal
+										show={isOpenBookingModal}
+										handlerModalClose={handlerCloseBookingModal}
+									/>
+								)}
+
+								{isOpenAddModal && (
+									<AddRoomModal show={isOpenAddModal} handlerModalClose={handlerCloseAddModal} />
+								)}
+
+								{isOpenStatusRoomModal && (
+									<ReservationCalendar
+										show={isOpenStatusRoomModal}
+										handlerModalClose={handlerCloseStatusRoomModal}
+									/>
+								)}
 							</ButtonToolbar>
 						</div>
 					</div>

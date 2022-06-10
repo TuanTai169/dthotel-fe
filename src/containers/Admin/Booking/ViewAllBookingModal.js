@@ -17,7 +17,7 @@ const ViewAllBookingModal = (props) => {
 	const [limit, setLimit] = useState(6);
 	const [sorting, setSorting] = useState({ field: '', order: '' });
 	const [search, setSearch] = useState('');
-	const [bookingType, setBookingType] = useState('BOTH');
+	const [bookingType, setBookingType] = useState('Both');
 
 	const dispatch = useDispatch();
 
@@ -26,7 +26,10 @@ const ViewAllBookingModal = (props) => {
 	const isBookingLoading = useSelector((state) => state.bookingReducer.isBookingLoading);
 	const receipts = useSelector((state) => state.receiptReducer.receipts);
 
-	useEffect(() => dispatch(getAllRoom()), [dispatch, bookings, receipts]);
+	useEffect(() => {
+		dispatch(getAllRoom());
+		return () => {};
+	}, [dispatch, bookings, receipts]);
 
 	//Header table
 	const headers = [
@@ -43,7 +46,7 @@ const ViewAllBookingModal = (props) => {
 	const currentData = useMemo(() => {
 		let computedBookings = [...bookings]
 			.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
-			.filter((item) => (bookingType === 'BOTH' ? true : item.status === bookingType));
+			.filter((item) => (bookingType === 'Both' ? true : item.status === bookingType));
 
 		if (search) {
 			computedBookings = computedBookings.filter((booking) =>
@@ -76,7 +79,12 @@ const ViewAllBookingModal = (props) => {
 			{isBookingLoading ? (
 				<FullLoading />
 			) : (
-				<Modal show={show} onHide={handlerModalClose} animation={false} dialogClassName='modal-80w'>
+				<Modal
+					show={show}
+					onHide={handlerModalClose}
+					animation={false}
+					dialogClassName='modal-80w admin-modal'
+				>
 					<Modal.Header closeButton>
 						<Modal.Title style={{ width: '30%' }}>LIST BOOKING/CHECK IN</Modal.Title>
 						<div
@@ -93,9 +101,9 @@ const ViewAllBookingModal = (props) => {
 									<option className='d-none' value=''>
 										Select Type...
 									</option>
-									<option value='BOTH'>BOTH</option>
-									<option value='BOOKING'>BOOKING</option>
-									<option value='CHECK IN'>CHECK IN</option>
+									<option value='Both'>BOTH</option>
+									<option value='Booking'>BOOKING</option>
+									<option value='Check In'>CHECK IN</option>
 								</Form.Control>
 							</FloatingLabel>
 						</div>

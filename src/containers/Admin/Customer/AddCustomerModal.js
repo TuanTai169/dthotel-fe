@@ -53,7 +53,7 @@ const AddCustomerModal = (props) => {
 	const { name, email, phone, address, idNumber, numberOfPeople } = newCustomer;
 	return (
 		<>
-			<Modal show={show} onHide={resetAddPostData} animation={false}>
+			<Modal show={show} onHide={resetAddPostData} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Add Customer</Modal.Title>
 				</Modal.Header>

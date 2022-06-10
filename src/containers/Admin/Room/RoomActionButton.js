@@ -3,8 +3,7 @@ import { ButtonToolbar, Button } from 'react-bootstrap';
 import { changeStatusRoom } from '../../../redux/actions/room';
 import { useDispatch } from 'react-redux';
 import BookingModal from '../Booking/BookingModal';
-import CheckInModal from '../Booking/CheckInModal';
-import ViewAllRoomModal from './ViewAllRoomModal';
+
 import DialogChange from '../../../components/Dialog/DialogChange';
 import CheckOutModal from '../Receipt/CheckOutModal';
 import { RoomStatus } from '../../../assets/app/constants';
@@ -15,7 +14,6 @@ const RoomActionButton = (props) => {
 	const { room, handlerModalClose, booking } = props;
 
 	const [isOpenBooking, setIsOpenBooking] = useState(false);
-	const [isOpenCheckIn, setIsOpenCheckIn] = useState(false);
 	const [isOpenCheckOut, setIsOpenCheckOut] = useState(false);
 	const [isOpenViewRoom, setIsOpenViewRoom] = useState(false);
 
@@ -28,7 +26,6 @@ const RoomActionButton = (props) => {
 	const [statusBooking, setStatusBooking] = useState('book');
 
 	const handlerCloseBookingModal = () => setIsOpenBooking(false);
-	const handlerCloseCheckInModal = () => setIsOpenCheckIn(false);
 	const handlerCloseCheckOutModal = () => setIsOpenCheckOut(false);
 	const handlerCloseViewRoomModal = () => setIsOpenViewRoom(false);
 
@@ -90,13 +87,15 @@ const RoomActionButton = (props) => {
 							<i className='bx bxs-user-x'></i>
 							<span>&ensp;Booking</span>
 						</Button>
-						<BookingModal
-							show={isOpenBooking}
-							handlerModalClose={handlerCloseBookingModal}
-							currentRoom={room}
-							handlerParentModalClose={handlerModalClose}
-							status={statusBooking}
-						/>
+						{isOpenBooking && (
+							<BookingModal
+								show={isOpenBooking}
+								handlerModalClose={handlerCloseBookingModal}
+								currentRoom={room}
+								handlerParentModalClose={handlerModalClose}
+								status={statusBooking}
+							/>
+						)}
 					</>
 				)}
 
@@ -116,13 +115,16 @@ const RoomActionButton = (props) => {
 								<i className='bx bxs-user-check'></i>
 								<span>&ensp;Check in</span>
 							</Button>
-							<BookingModal
-								show={isOpenBooking}
-								handlerModalClose={handlerCloseBookingModal}
-								currentRoom={room}
-								handlerParentModalClose={handlerModalClose}
-								status={statusBooking}
-							/>
+							{isOpenBooking && (
+								<BookingModal
+									show={isOpenBooking}
+									handlerModalClose={handlerCloseBookingModal}
+									currentRoom={room}
+									handlerParentModalClose={handlerModalClose}
+									status={statusBooking}
+								/>
+							)}
+
 							{/* <CheckInModal
 								show={isOpenCheckIn}
 								handlerModalClose={handlerCloseCheckInModal}
@@ -161,22 +163,27 @@ const RoomActionButton = (props) => {
 							<i className='bx bxs-magic-wand'></i>
 							<span>&ensp;Check out</span>
 						</Button>
-						<CheckOutModal
-							show={isOpenCheckOut}
-							handlerModalClose={handlerCloseCheckOutModal}
-							handlerParentModalClose={handlerModalClose}
-							booking={booking}
-						/>
+						{isOpenCheckOut && (
+							<CheckOutModal
+								show={isOpenCheckOut}
+								handlerModalClose={handlerCloseCheckOutModal}
+								handlerParentModalClose={handlerModalClose}
+								booking={booking}
+							/>
+						)}
 					</>
 				)}
 
-				<ViewAllRoomModal
-					show={isOpenViewRoom}
-					handlerModalClose={handlerCloseViewRoomModal}
-					roomChoose={room}
-					bookingId={bookingId.toString()}
-					handlerParentModalClose={handlerModalClose}
-				/>
+				{isOpenViewRoom && (
+					<ViewAllRoomModal
+						show={isOpenViewRoom}
+						handlerModalClose={handlerCloseViewRoomModal}
+						roomChoose={room}
+						bookingId={bookingId.toString()}
+						handlerParentModalClose={handlerModalClose}
+					/>
+				)}
+
 				<DialogChange conformDialog={conformDialog} setConformDialog={setConformDialog} />
 			</ButtonToolbar>
 		</>

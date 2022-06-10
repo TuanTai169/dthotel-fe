@@ -8,6 +8,7 @@ import userReducer from './user';
 import receiptReducer from './receipt';
 import typeReducer from './typeOfRoom';
 import convenienceReducer from './convenience';
+import couponReducer from './coupon';
 
 import { combineReducers } from 'redux';
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
 	receiptReducer,
 	types: typeReducer,
 	convenience: convenienceReducer,
+	couponReducer,
 	auth: authReducer,
 });
 
