@@ -61,8 +61,9 @@ const BookingPage = () => {
 			deposit: parseFloat((totalPrice * 1.1 * 0.5).toFixed(2)),
 			discount: null,
 		};
+
 		setData(data);
-		setIsShowModal(true);
+		// setIsShowModal(true);
 	};
 	const onChangeInputCustomer = (e) => {
 		const dataChange = { [e.target.name]: e.target.value };
