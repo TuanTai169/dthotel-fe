@@ -1,9 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-import ScrollToTop from 'react-scroll-to-top';
 import { Link } from 'react-router-dom';
-import Navbar from './../Navbar/Navbar';
-import Footer from './../Footer/Footer';
 import './index.scss';
 
 const index = () => {
@@ -20,8 +17,6 @@ const index = () => {
 	};
 	return (
 		<div>
-			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a' }} />
-			<Navbar />
 			<section className='header'>
 				<div className='header__title'>Service</div>
 			</section>
@@ -136,7 +131,6 @@ const index = () => {
 					</div>
 				</div>
 			</section>
-			<Footer />
 		</div>
 	);
 };
