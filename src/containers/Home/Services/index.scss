@@ -1,0 +1,189 @@
+@import './../styles/variables';
+@import './../styles/mixin';
+
+.container {
+	padding: 1.5vw 4vw 1.5vw 4vw;
+	width: 100%;
+
+	&__item {
+		margin: auto;
+		width: 65vw;
+		height: 40vw;
+	}
+}
+
+.header {
+	// border-bottom: solid 0.3vh $main-text-color;
+}
+
+.body {
+	width: 100%;
+
+	&__slider {
+		padding: 4vw 0;
+		background-color: $main-bg-color;
+	}
+
+	&__title {
+		text-align: center;
+		width: 100%;
+		margin: 0;
+		color: $main-bg-color;
+
+		&__0 {
+			width: fit-content;
+			margin: 4vw auto 0;
+			padding: 1vw 0;
+			font-size: 1.5vw;
+			font-weight: 600;
+			border-bottom: solid 0.2vw $main-bg-color;
+			border-top: solid 0.2vw $main-bg-color;
+		}
+
+		&__1 {
+			margin: 0;
+			padding: 4vw 0 0 0;
+		}
+
+		&__2 {
+			margin: 0;
+			padding: 2vw 0;
+			font-weight: 800;
+			font-size: 4vw;
+			// color: $main-text-color;
+		}
+	}
+
+	&__container {
+		padding: 4vw 0;
+		display: flex;
+		flex-direction: row;
+		margin: auto;
+		width: 90%;
+		justify-content: space-around;
+
+		&__card {
+			width: 28%;
+			height: 58vh;
+			color: white;
+			border: solid 0.5vh $main-text-color;
+			border-radius: 1.3vw;
+
+			&__1,
+			&__2,
+			&__3 {
+				height: 100%;
+				-webkit-border-radius: 1vw;
+				-moz-border-radius: 1vw;
+				border-radius: 1vw;
+			}
+
+			&__info {
+				height: 100%;
+				text-align: center;
+				padding: 0 0.3vw;
+				display: flex;
+				flex-direction: column;
+				justify-content: top;
+				color: rgba($color: #fff, $alpha: 0);
+				transition: 0.5s;
+				animation: ease-in-out;
+				background-size: cover;
+				background-repeat: no-repeat;
+				-webkit-border-radius: 1vw;
+				-moz-border-radius: 1vw;
+				border-radius: 1vw;
+
+				&:hover {
+					padding-top: 45%;
+					color: rgba($main-text-color, $alpha: 1);
+					background: linear-gradient(
+						rgba($main-bg-color, $alpha: 0),
+						rgba($main-bg-color, $alpha: 1)
+					);
+				}
+			}
+
+			&__1 {
+				background-image: url('https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/11/Spa-chinh.jpg');
+			}
+
+			&__2 {
+				background-image: url('https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/spa2.png');
+			}
+
+			&__3 {
+				background-image: url('https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/spa3.png');
+			}
+		}
+	}
+
+	&__service {
+		padding: 4vw 0;
+		width: 100%;
+		height: fit-content;
+
+		&__content {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 5vw;
+
+			&__image {
+				width: 40vw;
+				height: fit-content;
+			}
+
+			&__description {
+				width: 45vw;
+				text-align: justify;
+				font-size: 1.5vw;
+
+				h2 {
+					width: fit-content;
+					margin-bottom: 1vw;
+					padding-left: 2vw;
+					font-weight: 400;
+					font-size: 3vw;
+					border-left: solid 1vw $main-text-color;
+				}
+
+				p {
+					padding-bottom: 1vw;
+				}
+			}
+		}
+	}
+
+	&__button {
+		width: 100%;
+		height: fit-content;
+		position: relative;
+
+		img {
+			width: 100%;
+			z-index: -1;
+		}
+
+		&__title {
+			width: fit-content;
+			position: absolute;
+			top: 30%;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 4vw;
+			font-weight: 800;
+			color: $main-bg-color;
+		}
+
+		&__link {
+			width: 30vw;
+			height: 6vw;
+			position: absolute;
+			top: 55%;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 3vw;
+		}
+	}
+}
