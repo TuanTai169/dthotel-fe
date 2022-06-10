@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonToolbar, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import lodash from 'lodash';
 
+import { RoomStatus } from '../../../assets/app/constanst';
 import RoomItem from './RoomItem';
 import AddRoomModal from './AddRoomModal';
 import ViewAllBookingModal from '../Booking/ViewAllBookingModal';
@@ -31,7 +32,7 @@ const Rooms = () => {
 	const arrayRoom = Object.values(roomGroupedByFloor);
 	const arrayStatusRoom = Object.entries(roomGroupedByStatus);
 
-	const statusArray = arrayStatusRoom.filter((item) => item[0] !== 'BOOKING');
+	const statusArray = arrayStatusRoom.filter((item) => item[0] !== RoomStatus.Booking.name);
 
 	//Close Add Modal
 	const handlerCloseAddModal = () => setIsOpenAddModal(false);
@@ -68,15 +69,7 @@ const Rooms = () => {
 									overlay={<Tooltip id='tooltip-disabled'>{item[0]}</Tooltip>}
 								>
 									<Button
-										variant={
-											item[0] === 'OCCUPIED'
-												? 'outline-primary'
-												: item[0] === 'CLEANING'
-												? 'outline-danger'
-												: item[0] === 'FIXING'
-												? 'outline-secondary'
-												: 'outline-success'
-										}
+										variant={RoomStatus[item[0]].variant}
 										key={index}
 										style={{
 											marginLeft: '16px',
@@ -84,11 +77,7 @@ const Rooms = () => {
 											fontSize: '18px',
 										}}
 									>
-										{item[0] === 'READY' && <i className='bx bxs-check-circle'></i>}
-										{item[0] === 'OCCUPIED' && <i className='bx bxs-user-check'></i>}
-										{item[0] === 'CLEANING' && <i className='bx bxs-magic-wand'></i>}
-										{item[0] === 'FIXING' && <i className='bx bxs-edit'></i>}
-
+										<i className={RoomStatus[item[0]].className}></i>
 										{item[1].length}
 									</Button>
 								</OverlayTrigger>
@@ -146,10 +135,10 @@ const Rooms = () => {
 										Add Room
 									</Button>
 								)}
-								<ViewAllBookingModal
+								{/* <ViewAllBookingModal
 									show={isOpenBookingModal}
 									handlerModalClose={handlerCloseBookingModal}
-								/>
+								/> */}
 								<AddRoomModal show={isOpenAddModal} handlerModalClose={handlerCloseAddModal} />
 								<ReservationCalendar
 									show={isOpenStatusRoomModal}

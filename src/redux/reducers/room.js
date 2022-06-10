@@ -36,6 +36,7 @@ const roomReducer = (state = initialState, action) => {
 			};
 
 		case types.UPDATE_ROOM:
+		case types.UPLOAD_IMAGE:
 			const newRooms = state.rooms.map((room) => (room._id === payload._id ? payload : room));
 			return {
 				...state,
