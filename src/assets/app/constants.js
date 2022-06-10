@@ -71,6 +71,15 @@ module.exports = {
 		src: 'https://drive.google.com/thumbnail?id=1wssym_RCzfAETooYk690s0mlcAv_CVhw',
 		alt: 'default-img',
 	},
+	imagePayPal: {
+		src: 'https://drive.google.com/thumbnail?id=1Szl4kHiJKfAeWNe8TLVOqCGMi3BK42AS',
+		alt: 'paypal-img',
+	},
+	imageVNPay: {
+		src: 'https://drive.google.com/thumbnail?id=1U_g_-i0t-iOjnIZ8UIXKvFxI3rAcOOBK',
+		alt: 'vnpay-img',
+	},
+
 	capacityDefault: {
 		adult: 1,
 		child: 0,

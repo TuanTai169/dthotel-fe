@@ -156,3 +156,24 @@ export const uploadImage = (id, formData) => {
 		}
 	};
 };
+
+export const checkAvailable = (data) => {
+	return async (dispatch) => {
+		try {
+			dispatch({ type: types.SET_ROOM_LOADING, payload: true });
+			const response = await axios.post(`${HOST_API_URL}/room/check-available`, data);
+			if (response.data.success) {
+				dispatch({
+					type: types.CHECK_AVAILABLE,
+					payload: response.data.listRoom,
+				});
+				dispatch({ type: types.SET_ROOM_LOADING, payload: false });
+				toast.success(response.data.message);
+			}
+		} catch (error) {
+			console.log(error);
+			dispatch({ type: types.SET_ROOM_LOADING, payload: false });
+			error.response && toast.error(error.response.data.message);
+		}
+	};
+};

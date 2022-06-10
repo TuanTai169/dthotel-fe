@@ -10,15 +10,15 @@ import {
 	nameValidation,
 	textValidation,
 } from '../../../utils/validation';
-import { userDefault, userRoles } from '../../../assets/app/constanst';
+import { userDefault, userRoles } from '../../../assets/app/constants';
 
 const AddUserModal = (props) => {
 	const { show, handlerModalClose } = props;
 	const dispatch = useDispatch();
-	const currentRole = useSelector((state) => state.auth.user.roles);
+	const currentRole = useSelector((state) => state.auth.user.role);
 
 	const [inputType, toggleIcon] = usePasswordToggle();
-	const [newUser, setNewUser] = useState(userDefault);
+	const [newUser, setNewUser] = useState({ ...userDefault });
 
 	const onChangeNewForm = (event) =>
 		setNewUser({
@@ -105,12 +105,14 @@ const AddUserModal = (props) => {
 							<Col>
 								<FloatingLabel controlId='floatingRole' label='Role' className='mb-3'>
 									<Form.Select name='role' value={role || ''} onChange={onChangeNewForm} required>
-										<option value=''>--</option>
+										<option value='' hidden>
+											---
+										</option>
 										{currentRole === userRoles.Admin.name && (
 											<option value={userRoles.Admin.name}>{userRoles.Admin.name}</option>
 										)}
-										<option value={userRoles.Manager.name}>{userRoles.Manager.name}</option>
-										<option value={userRoles.Employee.name}>{userRoles.Employee.name}</option>
+										{/* <option value={userRoles?.Manager.name}>{userRoles.Manager.name}</option>
+										<option value={userRoles?.Employee.name}>{userRoles.Employee.name}</option> */}
 									</Form.Select>
 								</FloatingLabel>
 							</Col>

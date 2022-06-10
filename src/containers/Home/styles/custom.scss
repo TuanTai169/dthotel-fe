@@ -1,0 +1,53 @@
+@import './../styles/variables';
+
+.format-default {
+	color: $main-text-color;
+	background-color: $main-bg-color;
+}
+.format-home {
+	@extend .format-default;
+	border: none;
+	border-bottom: 2px solid $main-text-color;
+}
+.btn-home {
+	padding: 10px 20px;
+	border: 3px solid $main-text-color;
+	border-radius: 8px;
+	color: $main-text-color;
+	background-color: $main-bg-color;
+	cursor: pointer;
+
+	&:hover {
+		color: $main-bg-color;
+		background-color: $main-text-color;
+		font-weight: 500;
+	}
+	&:disabled {
+		opacity: 0.7;
+		color: $main-text-color;
+		cursor: not-allowed;
+		&:hover {
+			background-color: transparent;
+		}
+	}
+}
+
+.select-home {
+	@extend .format-home;
+	padding: 8px;
+	color: #fff;
+}
+
+.input-text-home {
+	@extend .format-home;
+	color: #fff;
+
+	&:focus {
+		color: #fff;
+		background-color: $main-bg-color;
+	}
+	&:disabled {
+		color: #fff;
+		background-color: $main-bg-color;
+	}
+}

@@ -1,9 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-import ScrollToTop from 'react-scroll-to-top';
 import { Link } from 'react-router-dom';
-import Navbar from './../Navbar/Navbar';
-import Footer from './../Footer/Footer';
 import './index.scss';
 
 const index = () => {
@@ -20,12 +17,6 @@ const index = () => {
 	};
 	return (
 		<div>
-			<ScrollToTop
-				smooth
-				color='$dark-blue'
-				style={{ backgroundColor: '#ffce6a' }}
-			/>
-			<Navbar />
 			<section className='header'>
 				<div className='header__title'>Service</div>
 			</section>
@@ -67,18 +58,12 @@ const index = () => {
 					</div>
 				</div>
 				<div className='body__title'>
-					<p className='body__title__0'>
-						Recover yourself at Zen Spa
-					</p>
+					<p className='body__title__0'>Recover yourself at Zen Spa</p>
 					<h2 className='body__title__1'>
-						Swiss-Belresort Zen Spa will take care and
-						regenerate energy for your body.
+						Swiss-Belresort Zen Spa will take care and regenerate energy for your body.
 					</h2>
 					<h1 className='body__title__2'>
-						Spa of{' '}
-						<span style={{ color: '#ffce6a' }}>
-							Swiss-Belresort Tuyen Lam
-						</span>
+						Spa of <span style={{ color: '#ffce6a' }}>Swiss-Belresort Tuyen Lam</span>
 					</h1>
 				</div>
 				<div className='body__container'>
@@ -86,10 +71,7 @@ const index = () => {
 						<div className='body__container__card__1'>
 							<div className='body__container__card__info'>
 								<h3 className='title'>Body Treatment</h3>
-								<p className='description'>
-									We have therapies to regenerate and
-									restore your body
-								</p>
+								<p className='description'>We have therapies to regenerate and restore your body</p>
 							</div>
 						</div>
 					</div>
@@ -98,8 +80,8 @@ const index = () => {
 							<div className='body__container__card__info'>
 								<h3 className='title'>Facial Treatment</h3>
 								<p className='description'>
-									Take care of your beauty with its natural
-									materials, technical and modern facilities
+									Take care of your beauty with its natural materials, technical and modern
+									facilities
 								</p>
 							</div>
 						</div>
@@ -107,14 +89,10 @@ const index = () => {
 					<div className='body__container__card'>
 						<div className='body__container__card__3'>
 							<div className='body__container__card__info'>
-								<h3 className='title'>
-									Sauna & Steam bath
-								</h3>
+								<h3 className='title'>Sauna & Steam bath</h3>
 								<p className='description'>
-									Saunas are considered a great help in
-									health care and protection. We have a dry
-									and wet bathroom in two separate areas for
-									men and women.
+									Saunas are considered a great help in health care and protection. We have a dry
+									and wet bathroom in two separate areas for men and women.
 								</p>
 							</div>
 						</div>
@@ -131,15 +109,13 @@ const index = () => {
 						<div className='body__service__content__description'>
 							<h2 className='first'>Comfort Anbience</h2>
 							<p>
-								The first step into the Zen Spa, customer
-								will feel like step into another world with
-								yellow light, relaxing herbal aroma and
-								splendid space as Europe Catsle's smell.
+								The first step into the Zen Spa, customer will feel like step into another world
+								with yellow light, relaxing herbal aroma and splendid space as Europe Catsle's
+								smell.
 							</p>
 							<h2 className='second'>Sauna Steam Bath</h2>
 							<p>
-								Zen Spa has private space to pamper your
-								body with massage roo, sauna, jacuzzi, bath
+								Zen Spa has private space to pamper your body with massage roo, sauna, jacuzzi, bath
 								room, gym, swimming pool ...
 							</p>
 						</div>
@@ -147,20 +123,14 @@ const index = () => {
 				</div>
 				<div className='body__button'>
 					<img src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/bg_care_spa.jpg' />
-					<h2 className='body__button__title'>
-						Treat your a Spa-cation
-					</h2>
+					<h2 className='body__button__title'>Treat your a Spa-cation</h2>
 					<div>
-						<Link
-							className='body__button__link'
-							to='/rooms'
-						>
+						<Link className='body__button__link' to='/rooms'>
 							Book now
 						</Link>
 					</div>
 				</div>
 			</section>
-			<Footer />
 		</div>
 	);
 };

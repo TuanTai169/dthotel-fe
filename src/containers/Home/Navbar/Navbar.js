@@ -12,41 +12,25 @@ const Navbar = () => {
 					<nav className='header__nav__content'>
 						<ul className='header__nav__content__items'>
 							<li>
-								<Link
-									className='header__nav__content__items__link'
-									to='/'
-								>
+								<Link className='header__nav__content__items__link' to='/'>
 									HOME
 								</Link>
 							</li>
 							<li>
-								<Link
-									className='header__nav__content__items__link'
-									to='/rooms'
-								>
+								<Link className='header__nav__content__items__link' to='/rooms'>
 									ROOMS
 								</Link>
 							</li>
 							<li>
-								<img
-									src={logo}
-									alt='Swiss Logo'
-									className='header__nav__content__items__logo'
-								/>
+								<img src={logo} alt='Swiss Logo' className='header__nav__content__items__logo' />
 							</li>
 							<li>
-								<Link
-									className='header__nav__content__items__link'
-									to='/services'
-								>
+								<Link className='header__nav__content__items__link' to='/services'>
 									SERVICES
 								</Link>
 							</li>
 							<li>
-								<Link
-									className='header__nav__content__items__link'
-									to='/about-us'
-								>
+								<Link className='header__nav__content__items__link' to='/about-us'>
 									ABOUT US
 								</Link>
 							</li>
