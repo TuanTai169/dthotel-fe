@@ -1,0 +1,175 @@
+@import './../styles/variables';
+
+* {
+	font-family: $Montserrat;
+}
+
+.abbody {
+	width: 100%;
+
+	&__special {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		padding: 4vw;
+		justify-content: space-between;
+
+		&__item {
+			width: 31%;
+			font-family: $Montserrat;
+			text-align: justify;
+
+			img {
+				margin-bottom: 1vw;
+			}
+
+			h1 {
+				font-size: 1.8vw;
+				color: $main-text-color;
+				padding-left: 1vw;
+				border-left: solid 1vw $main-text-color;
+			}
+
+			h3,
+			p {
+				font-size: 1.1vw;
+				color: $main-bg-color;
+			}
+
+			h3 {
+				width: 50%;
+				margin: 0 0 1vw 0;
+				border-bottom: solid 0.2vw $main-bg-color;
+				border-left: solid 0.2vw $main-bg-color;
+				padding: 0 0 0.2vw 0.5vw;
+			}
+		}
+	}
+
+	&__history {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		background-color: $main-bg-color;
+
+		&__description {
+			flex: 3;
+			color: white;
+			font-family: $Montserrat;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+
+			h3 {
+				font-size: 2.3vw;
+				text-align: center;
+				padding: 2vw 0 4vw 0;
+				color: $main-text-color;
+			}
+
+			p {
+				padding: 0 1vw;
+				text-align: justify;
+			}
+		}
+
+		&__container {
+			padding: 0.5vw;
+			flex: 8;
+			display: flex;
+			// justify-content: space-between;
+			flex-wrap: wrap;
+
+			img {
+				width: 30%;
+				padding: 0.5vw;
+				flex: 1;
+			}
+		}
+	}
+
+	&__room {
+		width: 100%;
+		padding: 6vw 8vw 2vw;
+
+		&__title {
+			width: 100%;
+			position: relative;
+
+			&__back {
+				font-family: $DancingScript;
+				color: rgb(224, 224, 224);
+				font-size: 5vw;
+				margin: 0;
+				position: absolute;
+				z-index: -1000;
+				top: 0;
+			}
+
+			&__front {
+				padding-top: 3.5vw;
+				margin: 0;
+				font-size: 3vw;
+			}
+		}
+
+		&__container {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+
+			&__item {
+				padding-top: 3vw;
+				width: 47%;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				text-align: justify;
+
+				p {
+					border-left: solid 1vw $main-text-color;
+					padding-left: 1vw;
+				}
+
+				img {
+					margin-top: 2vw;
+					border: solid 0.3vw $main-text-color;
+					border-radius: 1vw;
+				}
+			}
+		}
+	}
+
+	&__images {
+		width: 100%;
+		padding: 4vw 0.5vw 0.5vw;
+		display: flex;
+		flex-direction: row;
+
+		&__title {
+			width: 100%;
+			text-align: center;
+			font-family: $DancingScript;
+			color: rgb(202, 202, 202);
+			font-size: 5vw;
+			margin-top: 1vw;
+		}
+
+		&__container {
+			width: 50%;
+			display: flex;
+			flex-wrap: wrap;
+
+			img {
+				width: 50%;
+				height: 50%;
+				padding: 0.5vw;
+			}
+
+			.flex2 {
+				width: 100%;
+				height: 50%;
+			}
+		}
+	}
+}

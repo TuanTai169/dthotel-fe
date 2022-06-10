@@ -2,9 +2,12 @@
 @import './../../styles/mixin';
 
 .footer {
+	padding-top: 5vh;
+	width: 100%;
 	bottom: 0;
 	background-color: $dark-blue;
 	color: $white;
+	font-family: $Montserrat;
 
 	&__container {
 		width: 100%;
@@ -42,6 +45,7 @@
 			}
 
 			&__item {
+				width: fit-content;
 				padding-top: 1.4vw;
 			}
 		}
@@ -61,6 +65,7 @@
 
 			&__item {
 				padding-top: 1.4vw;
+				width: fit-content;
 			}
 		}
 	}
@@ -73,6 +78,7 @@
 
 	&__otherinfor {
 		color: $main-text-color;
+		width: 100%;
 		display: inline-flex;
 		justify-content: space-between;
 		align-items: center;
