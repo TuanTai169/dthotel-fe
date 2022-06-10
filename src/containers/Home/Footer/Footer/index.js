@@ -49,13 +49,13 @@ const index = () => {
 				<div className='footer__line'></div>
 				<div className='footer__otherinfor'>
 					<div className='footer__otherinfor__social'>
-						<a href='instagram.com' className='footer__otherinfor__social-item'>
+						<a href='https://instagram.com' className='footer__otherinfor__social-item'>
 							<img src={instagram} alt='Instagram logo' />
 						</a>
-						<a href='youtube.com' className='footer__otherinfor__social-item'>
+						<a href='https://youtube.com' className='footer__otherinfor__social-item'>
 							<img src={youtube} alt='YouTube logo' />
 						</a>
-						<a href='facebook.com' className='footer__otherinfor__social-item'>
+						<a href='https://facebook.com' className='footer__otherinfor__social-item'>
 							<img src={facebook} alt='Facebook logo' />
 						</a>
 					</div>

@@ -58,7 +58,7 @@ const BookingPage = () => {
 			customer,
 			services: [],
 			products: [],
-			deposit: parseFloat((totalPrice * 1.1 * 0.1).toFixed(2)),
+			deposit: parseFloat((totalPrice * 1.1 * 0.5).toFixed(2)),
 			discount: null,
 		};
 
@@ -132,7 +132,7 @@ const BookingPage = () => {
 								</div>
 								<div className='col-4 total-price'>
 									<h4>
-										<strong>{convertCurrency(room.price * 23192, 'VND')}</strong>
+										<strong>{convertCurrency(room.price * 23500, 'VND')}</strong>
 									</h4>
 									<h5>{convertCurrency(room.price, 'USD')}</h5>
 									<span className='show-policy' onClick={() => setShowPolicy(true)}>
@@ -151,7 +151,7 @@ const BookingPage = () => {
 								<p>Accommodation charges</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 23192, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 23500, 'VND')}</strong>
 									</span>
 									<p>{convertCurrency(totalPrice, 'USD')}</p>
 								</div>
@@ -160,7 +160,7 @@ const BookingPage = () => {
 								<p>Taxes 10%</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 0.1 * 23192, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 0.1 * 23500, 'VND')}</strong>
 									</span>
 									<p>{convertCurrency(totalPrice * 0.1, 'USD')}</p>
 								</div>
@@ -169,7 +169,7 @@ const BookingPage = () => {
 								<p>Total price</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 1.1 * 23192, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 1.1 * 23500, 'VND')}</strong>
 									</span>
 									<p>{convertCurrency(totalPrice * 1.1, 'USD')}</p>
 								</div>
@@ -178,9 +178,9 @@ const BookingPage = () => {
 								<p>Deposit</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 1.1 * 0.1 * 23192, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 1.1 * 0.5 * 23500, 'VND')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice * 1.1 * 0.1, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 1.1 * 0.5, 'USD')}</p>
 								</div>
 							</div>
 						</div>
@@ -248,7 +248,7 @@ const BookingPage = () => {
 									<label htmlFor='gender'>Gender</label>
 									<select className='form-select select-home' id='gender'>
 										<option>Mr</option>
-										<option>Mis</option>
+										<option>Mrs</option>
 									</select>
 								</div>
 								<div className='form-group mb-32 col-9'>
@@ -351,7 +351,7 @@ const BookingPage = () => {
 								<strong>Payment:</strong>No deposit will be charged. Balance due on arrival.
 							</p>
 							<p>
-								<strong>The exchange rates:</strong> 1 USD = 23.192 VND.
+								<strong>The exchange rates:</strong> 1 USD = 23.500 VND.
 							</p>
 							<p>
 								<strong>Meal included:</strong>Breakfast included.
