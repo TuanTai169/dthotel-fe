@@ -1,0 +1,11 @@
+@import './../styles/variables';
+.container {
+	padding: 1.5vw 4vw 1.5vw 4vw;
+	width: 100%;
+	// background: $main-bg-color;
+	height: fit-content;
+
+	&__item {
+		width: 100%;
+	}
+}

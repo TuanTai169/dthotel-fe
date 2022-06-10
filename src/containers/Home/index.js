@@ -121,7 +121,7 @@ const Home = () => {
 					<div className='home__cards__container__button'>
 						<Link
 							className='home__cards__container__button__link'
-							to='/rooms'
+							to='/rooms-detail'
 						>
 							Find out more
 						</Link>
