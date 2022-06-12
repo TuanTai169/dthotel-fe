@@ -30,15 +30,15 @@ const AddRoomModal = (props) => {
 
 	const onChangeDetail = (e) => {
 		if (e.target.name === 'desc') {
-			let newDetail = { ...newRoom.detail, [event.target.name]: event.target.value };
+			let newDetail = { ...newRoom.detail, [e.target.name]: e.target.value };
 			setNewRoom({ ...newRoom, detail: newDetail });
 		} else {
-			let newDetail = { ...newRoom.detail, [event.target.name]: parseInt(event.target.value) };
+			let newDetail = { ...newRoom.detail, [e.target.name]: parseInt(e.target.value) };
 			setNewRoom({ ...newRoom, detail: newDetail });
 		}
 	};
 	const onChangeBed = (e) => {
-		let newBed = { ...newRoom.bed, [event.target.name]: parseInt(event.target.value) };
+		let newBed = { ...newRoom.bed, [e.target.name]: parseInt(e.target.value) };
 		setNewRoom({ ...newRoom, bed: newBed });
 	};
 

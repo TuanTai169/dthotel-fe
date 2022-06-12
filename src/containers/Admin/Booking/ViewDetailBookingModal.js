@@ -10,8 +10,8 @@ const ViewDetailBookingModal = (props) => {
 
 	const { code, customer, rooms, deposit, discount, services, totalPrice } = booking;
 
-	const checkInDateConvert = convertStringToDate(checkInDate);
-	const checkOutDateConvert = convertStringToDate(checkOutDate);
+	// const checkInDateConvert = convertStringToDate(checkInDate);
+	// const checkOutDateConvert = convertStringToDate(checkOutDate);
 
 	return (
 		<>
@@ -28,7 +28,7 @@ const ViewDetailBookingModal = (props) => {
 				<Form>
 					<Modal.Body>
 						<Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
-							<Col>
+							{/* <Col>
 								<FloatingLabel controlId='floatingCheckIn' label='Check in ' className='mb-3'>
 									<Form.Control type='text' value={checkInDateConvert} disabled />
 								</FloatingLabel>
@@ -37,7 +37,7 @@ const ViewDetailBookingModal = (props) => {
 								<FloatingLabel controlId='floatingCheckOut' label='Check out' className='mb-3'>
 									<Form.Control type='text' value={checkOutDateConvert} disabled />
 								</FloatingLabel>
-							</Col>
+							</Col> */}
 							<Col>
 								<FloatingLabel controlId='floatingDiscount' label='Discount (%)' className='mb-3'>
 									<Form.Control type='text' value={discount} disabled />
@@ -55,7 +55,7 @@ const ViewDetailBookingModal = (props) => {
 								<CustomerForm customer={customer} />
 							</Form.Group>
 						</Row>
-						<Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
+						{/* <Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 							<Form.Group controlId='formGridRoom'>
 								<div className='form-label'>
 									<h5>Room</h5>
@@ -65,8 +65,8 @@ const ViewDetailBookingModal = (props) => {
 								</div>
 								<RoomForm rooms={rooms} />
 							</Form.Group>
-						</Row>
-						<Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
+						</Row> */}
+						{/* <Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 							<Form.Group as={Col} controlId='formGridService'>
 								<div className='form-label'>
 									<h5>Service</h5>
@@ -76,7 +76,7 @@ const ViewDetailBookingModal = (props) => {
 								</div>
 								<ServiceForm services={services} />
 							</Form.Group>
-						</Row>
+						</Row> */}
 						<p>
 							Total Price (USD):{' '}
 							<strong style={{ color: 'red', fontSize: '20px' }}>{totalPrice}</strong>

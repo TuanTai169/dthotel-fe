@@ -7,6 +7,7 @@ import BookingModal from '../Booking/BookingModal';
 import DialogChange from '../../../components/Dialog/DialogChange';
 import CheckOutModal from '../Receipt/CheckOutModal';
 import { RoomStatus } from '../../../assets/app/constants';
+import ViewAllRoomModal from './ViewAllRoomModal';
 
 const RoomActionButton = (props) => {
 	const dispatch = useDispatch();

@@ -50,7 +50,7 @@ const EditBookingModal = (props) => {
 			.sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1))
 	);
 	const [newRooms, setRooms] = useState(detail.rooms);
-	const [newServices, setServices] = useState(detail.services);
+	const [newServices, setNewServices] = useState(detail.services);
 	const [newProducts, setNewProducts] = useState(detail.products);
 	const [arrayService, setArrayService] = useState(
 		listService.map((service) => {
@@ -176,7 +176,7 @@ const EditBookingModal = (props) => {
 		setNewServices([...newService]);
 		setNewProducts([...newProduct]);
 		setEditBooking({
-			...newBooking,
+			...editBooking,
 			services: newService.map((s) => {
 				return {
 					service: s._id,
@@ -195,8 +195,8 @@ const EditBookingModal = (props) => {
 	};
 
 	const onChangeCoupon = (selectItem) => {
-		setNewBooking({
-			...newBooking,
+		setEditBooking({
+			...editBooking,
 			discount: selectItem._id,
 		});
 	};

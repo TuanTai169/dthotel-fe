@@ -35,15 +35,15 @@ const EditRoomModal = (props) => {
 
 	const onChangeDetail = (e) => {
 		if (e.target.name === 'desc') {
-			let newDetail = { ...editRoom.detail, [event.target.name]: event.target.value };
+			let newDetail = { ...editRoom.detail, [e.target.name]: e.target.value };
 			setEditRoom({ ...editRoom, detail: newDetail });
 		} else {
-			let newDetail = { ...editRoom.detail, [event.target.name]: parseInt(event.target.value) };
+			let newDetail = { ...editRoom.detail, [e.target.name]: parseInt(e.target.value) };
 			setEditRoom({ ...editRoom, detail: newDetail });
 		}
 	};
 	const onChangeBed = (e) => {
-		let newBed = { ...editRoom.bed, [event.target.name]: parseInt(event.target.value) };
+		let newBed = { ...editRoom.bed, [e.target.name]: parseInt(e.target.value) };
 		setEditRoom({ ...editRoom, bed: newBed });
 	};
 
