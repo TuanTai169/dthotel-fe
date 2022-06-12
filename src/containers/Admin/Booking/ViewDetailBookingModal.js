@@ -8,26 +8,20 @@ import ServiceForm from '../FormBooking/ServiceForm';
 const ViewDetailBookingModal = (props) => {
 	const { show, handlerModalClose, booking } = props;
 
-	const {
-		code,
-		customer,
-		rooms,
-		checkInDate,
-		checkOutDate,
-		deposit,
-		discount,
-		services,
-		roomCharge,
-		serviceCharge,
-		totalPrice,
-	} = booking;
+	const { code, customer, rooms, deposit, discount, services, totalPrice } = booking;
 
 	const checkInDateConvert = convertStringToDate(checkInDate);
 	const checkOutDateConvert = convertStringToDate(checkOutDate);
 
 	return (
 		<>
-			<Modal show={show} onHide={handlerModalClose} animation={false} size='lg'>
+			<Modal
+				show={show}
+				onHide={handlerModalClose}
+				animation={false}
+				size='lg'
+				dialogClassName='admin-modal'
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>{code}</Modal.Title>
 				</Modal.Header>

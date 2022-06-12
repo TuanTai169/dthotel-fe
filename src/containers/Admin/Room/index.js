@@ -13,6 +13,7 @@ import FullLoading from '../../../components/Common/FullLoading';
 import ScrollToTop from '../../../components/Common/ScrollToTop';
 import { getAllBooking } from '../../../redux/actions/booking';
 import { getAllReceipt } from '../../../redux/actions/receipt';
+import { getAllRoom } from './../../../redux/actions/room';
 
 const Rooms = () => {
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -92,6 +93,7 @@ const Rooms = () => {
 											onClick={() => {
 												dispatch(getAllBooking());
 												dispatch(getAllReceipt());
+												dispatch(getAllRoom());
 											}}
 											style={{ marginRight: '10px', color: '#fff' }}
 										>
@@ -135,15 +137,23 @@ const Rooms = () => {
 										Add Room
 									</Button>
 								)}
-								{/* <ViewAllBookingModal
-									show={isOpenBookingModal}
-									handlerModalClose={handlerCloseBookingModal}
-								/> */}
-								<AddRoomModal show={isOpenAddModal} handlerModalClose={handlerCloseAddModal} />
-								<ReservationCalendar
-									show={isOpenStatusRoomModal}
-									handlerModalClose={handlerCloseStatusRoomModal}
-								/>
+								{isOpenBookingModal && (
+									<ViewAllBookingModal
+										show={isOpenBookingModal}
+										handlerModalClose={handlerCloseBookingModal}
+									/>
+								)}
+
+								{isOpenAddModal && (
+									<AddRoomModal show={isOpenAddModal} handlerModalClose={handlerCloseAddModal} />
+								)}
+
+								{isOpenStatusRoomModal && (
+									<ReservationCalendar
+										show={isOpenStatusRoomModal}
+										handlerModalClose={handlerCloseStatusRoomModal}
+									/>
+								)}
 							</ButtonToolbar>
 						</div>
 					</div>

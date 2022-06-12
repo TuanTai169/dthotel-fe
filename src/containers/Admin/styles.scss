@@ -1,3 +1,16 @@
+@import '../Home/styles/variables';
 .admin {
 	overflow: auto !important;
+}
+
+.admin-modal {
+	& > .modal-content {
+		background-color: #fff;
+		color: #111;
+		.modal-header {
+			color: #111;
+			text-transform: uppercase;
+			border-bottom: transparent;
+		}
+	}
 }

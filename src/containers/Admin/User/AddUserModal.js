@@ -49,7 +49,7 @@ const AddUserModal = (props) => {
 
 	return (
 		<>
-			<Modal show={show} onHide={resetAddPostData} animation={false}>
+			<Modal show={show} onHide={resetAddPostData} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Add New User</Modal.Title>
 				</Modal.Header>

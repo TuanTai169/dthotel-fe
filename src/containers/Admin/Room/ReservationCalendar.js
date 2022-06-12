@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import moment from 'moment';
 import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import { useSelector } from 'react-redux';
-import moment from 'moment';
-import { useMemo } from 'react';
+
+import { RoomStatus } from '../../../assets/app/constants';
 
 const ReservationCalendar = (props) => {
 	const { show, handlerModalClose } = props;
 
 	const listRoom = useSelector((state) => state.roomReducer.rooms);
 	const listBooking = useSelector((state) => state.bookingReducer.bookings);
+	const listType = useSelector((state) => state.types.types);
 
 	const [month, setMonth] = useState(new Date());
-	const [roomType, setRoomType] = useState('ALL');
+	const [roomType, setRoomType] = useState('All');
 
 	let bookings = [];
 	listBooking.forEach((item) => {
-		item.rooms.forEach((room) => {
+		item.detail.rooms.forEach((room) => {
+			const type = listType.find((x) => x._id === room.roomType);
 			bookings.push({
 				number: room.roomNumber,
-				type: room.roomType,
-				status: room.status,
-				checkInDate: [item.checkInDate],
-				checkOutDate: [item.checkOutDate],
+				type: type.nameTag,
+				status: item.status,
+				checkInDate: [item.rooms[0].checkInDate],
+				checkOutDate: [item.rooms[0].checkOutDate],
 			});
 		});
 	});
@@ -84,7 +87,7 @@ const ReservationCalendar = (props) => {
 		if (!found) {
 			data.push({
 				number: room.roomNumber,
-				type: room.roomType,
+				type: room.roomType.nameTag,
 				status: room.status,
 				checkInDate: [],
 				checkOutDate: [],
@@ -122,9 +125,15 @@ const ReservationCalendar = (props) => {
 		return <>{render}</>;
 	};
 
+	console.log(data);
 	return (
 		<>
-			<Modal show={show} onHide={handlerModalClose} animation={false} dialogClassName='modal-95w'>
+			<Modal
+				show={show}
+				onHide={handlerModalClose}
+				animation={false}
+				dialogClassName='modal-95w admin-modal'
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>Reservation Calendar</Modal.Title>
 				</Modal.Header>
@@ -147,13 +156,16 @@ const ReservationCalendar = (props) => {
 									<Form.Control
 										as='select'
 										name='roomType'
-										value={roomType}
+										value={roomType.nameTag}
 										onChange={(e) => setRoomType(e.target.value)}
 									>
-										<option value='ALL'>ALL</option>
-										<option value='SINGLE'>SINGLE</option>
-										<option value='DOUBLE'>DOUBLE</option>
-										<option value='DELUXE'>DELUXE</option>
+										<option value='All'>All</option>
+										{Array.isArray(listType) &&
+											listType.map((t) => (
+												<option key={t._id} value={t.nameTag}>
+													{t.nameTag}
+												</option>
+											))}
 									</Form.Control>
 								</FloatingLabel>
 							</div>
@@ -162,13 +174,13 @@ const ReservationCalendar = (props) => {
 							<table>
 								<thead>
 									<tr>
-										<th rowSpan={2} className='p-3'>
+										<th rowSpan={2} className='p-4'>
 											Number
 										</th>
-										<th rowSpan={2} className='p-4'>
+										<th rowSpan={2} className='p-3'>
 											Type
 										</th>
-										<th rowSpan={2} className='p-4'>
+										<th rowSpan={2} className='p-10'>
 											Status
 										</th>
 										<th colSpan={arrayDay.length} className='text-center'>
@@ -188,7 +200,7 @@ const ReservationCalendar = (props) => {
 
 								{data
 									.sort((a, b) => (a.number > b.number ? 1 : -1))
-									.filter((item) => (roomType === 'ALL' ? true : item.type === roomType))
+									.filter((item) => (roomType === 'All' ? true : item.type === roomType))
 									.map((room, index) => {
 										return (
 											<tbody key={index}>
@@ -196,7 +208,7 @@ const ReservationCalendar = (props) => {
 													<td rowSpan={2} className='p-2 text-center'>
 														{room.number}
 													</td>
-													<td rowSpan={2} className='text-center'>
+													<td rowSpan={2} className='p-2 text-center'>
 														{room.type}
 													</td>
 													<td
@@ -204,11 +216,11 @@ const ReservationCalendar = (props) => {
 														className='text-center'
 														style={{
 															color:
-																room.status === 'READY'
+																room.status === RoomStatus.Ready.name
 																	? '#157347'
-																	: room.status === 'OCCUPIED'
+																	: room.status === 'Check In'
 																	? 'red'
-																	: room.status === 'BOOKING'
+																	: room.status === RoomStatus.Booking.name
 																	? 'blue'
 																	: '#ccc',
 														}}

@@ -6,6 +6,7 @@ import { cancelledBooking } from '../../../redux/actions/booking';
 import { useDispatch } from 'react-redux';
 import ViewDetailBookingModal from './ViewDetailBookingModal';
 import EditBookingModal from './EditBookingModal';
+import { BookingStatus } from '../../../assets/app/constants';
 
 const BookingItem = (props) => {
 	const { booking } = props;
@@ -20,10 +21,10 @@ const BookingItem = (props) => {
 		message: '',
 	});
 
-	const { code, customer, rooms, checkInDate, checkOutDate, status } = booking;
+	const { code, customer, rooms, status, detail } = booking;
 
-	const checkInDateConvert = convertStringToDate(checkInDate);
-	const checkOutDateConvert = convertStringToDate(checkOutDate);
+	const checkInDateConvert = convertStringToDate(rooms[0].checkInDate);
+	const checkOutDateConvert = convertStringToDate(rooms[0].checkOutDate);
 
 	const handlerViewModalClose = () => setIsOpenViewModal(false);
 	const handlerCloseEditBookingModal = () => setIsOpenEditBooking(false);
@@ -32,7 +33,7 @@ const BookingItem = (props) => {
 		dispatch(cancelledBooking(id));
 	};
 
-	const renderRoom = rooms.map((room) => {
+	const renderRoom = detail.rooms.map((room) => {
 		return <p key={room._id}>{room.roomNumber}</p>;
 	});
 	return (
@@ -42,12 +43,14 @@ const BookingItem = (props) => {
 			<td>{renderRoom}</td>
 			<td>{checkInDateConvert}</td>
 			<td>{checkOutDateConvert}</td>
-			<td className={status === 'BOOKING' ? 'status-book' : 'status-check-in'}>{status}</td>
+			<td className={status === BookingStatus.Booking.name ? 'status-book' : 'status-check-in'}>
+				{status}
+			</td>
 			<td>
-				<Button variant='info' onClick={() => setIsOpenViewModal(true)}>
+				{/* <Button variant='info' onClick={() => setIsOpenViewModal(true)}>
 					<i className='bx bx-detail icon-bg' style={{ color: '#fff' }}></i>
-				</Button>{' '}
-				{status === 'BOOKING' && (
+				</Button>{' '} */}
+				{status === BookingStatus.Booking.name && (
 					<>
 						<Button variant='primary' onClick={() => setIsOpenEditBooking(true)}>
 							<i className='bx  bxs-edit-alt' style={{ color: '#fff' }}></i>
@@ -71,16 +74,20 @@ const BookingItem = (props) => {
 						</OverlayTrigger>
 					</>
 				)}
-				<ViewDetailBookingModal
-					show={isOpenViewModal}
-					handlerModalClose={handlerViewModalClose}
-					booking={booking}
-				/>
-				<EditBookingModal
-					show={isOpenEditBooking}
-					handlerModalClose={handlerCloseEditBookingModal}
-					booking={booking}
-				/>
+				{isOpenViewModal && (
+					<ViewDetailBookingModal
+						show={isOpenViewModal}
+						handlerModalClose={handlerViewModalClose}
+						booking={booking}
+					/>
+				)}
+				{isOpenEditBooking && (
+					<EditBookingModal
+						show={isOpenEditBooking}
+						handlerModalClose={handlerCloseEditBookingModal}
+						booking={booking}
+					/>
+				)}
 				<DialogDelete conformDialog={conformDialog} setConformDialog={setConformDialog} />
 			</td>
 		</>

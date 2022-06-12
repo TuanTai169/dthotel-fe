@@ -31,7 +31,7 @@ const EditServiceModal = (props) => {
 	const { name, price } = editService;
 	return (
 		<div>
-			<Modal show={show} onHide={resetEditPostData} animation={false}>
+			<Modal show={show} onHide={resetEditPostData} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Edit Service</Modal.Title>
 				</Modal.Header>

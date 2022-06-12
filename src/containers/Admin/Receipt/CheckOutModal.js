@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Row, Col, FloatingLabel } from 'react-bootstrap';
+import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
@@ -13,7 +14,7 @@ import ServiceForm from './../FormBooking/ServiceForm';
 
 import { convertStringToDate } from '../../../utils/convertDateTime';
 import { numberValidation } from '../../../utils/validation';
-import { totalRoomCharge } from '../../../utils/calculateRoomPrice';
+import { totalRoomCharge, totalServiceCharge } from '../../../utils/calculateRoomPrice';
 
 import PayPalModal from './PayPalModal';
 import FullLoading from './../../../components/Common/FullLoading';
@@ -22,97 +23,103 @@ const CheckOutModal = (props) => {
 	const { show, handlerModalClose, handlerParentModalClose, booking } = props;
 
 	const isLoading = useSelector((state) => state.receiptReducer.isReceiptLoading);
+	const listCoupon = useSelector((state) => state.couponReducer.coupons);
+	const listService = useSelector((state) => state.serviceReducer.services);
+	const listRoom = useSelector((state) => state.roomReducer.rooms);
 
-	const {
-		_id,
-		code,
-		customer,
-		rooms,
-		checkInDate,
-		deposit,
-		discount,
-		services,
-		roomCharge,
-		serviceCharge,
-		VAT,
-		totalPrice,
-		status,
-	} = booking[0];
+	const { _id, code, customer, rooms, deposit, discount, services, products, totalPrice, status } =
+		booking[0];
 
-	const [newCheckOut, setNewCheckOut] = useState(new Date().setHours(12, 0));
+	const [newDateCheckOut, setNewDateCheckOut] = useState(new Date().setHours(12, 0));
 
 	const [editBooking, setEditBooking] = useState({
 		_id: _id,
-		rooms: rooms.map((room) => room._id),
+		rooms: rooms.map((room) => room.room),
 		customer: customer._id,
-		checkInDate: moment(checkInDate).format('YYYY-MM-DD HH:mm'),
-		checkOutDate: moment(newCheckOut).format('YYYY-MM-DD HH:mm'),
-		services: services,
+		checkInDate: moment(rooms[0].checkInDate).format('YYYY-MM-DD HH:mm'),
+		checkOutDate: moment(newDateCheckOut).format('YYYY-MM-DD HH:mm'),
+		services: services.map((x) => {
+			return {
+				service: x.service,
+				amount: x.amount,
+			};
+		}),
+		products: products.map((x) => {
+			return {
+				product: x.product,
+				amount: x.amount,
+			};
+		}),
 		deposit: deposit,
-		discount: discount,
+		discount: discount._id,
 		status: status,
 	});
 
 	const [sumPrice, setSumPrice] = useState(totalPrice);
-	const [roomPrice, setRoomPrice] = useState(roomCharge);
-	const [servicePrice, setServicePrice] = useState(serviceCharge);
+	const [roomPrice, setRoomPrice] = useState(0);
+	const [servicePrice, setServicePrice] = useState(0);
 
 	const dispatch = useDispatch();
 	const [receipt, setReceipt] = useState({
 		booking: _id,
-		paidOut: '0',
+		paidOut: 0,
 		refund: 0,
 		modeOfPayment: 'CASH',
 	});
 	const [isPaypal, setIsPaypal] = useState(false);
 
 	useEffect(() => {
-		const { checkInDate, checkOutDate, deposit, discount } = editBooking;
+		const { checkInDate, checkOutDate, deposit, discount, services, products } = editBooking;
 
 		const calculatorPrice = () => {
-			const RoomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate);
+			const roomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate, listRoom);
+			setRoomPrice(Math.round(roomCharge));
 
-			setRoomPrice(Math.round(RoomCharge));
-			const sumServicesPrice = services
-				.map((item) => item.price)
-				.reduce((prev, curr) => prev + curr, 0);
+			let priceDiscount = 0;
+			const coupon = listCoupon.find((x) => x._id === discount);
+			if (coupon) {
+				priceDiscount = coupon.discount;
+			}
 
+			const sumServicesPrice = totalServiceCharge(services, products, listService);
 			setServicePrice(sumServicesPrice);
+
 			const VAT = 10;
-			return (
-				(RoomCharge + sumServicesPrice) * (1 + VAT / 100 - discount / 100) -
-				deposit
-			).toFixed();
+			return Number(
+				parseFloat(
+					(roomCharge + sumServicesPrice) * (1 + VAT / 100 - priceDiscount / 100) - deposit
+				).toFixed(2)
+			);
 		};
 
 		setSumPrice(calculatorPrice);
-	}, [editBooking, rooms, services]);
+	}, [editBooking, rooms, services, products]);
 
-	const checkInDateConvert = convertStringToDate(checkInDate);
+	const checkInDateConvert = convertStringToDate(rooms[0].checkInDate);
 
 	const onChangePaidOut = (e) => {
 		setReceipt({
 			...receipt,
-			paidOut: e.target.value,
-			refund: e.target.value > sumPrice ? e.target.value - sumPrice : 0,
+			paidOut: Number(parseFloat(e.target.value).toFixed(2)),
+			refund:
+				e.target.value > sumPrice ? Number(parseFloat(e.target.value - sumPrice).toFixed(2)) : 0,
 		});
 	};
 
 	const onSubmitCheckOut = () => {
-		if (numberValidation(receipt.paidOut)) {
-			dispatch(updateBooking(editBooking));
-			const newReceipt = {
-				...receipt,
-				paidOut: parseInt(receipt.paidOut),
-			};
-			setTimeout(() => dispatch(checkOut(newReceipt)), 3000);
-			resetData();
-		}
+		// dispatch(updateBooking(editBooking));
+		const newReceipt = {
+			...receipt,
+			paidOut: parseInt(receipt.paidOut),
+		};
+
+		setTimeout(() => dispatch(checkOut(newReceipt)), 3000);
+		resetData();
 	};
 	const resetData = () => {
 		setReceipt({
 			booking: _id,
-			paidOut: '0',
+			paidOut: 0,
 			refund: 0,
 			modeOfPayment: 'CASH',
 		});
@@ -127,7 +134,12 @@ const CheckOutModal = (props) => {
 			{isLoading ? (
 				<FullLoading />
 			) : (
-				<Modal show={show} onHide={handlerModalClose} animation={false} size='lg'>
+				<Modal
+					show={show}
+					onHide={handlerModalClose}
+					animation={false}
+					dialogClassName='admin-modal modal-60w '
+				>
 					<Modal.Header closeButton>
 						<Modal.Title>{code}</Modal.Title>
 						<div style={{ marginLeft: '30%', fontSize: '20px' }}>
@@ -148,18 +160,18 @@ const CheckOutModal = (props) => {
 								<Form.Group as={Col} controlId='formGridCheckOut'>
 									<Form.Label>Check out</Form.Label>
 									<DatePicker
-										selected={newCheckOut}
+										selected={newDateCheckOut}
 										onChange={(date) => {
-											setNewCheckOut(date);
+											setNewDateCheckOut(date);
 											setEditBooking({
 												...editBooking,
 												checkOutDate: moment(date).format('YYYY-MM-DD HH:mm'),
 											});
 										}}
 										selectsEnd
-										startDate={new Date(checkInDate)}
-										endDate={newCheckOut}
-										minDate={new Date(checkInDate)}
+										startDate={new Date(rooms[0].checkInDate)}
+										endDate={newDateCheckOut}
+										minDate={new Date(rooms[0].checkInDate)}
 										showTimeSelect
 										timeFormat='HH:mm'
 										dateFormat='dd/MM/yyyy HH:mm'
@@ -167,8 +179,12 @@ const CheckOutModal = (props) => {
 								</Form.Group>
 
 								<Col>
-									<FloatingLabel controlId='floatingDiscount' label='Discount (%)' className='mb-3'>
-										<Form.Control type='number' value={discount} disabled />
+									<FloatingLabel controlId='formGridDiscount' label='Discount (%)' className='mb-3'>
+										<Form.Control
+											type='text'
+											value={listCoupon.find((x) => discount._id === x._id).discount}
+											disabled
+										/>
 									</FloatingLabel>
 								</Col>
 								<Col>
@@ -190,7 +206,7 @@ const CheckOutModal = (props) => {
 								</Col>
 								<Col>
 									<FloatingLabel controlId='floatingVAT' label='VAT(%) ' className='mb-3'>
-										<Form.Control type='text' value={VAT} readOnly />
+										<Form.Control type='text' value={10} readOnly />
 									</FloatingLabel>
 								</Col>
 								<Col>
@@ -231,18 +247,20 @@ const CheckOutModal = (props) => {
 											Price (USD): <strong style={{ color: 'red' }}>{roomPrice}</strong>
 										</p>
 									</div>
-									<RoomForm rooms={rooms} />
+									<RoomForm
+										rooms={listRoom.filter((s) => rooms.map((x) => x.room).includes(s._id))}
+									/>
 								</Form.Group>
 							</Row>
 							<Row className='mb-3'>
 								<Form.Group as={Col} controlId='formGridService'>
 									<div className='form-label'>
-										<h5>Service</h5>
+										<h5>Services</h5>
 										<p>
 											Price (USD): <strong style={{ color: 'red' }}>{servicePrice}</strong>
 										</p>
 									</div>
-									<ServiceForm services={services} />
+									<ServiceForm services={listService} />
 								</Form.Group>
 							</Row>
 						</Modal.Body>

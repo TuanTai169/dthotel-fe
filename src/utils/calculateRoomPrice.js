@@ -1,11 +1,16 @@
 import moment from 'moment';
 
 export const totalRoomCharge = (rooms, checkInDate, checkOutDate) => {
-	let total;
+	let total = 0;
+	let sumRoomsPrice = 0;
 
 	const hourDiff = getNumberOfHour(checkInDate, checkOutDate);
 
-	const sumRoomsPrice = rooms.map((item) => item.price).reduce((prev, curr) => prev + curr, 0);
+	if (Array.isArray(rooms) && rooms.length > 0) {
+		rooms.forEach((item) => {
+			sumRoomsPrice += item.price;
+		});
+	}
 
 	if (hourDiff < 24) {
 		total = priceInHour(hourDiff, sumRoomsPrice);
@@ -16,7 +21,29 @@ export const totalRoomCharge = (rooms, checkInDate, checkOutDate) => {
 		total = ((hourDiff - early.hour - late.hour) * sumRoomsPrice) / 24 + early.price + late.price;
 	}
 
-	return total;
+	return Number(parseFloat(total).toFixed(2));
+};
+
+export const totalServiceCharge = (services, products, listServices) => {
+	let total = 0;
+	if (Array.isArray(services) && services.length > 0) {
+		services.forEach((s) => {
+			const item = listServices.find((x) => x._id === s.service);
+			if (item) {
+				total += item.price * s.amount;
+			}
+		});
+	}
+	if (Array.isArray(products) && products.length > 0) {
+		products.forEach((s) => {
+			const item = listServices.find((x) => x._id === s.service);
+			if (item) {
+				total += item.price * s.amount;
+			}
+		});
+	}
+
+	return Number(parseFloat(total).toFixed(2));
 };
 
 const getNumberOfHour = (checkInDate, checkOutDate) => {

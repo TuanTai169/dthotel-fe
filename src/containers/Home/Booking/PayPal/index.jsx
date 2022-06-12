@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const PayPal = (props) => {
 	const paypal = useRef();
@@ -26,12 +27,12 @@ const PayPal = (props) => {
 					});
 				},
 				onApprove: async (data, actions) => {
-					await actions.order.capture();
 					onSuccess();
-					// dispatch(checkOut({ ...receipt, paidOut: value }));
+					await actions.order.capture();
 				},
 				onError: (err) => {
 					console.log(err);
+					toast.error(err);
 				},
 			})
 			.render(paypal.current);

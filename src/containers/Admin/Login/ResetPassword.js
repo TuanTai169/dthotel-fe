@@ -28,7 +28,7 @@ const ResetPassword = () => {
 				const res = await axios.post(`${HOST_API_URL}/auth/reset-password/${token}`, {
 					password,
 				});
-				navigate('/login');
+				navigate('/admin/login');
 				return toast.success(res.data.message);
 			} catch (err) {
 				err.response.data.message && toast.error(err.response.data.message);
@@ -40,7 +40,7 @@ const ResetPassword = () => {
 	return (
 		<div className='login-page'>
 			<div className='company-logo'>
-				<Link to='/'>
+				<Link to='/admin'>
 					<img src={logo} alt='company logo' />
 				</Link>
 			</div>

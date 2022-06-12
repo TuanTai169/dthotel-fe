@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import lodash from 'lodash';
 // import { changeRoom } from '../../../redux/actions/booking';
 import DialogChange from '../../../components/Dialog/DialogChange';
+import { RoomStatus } from '../../../assets/app/constants';
 
 const ViewAllRoomModal = (props) => {
 	const { show, handlerModalClose, handlerParentModalClose, roomChoose, getRoom, bookingId } =
@@ -64,11 +65,12 @@ const ViewAllRoomModal = (props) => {
 		handlerModalClose();
 	};
 	const handlerSelect = (e, room) => {
-		(room.status === 'READY' || room.status === 'BOOKING') &&
+		(room.status === RoomStatus.Ready.name || room.status === RoomStatus.Booking.name) &&
 			room._id !== roomChoose._id &&
-			(roomChoose.status === 'READY' || roomChoose.status === 'BOOKING') &&
+			(roomChoose.status === RoomStatus.Ready.name ||
+				roomChoose.status === RoomStatus.Booking.name) &&
 			selectedRoom(e, room);
-		room.status === 'READY' &&
+		room.status === RoomStatus.Ready.name &&
 			room._id !== roomChoose._id &&
 			roomChoose.status === 'OCCUPIED' &&
 			selectedChangeRoom(e, room);
@@ -76,7 +78,12 @@ const ViewAllRoomModal = (props) => {
 
 	return (
 		<>
-			<Modal show={show} onHide={resetModal} animation={false} dialogClassName='modal-60w'>
+			<Modal
+				show={show}
+				onHide={resetModal}
+				animation={false}
+				dialogClassName='modal-60w admin-modal'
+			>
 				<Modal.Header closeButton>
 					<Modal.Title>Add a room</Modal.Title>
 				</Modal.Header>
@@ -89,15 +96,15 @@ const ViewAllRoomModal = (props) => {
 										id='room'
 										className='status-card'
 										style={{
-											cursor: room.status === 'READY' && 'pointer',
+											cursor: room.status === RoomStatus.Ready.name && 'pointer',
 											backgroundColor:
 												room._id === roomChoose._id
 													? '#7fff00'
-													: room.status === 'OCCUPIED'
+													: room.status === RoomStatus.Occupied.name
 													? 'tomato'
-													: room.status === 'CLEANING'
+													: room.status === RoomStatus.Cleaning.name
 													? 'yellow'
-													: room.status === 'FIXING'
+													: room.status === RoomStatus.Fixing.name
 													? '#ccc'
 													: '#fff',
 										}}
@@ -106,7 +113,6 @@ const ViewAllRoomModal = (props) => {
 										<div className='status-card__info'>
 											<h4>{room.roomNumber}</h4>
 											<span>${room.price}</span>
-											<p>{room.roomType}</p>
 										</div>
 									</div>
 								</div>
@@ -131,7 +137,7 @@ const ViewAllRoomModal = (props) => {
               Change
             </Button>
           )} */}
-					{(roomChoose.status === 'READY' || roomChoose.status === 'BOOKING') && (
+					{(roomChoose.status === RoomStatus.Ready.name || roomChoose.status === 'BOOKING') && (
 						<Button variant='danger' onClick={submitArrayRoom}>
 							Save
 						</Button>
