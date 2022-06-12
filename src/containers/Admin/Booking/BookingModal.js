@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RoomStatus } from '../../../assets/app/constants';
 import CustomerForm from '../FormBooking/CustomerForm';
-import { totalRoomCharge } from '../../../utils/calculateRoomPrice';
+import { totalRoomCharge, totalServiceCharge } from '../../../utils/calculateRoomPrice';
 import { getAllBooking, addBooking } from '../../../redux/actions/booking';
 import { getAllRoom } from './../../../redux/actions/room';
 
@@ -76,25 +76,22 @@ const BookingModal = (props) => {
 		setExcludeDates(exclude);
 
 		const calculatorPrice = () => {
-			const RoomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate);
+			const roomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate);
+
 			let priceDiscount = 0;
 			const coupon = listCoupon.find((x) => x._id === discount);
 			if (coupon) {
 				priceDiscount = coupon.discount;
 			}
-			const sumServicesPrice = services
-				.map((item) => item.price)
-				.reduce((prev, curr) => prev + curr, 0);
 
-			const sumProductsPrice = products
-				.map((item) => item.price)
-				.reduce((prev, curr) => prev + curr, 0);
+			const sumServicesPrice = totalServiceCharge(services, products, listService);
 
 			const VAT = 10;
-			return (
-				(RoomCharge + sumServicesPrice + sumProductsPrice) * (1 + VAT / 100 - priceDiscount / 100) -
-				deposit
-			).toFixed();
+			return Number(
+				parseFloat(
+					(roomCharge + sumServicesPrice) * (1 + VAT / 100 - priceDiscount / 100) - deposit
+				).toFixed(2)
+			);
 		};
 		setTotalPrice(calculatorPrice);
 	}, [newBooking, rooms, services, products, listBooking]);
@@ -360,7 +357,7 @@ const BookingModal = (props) => {
 								<Select
 									name='discount'
 									options={listCoupon}
-									getOptionLabel={(option) => option.code}
+									getOptionLabel={(option) => option.code + '-' + option.discount + '%'}
 									getOptionValue={(option) => option._id}
 									onChange={onChangeCoupon}
 									className='basic-select'
@@ -402,9 +399,7 @@ const BookingModal = (props) => {
 									getOptionValue={(option) => option._id}
 								/>
 							</Col>
-							{/* <Col sm={3}>
-								<Button onClick={() => setOpenViewRoom(true)}>Add New Room</Button>
-							</Col> */}
+
 							<Table striped>
 								<thead>
 									<tr>{renderRoomHead}</tr>
@@ -416,11 +411,6 @@ const BookingModal = (props) => {
 											<td>{room.roomNumber}</td>
 											<td>{room.floor}</td>
 											<td>{room.price}</td>
-											<td>
-												<button onClick={(e) => onRemoveRoom(e, room)} className='btn-remove'>
-													x
-												</button>
-											</td>
 										</tr>
 									))}
 								</tbody>
@@ -436,15 +426,6 @@ const BookingModal = (props) => {
 							<Col sm={9}>
 								<h5>Service and Product</h5>
 							</Col>
-							{/* <Col sm={3}>
-								<Button
-									variant='warning'
-									style={{ color: '#fff' }}
-									onClick={() => setOpenViewService(true)}
-								>
-									Add New Service
-								</Button>
-							</Col> */}
 
 							<Form.Group className='mb-3' controlId='formBasicService'>
 								<Select
@@ -463,26 +444,27 @@ const BookingModal = (props) => {
 									<tr>{renderServiceHead}</tr>
 								</thead>
 								<tbody>
-									{[...services, ...products].map((service, index) => (
-										<tr key={service._id}>
-											<td>{index + 1}</td>
-											<td>{service.name}</td>
-											<td>{service.price}</td>
-											<td>{service.amount}</td>
-											<td className='d-flex align-items-center justify-content-around'>
-												<Button onClick={(e) => onAddService(e, service)}>
-													<BsPlus />
-												</Button>
-												<Button
-													variant='danger'
-													onClick={(e) => onSubtractService(e, service)}
-													disabled={!!(service.amount < 2)}
-												>
-													<BsDash />
-												</Button>
-											</td>
-										</tr>
-									))}
+									{(services.length > 0 || products.length > 0) &&
+										[...services, ...products].map((service, index) => (
+											<tr key={service._id}>
+												<td>{index + 1}</td>
+												<td>{service.name}</td>
+												<td>{service.price}</td>
+												<td>{service.amount}</td>
+												<td className='d-flex align-items-center justify-content-around'>
+													<Button onClick={(e) => onAddService(e, service)}>
+														<BsPlus />
+													</Button>
+													<Button
+														variant='danger'
+														onClick={(e) => onSubtractService(e, service)}
+														disabled={!!(service.amount < 2)}
+													>
+														<BsDash />
+													</Button>
+												</td>
+											</tr>
+										))}
 								</tbody>
 							</Table>
 							<ViewAllServiceModal

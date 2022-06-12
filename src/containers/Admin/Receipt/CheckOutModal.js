@@ -101,7 +101,8 @@ const CheckOutModal = (props) => {
 		setReceipt({
 			...receipt,
 			paidOut: Number(parseFloat(e.target.value).toFixed(2)),
-			refund: e.target.value > sumPrice ? e.target.value - sumPrice : 0,
+			refund:
+				e.target.value > sumPrice ? Number(parseFloat(e.target.value - sumPrice).toFixed(2)) : 0,
 		});
 	};
 
@@ -111,15 +112,14 @@ const CheckOutModal = (props) => {
 			...receipt,
 			paidOut: parseInt(receipt.paidOut),
 		};
-		console.log(newReceipt);
-		console.log(editBooking);
-		// setTimeout(() => dispatch(checkOut(newReceipt)), 3000);
-		// resetData();
+
+		setTimeout(() => dispatch(checkOut(newReceipt)), 3000);
+		resetData();
 	};
 	const resetData = () => {
 		setReceipt({
 			booking: _id,
-			paidOut: '0',
+			paidOut: 0,
 			refund: 0,
 			modeOfPayment: 'CASH',
 		});
@@ -128,12 +128,6 @@ const CheckOutModal = (props) => {
 	};
 
 	const { paidOut, refund, modeOfPayment } = receipt;
-
-	// .filter((s) => {
-	// 	if(services.map((x) => x.service).includes(s._id)){
-
-	// 	};
-	// })
 
 	return (
 		<>
@@ -144,8 +138,7 @@ const CheckOutModal = (props) => {
 					show={show}
 					onHide={handlerModalClose}
 					animation={false}
-					size='lg'
-					dialogClassName='admin-modal'
+					dialogClassName='admin-modal modal-60w '
 				>
 					<Modal.Header closeButton>
 						<Modal.Title>{code}</Modal.Title>
