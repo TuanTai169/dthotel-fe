@@ -29,6 +29,7 @@ const CustomerItem = (props) => {
 		<>
 			<td>{customer.name}</td>
 			<td>{customer.email}</td>
+			<td>{customer.idNumber}</td>
 			<td>{customer.phone}</td>
 			<td>
 				<ButtonToolbar>

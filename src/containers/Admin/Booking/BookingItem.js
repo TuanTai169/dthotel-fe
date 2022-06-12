@@ -47,9 +47,9 @@ const BookingItem = (props) => {
 				{status}
 			</td>
 			<td>
-				<Button variant='info' onClick={() => setIsOpenViewModal(true)}>
+				{/* <Button variant='info' onClick={() => setIsOpenViewModal(true)}>
 					<i className='bx bx-detail icon-bg' style={{ color: '#fff' }}></i>
-				</Button>{' '}
+				</Button>{' '} */}
 				{status === BookingStatus.Booking.name && (
 					<>
 						<Button variant='primary' onClick={() => setIsOpenEditBooking(true)}>
@@ -74,16 +74,20 @@ const BookingItem = (props) => {
 						</OverlayTrigger>
 					</>
 				)}
-				<ViewDetailBookingModal
-					show={isOpenViewModal}
-					handlerModalClose={handlerViewModalClose}
-					booking={booking}
-				/>
-				<EditBookingModal
-					show={isOpenEditBooking}
-					handlerModalClose={handlerCloseEditBookingModal}
-					booking={booking}
-				/>
+				{isOpenViewModal && (
+					<ViewDetailBookingModal
+						show={isOpenViewModal}
+						handlerModalClose={handlerViewModalClose}
+						booking={booking}
+					/>
+				)}
+				{isOpenEditBooking && (
+					<EditBookingModal
+						show={isOpenEditBooking}
+						handlerModalClose={handlerCloseEditBookingModal}
+						booking={booking}
+					/>
+				)}
 				<DialogDelete conformDialog={conformDialog} setConformDialog={setConformDialog} />
 			</td>
 		</>
