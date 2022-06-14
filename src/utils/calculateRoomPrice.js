@@ -36,7 +36,7 @@ export const totalServiceCharge = (services, products, listServices) => {
 	}
 	if (Array.isArray(products) && products.length > 0) {
 		products.forEach((s) => {
-			const item = listServices.find((x) => x._id === s.service);
+			const item = listServices.find((x) => x._id === s.product);
 			if (item) {
 				total += item.price * s.amount;
 			}

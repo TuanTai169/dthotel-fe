@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Row, Col, FloatingLabel } from 'react-bootstrap';
-import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
@@ -13,45 +12,61 @@ import RoomForm from '../FormBooking/RoomForm';
 import ServiceForm from './../FormBooking/ServiceForm';
 
 import { convertStringToDate } from '../../../utils/convertDateTime';
-import { numberValidation } from '../../../utils/validation';
 import { totalRoomCharge, totalServiceCharge } from '../../../utils/calculateRoomPrice';
 
 import PayPalModal from './PayPalModal';
 import FullLoading from './../../../components/Common/FullLoading';
 
 const CheckOutModal = (props) => {
-	const { show, handlerModalClose, handlerParentModalClose, booking } = props;
+	const { show, checkOutSuccess, booking } = props;
 
 	const isLoading = useSelector((state) => state.receiptReducer.isReceiptLoading);
 	const listCoupon = useSelector((state) => state.couponReducer.coupons);
 	const listService = useSelector((state) => state.serviceReducer.services);
 	const listRoom = useSelector((state) => state.roomReducer.rooms);
 
-	const { _id, code, customer, rooms, deposit, discount, services, products, totalPrice, status } =
-		booking[0];
+	const {
+		_id,
+		code,
+		customer,
+		rooms,
+		detail,
+		deposit,
+		discount,
+		services,
+		products,
+		totalPrice,
+		status,
+	} = booking[0];
 
 	const [newDateCheckOut, setNewDateCheckOut] = useState(new Date().setHours(12, 0));
 
 	const [editBooking, setEditBooking] = useState({
 		_id: _id,
-		rooms: rooms.map((room) => room.room),
+		rooms: detail.rooms.map((r) => r._id),
 		customer: customer._id,
 		checkInDate: moment(rooms[0].checkInDate).format('YYYY-MM-DD HH:mm'),
 		checkOutDate: moment(newDateCheckOut).format('YYYY-MM-DD HH:mm'),
-		services: services.map((x) => {
-			return {
-				service: x.service,
-				amount: x.amount,
-			};
-		}),
-		products: products.map((x) => {
-			return {
-				product: x.product,
-				amount: x.amount,
-			};
-		}),
+		services:
+			Array.isArray(services) && services.length > 0
+				? services.map((x) => {
+						return {
+							service: x.service,
+							amount: x.amount,
+						};
+				  })
+				: [],
+		products:
+			Array.isArray(products) && products.length > 0
+				? products.map((x) => {
+						return {
+							product: x.product,
+							amount: x.amount,
+						};
+				  })
+				: [],
 		deposit: deposit,
-		discount: discount._id,
+		discount: discount ? discount._id : null,
 		status: status,
 	});
 
@@ -72,8 +87,8 @@ const CheckOutModal = (props) => {
 		const { checkInDate, checkOutDate, deposit, discount, services, products } = editBooking;
 
 		const calculatorPrice = () => {
-			const roomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate, listRoom);
-			setRoomPrice(Math.round(roomCharge));
+			const roomCharge = totalRoomCharge(detail.rooms, checkInDate, checkOutDate);
+			setRoomPrice(roomCharge);
 
 			let priceDiscount = 0;
 			const coupon = listCoupon.find((x) => x._id === discount);
@@ -93,21 +108,21 @@ const CheckOutModal = (props) => {
 		};
 
 		setSumPrice(calculatorPrice);
-	}, [editBooking, rooms, services, products]);
+	}, [editBooking, detail.rooms, services, products]);
 
 	const checkInDateConvert = convertStringToDate(rooms[0].checkInDate);
 
 	const onChangePaidOut = (e) => {
 		setReceipt({
 			...receipt,
-			paidOut: Number(parseFloat(e.target.value).toFixed(2)),
+			paidOut: e.target.value ? Number(parseFloat(e.target.value).toFixed(2)) : 0,
 			refund:
 				e.target.value > sumPrice ? Number(parseFloat(e.target.value - sumPrice).toFixed(2)) : 0,
 		});
 	};
 
 	const onSubmitCheckOut = () => {
-		// dispatch(updateBooking(editBooking));
+		dispatch(updateBooking(editBooking));
 		const newReceipt = {
 			...receipt,
 			paidOut: parseInt(receipt.paidOut),
@@ -123,12 +138,39 @@ const CheckOutModal = (props) => {
 			refund: 0,
 			modeOfPayment: 'CASH',
 		});
-		handlerModalClose();
-		handlerParentModalClose();
+		checkOutSuccess();
 	};
 
 	const { paidOut, refund, modeOfPayment } = receipt;
 
+	const detailServices =
+		services.length > 0
+			? services.map((s) => {
+					const item = listService.find((x) => x._id === s.service);
+					if (item) {
+						return {
+							...item,
+							amount: s.amount,
+						};
+					} else {
+						return;
+					}
+			  })
+			: [];
+	const detailProducts =
+		products.length > 0
+			? products.map((p) => {
+					const item = listService.find((x) => x._id === s.product);
+					if (item) {
+						return {
+							...item,
+							amount: s.amount,
+						};
+					} else {
+						return;
+					}
+			  })
+			: [];
 	return (
 		<>
 			{isLoading ? (
@@ -136,7 +178,7 @@ const CheckOutModal = (props) => {
 			) : (
 				<Modal
 					show={show}
-					onHide={handlerModalClose}
+					onHide={resetData}
 					animation={false}
 					dialogClassName='admin-modal modal-60w '
 				>
@@ -182,21 +224,23 @@ const CheckOutModal = (props) => {
 									<FloatingLabel controlId='formGridDiscount' label='Discount (%)' className='mb-3'>
 										<Form.Control
 											type='text'
-											value={listCoupon.find((x) => discount._id === x._id).discount}
-											disabled
+											value={
+												discount ? listCoupon.find((x) => discount._id === x._id).discount : '0'
+											}
+											readOnly
 										/>
 									</FloatingLabel>
 								</Col>
 								<Col>
 									<FloatingLabel controlId='floatingDeposit' label='Deposit (USD)' className='mb-3'>
-										<Form.Control type='text' value={deposit} disabled />
+										<Form.Control type='text' value={deposit} readOnly />
 									</FloatingLabel>
 								</Col>
 							</Row>
 							<Row style={{ borderBottom: '1px solid #bbb' }}>
 								<Col>
 									<FloatingLabel controlId='floatingPaidOut' label='Paid (USD) ' className='mb-3'>
-										<Form.Control type='number' value={paidOut} onChange={onChangePaidOut} />
+										<Form.Control type='text' value={paidOut} onChange={onChangePaidOut} />
 									</FloatingLabel>
 								</Col>
 								<Col>
@@ -260,26 +304,33 @@ const CheckOutModal = (props) => {
 											Price (USD): <strong style={{ color: 'red' }}>{servicePrice}</strong>
 										</p>
 									</div>
-									<ServiceForm services={listService} />
+									{[...detailServices, ...detailProducts].length > 0 && (
+										<ServiceForm services={[...detailServices, ...detailProducts]} />
+									)}
 								</Form.Group>
 							</Row>
 						</Modal.Body>
 						<Modal.Footer>
-							{modeOfPayment === 'PAYPAL' && (
-								<Button onClick={() => setIsPaypal(true)}>PayPal</Button>
+							{modeOfPayment === 'PAYPAL' ? (
+								<Button onClick={() => setIsPaypal(true)} disabled={paidOut < sumPrice}>
+									PayPal
+								</Button>
+							) : (
+								<Button variant='danger' onClick={onSubmitCheckOut} disabled={paidOut < sumPrice}>
+									Check out
+								</Button>
 							)}
-							<PayPalModal
-								open={isPaypal}
-								closeModal={() => setIsPaypal(false)}
-								receipt={receipt}
-								closeAllModal={resetData}
-							/>
-							<Button variant='danger' onClick={onSubmitCheckOut}>
-								Save
-							</Button>
-							<Button variant='secondary' onClick={handlerModalClose}>
+							<Button variant='secondary' onClick={resetData}>
 								Close
 							</Button>
+							{isPaypal && (
+								<PayPalModal
+									open={isPaypal}
+									closeModal={() => setIsPaypal(false)}
+									receipt={receipt}
+									closeAllModal={resetData}
+								/>
+							)}
 						</Modal.Footer>
 					</Form>
 				</Modal>

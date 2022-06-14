@@ -151,7 +151,7 @@ const InfoRoomModal = (props) => {
 							/>
 						</Form.Group>
 
-						<Form.Group className='col-3 mb-3' controlId='formBasicAdult'>
+						<Form.Group className='col-2 mb-3' controlId='formBasicAdult'>
 							<Form.Label>Adult</Form.Label>
 							<Form.Control
 								type='number'
@@ -162,7 +162,7 @@ const InfoRoomModal = (props) => {
 								readOnly
 							/>
 						</Form.Group>
-						<Form.Group className='col-3 mb-3' controlId='formBasicChildren'>
+						<Form.Group className='col-2 mb-3' controlId='formBasicChildren'>
 							<Form.Label>Children</Form.Label>
 							<Form.Control
 								type='number'
@@ -173,26 +173,26 @@ const InfoRoomModal = (props) => {
 								readOnly
 							/>
 						</Form.Group>
-					</Row>
-					<Row>
-						<Form.Group className='col-6 mb-3' controlId='formBasicRoomName'>
-							<Form.Label>Name</Form.Label>
-							<Form.Control
-								type='text'
-								placeholder='Room name'
-								name='name'
-								value={name || ''}
-								required
-								readOnly
-							/>
-						</Form.Group>
-						<Form.Group className='col-3 mb-3' controlId='formBasicFloor'>
+						<Form.Group className='col-2 mb-3' controlId='formBasicFloor'>
 							<Form.Label>Floor</Form.Label>
 							<Form.Control
 								type='text'
 								placeholder='1'
 								name='floor'
 								value={floor || ''}
+								required
+								readOnly
+							/>
+						</Form.Group>
+					</Row>
+					<Row>
+						<Form.Group className='col-3 mb-3' controlId='formBasicRoomName'>
+							<Form.Label>Name</Form.Label>
+							<Form.Control
+								type='text'
+								placeholder='Room name'
+								name='name'
+								value={name || ''}
 								required
 								readOnly
 							/>
@@ -209,8 +209,6 @@ const InfoRoomModal = (props) => {
 								readOnly
 							/>
 						</Form.Group>
-					</Row>
-					<Row>
 						<Form.Group className='col-3 mb-3' controlId='formBasicSingleBed'>
 							<Form.Label>Single Bed</Form.Label>
 							<Form.Control
@@ -231,7 +229,9 @@ const InfoRoomModal = (props) => {
 								readOnly
 							/>
 						</Form.Group>
-						<Form.Group className='col-6 mb-3' controlId='formBasicConvenience'>
+					</Row>
+					<Row>
+						<Form.Group className=' mb-3' controlId='formBasicConvenience'>
 							<Form.Label>Convenience</Form.Label>
 							<Select
 								isMulti

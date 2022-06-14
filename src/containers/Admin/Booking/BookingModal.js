@@ -18,7 +18,7 @@ import ViewAllServiceModal from '../Service/ViewAllServiceModal';
 import { BsDash, BsPlus } from 'react-icons/bs';
 
 const BookingModal = (props) => {
-	const { show, handlerModalClose, handlerParentModalClose, currentRoom, status } = props;
+	const { show, bookingSuccess, currentRoom, status } = props;
 	const dispatch = useDispatch();
 	let navigate = useNavigate();
 
@@ -79,7 +79,7 @@ const BookingModal = (props) => {
 			const roomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate);
 
 			let priceDiscount = 0;
-			const coupon = listCoupon.find((x) => x._id === discount);
+			const coupon = discount && listCoupon.find((x) => x._id === discount._id);
 			if (coupon) {
 				priceDiscount = coupon.discount;
 			}
@@ -106,7 +106,7 @@ const BookingModal = (props) => {
 
 		const data = {
 			...newBooking,
-			discount: newBooking.discount._id,
+			discount: newBooking.discount ? newBooking.discount._id : null,
 			products: newBooking.products.map((x) => {
 				return {
 					product: x.product,
@@ -124,7 +124,6 @@ const BookingModal = (props) => {
 		dispatch(addBooking(data, status));
 		setTimeout(() => {
 			dispatch(getAllBooking());
-			dispatch(getAllRoom());
 		}, 3000);
 		resetDataBooking();
 	};
@@ -133,8 +132,6 @@ const BookingModal = (props) => {
 	const closeViewServiceModal = () => setOpenViewService(false);
 
 	const resetDataBooking = () => {
-		handlerParentModalClose();
-		handlerModalClose();
 		setArrayRoom({
 			checkInDate: moment(startDate).format('YYYY-MM-DD HH:mm'),
 			checkOutDate: moment(endDate).format('YYYY-MM-DD HH:mm'),
@@ -145,6 +142,7 @@ const BookingModal = (props) => {
 			services: [],
 			products: [],
 		});
+		bookingSuccess();
 	};
 
 	//onChange
@@ -169,19 +167,6 @@ const BookingModal = (props) => {
 		setNewBooking({
 			...newBooking,
 			rooms: listRoom.map((room) => room._id),
-		});
-	};
-
-	const onRemoveRoom = (e, selectRoom) => {
-		e.preventDefault();
-
-		let newArrayRoom = rooms.filter((room) => room._id !== selectRoom._id);
-
-		setRooms(newArrayRoom);
-		setArrayRoom([...arrayRoom, selectRoom].sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1)));
-		setNewBooking({
-			...newBooking,
-			rooms: newArrayRoom.map((room) => room._id),
 		});
 	};
 
