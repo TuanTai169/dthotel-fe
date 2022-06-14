@@ -106,6 +106,7 @@ const BookingModal = (props) => {
 
 		const data = {
 			...newBooking,
+			discount: newBooking.discount._id,
 			products: newBooking.products.map((x) => {
 				return {
 					product: x.product,
@@ -158,7 +159,7 @@ const BookingModal = (props) => {
 	const onChangeCoupon = (selectItem) => {
 		setNewBooking({
 			...newBooking,
-			discount: selectItem._id,
+			discount: selectItem,
 		});
 	};
 
