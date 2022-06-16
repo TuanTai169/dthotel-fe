@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
 import { RoomPrice } from '../../../../components/Common/Utils';
 import { BiGroup, BiChevronsRight, BiChevronsLeft } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { findRoom } from '../../../../redux/actions/room';
 
 const AvailableRoom = (props) => {
 	const { room, onSelect } = props;
-	const { images, name, price, detail, bed, roomNumber, roomType, convenience, capacity } = room;
+	const { images, name, price, detail, bed, roomType, convenience, capacity } = room;
 	const [more, showMore] = useState(false);
+
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const onChangeChecked = (e) => {
 		onSelect({ room, [e.target.name]: e.target.checked });
+	};
+	const onDetail = (e) => {
+		e.preventDefault();
+		dispatch(findRoom(room._id));
+		navigate('/rooms-detail');
 	};
 	return (
 		<div className='room row mb-20'>
@@ -21,7 +32,9 @@ const AvailableRoom = (props) => {
 				</div>
 			</div>
 			<div className=' col-7 room-right'>
-				<div className='room__title'>{name}</div>
+				<div className='room__title' onClick={onDetail}>
+					{name}
+				</div>
 				<div className='room__desc'>
 					<p>{detail.desc}</p>
 				</div>

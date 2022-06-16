@@ -27,6 +27,7 @@ const RoomPage = () => {
 		new Date(new Date().getTime() + 12 * 60 * 60 * 1000 * 2),
 	]);
 	const [startDate, endDate] = dateRange;
+	const [dayDiff, setDayDiff] = useState(getDateRange(startDate, endDate));
 	const [capacity, setCapacity] = useState({ ...capacityDefault });
 	const [selectRoom, setSelectRoom] = useState([]);
 	const [totalPrice, setTotalPrice] = useState(0);
@@ -46,6 +47,13 @@ const RoomPage = () => {
 		setCapacity({ ...capacity, [e.target.name]: parseInt(e.target.value) });
 	};
 
+	const onChangeDateRange = (update) => {
+		const dayDiff = getDateRange(...update);
+		const price = selectRoom.reduce((sum, { price }) => sum + price, 0);
+		setDateRange(update);
+		setDayDiff(dayDiff);
+		setTotalPrice(price * dayDiff);
+	};
 	const onCheckAvailability = () => {
 		const checkInDate = moment(startDate).format('YYYY-MM-DD');
 		const checkOutDate = moment(endDate).format('YYYY-MM-DD');
@@ -68,6 +76,13 @@ const RoomPage = () => {
 			},
 		};
 		dispatch(checkAvailable(data));
+		resetPage();
+	};
+
+	const resetPage = () => {
+		setSelectRoom([]);
+		setCapacity({ ...capacityDefault });
+		setTotalPrice(0);
 	};
 
 	const onSelectedRoom = (value) => {
@@ -75,12 +90,12 @@ const RoomPage = () => {
 		if (isChecked) {
 			const newArray = [...selectRoom, room];
 			const price = newArray.reduce((sum, { price }) => sum + price, 0);
-			setTotalPrice(price);
+			setTotalPrice(price * dayDiff);
 			setSelectRoom(newArray);
 		} else {
 			const newArray = selectRoom.filter((x) => x._id !== room._id);
 			const price = newArray.reduce((sum, { price }) => sum + price, 0);
-			setTotalPrice(price);
+			setTotalPrice(price * dayDiff);
 			setSelectRoom(newArray);
 		}
 	};
@@ -121,9 +136,7 @@ const RoomPage = () => {
 								selectsRange={true}
 								startDate={startDate}
 								endDate={endDate}
-								onChange={(update) => {
-									setDateRange(update);
-								}}
+								onChange={onChangeDateRange}
 								customInput={<ExampleCustomInput />}
 							/>
 						</div>
@@ -178,30 +191,28 @@ const RoomPage = () => {
 					</div>
 				</div>
 			</section>
-			<section className='available-room'>
-				<div className='list-room row'>
-					<div className='col-9'>
-						{listRoom.map((room) => (
-							<AvailableRoom room={room} key={room._id} onSelect={onSelectedRoom} />
-						))}
-					</div>
+			{Array.isArray(listRoom) && listRoom.length > 0 && (
+				<section className='available-room'>
+					<div className='list-room row'>
+						<div className='col-9'>
+							{listRoom.map((room) => (
+								<AvailableRoom room={room} key={room._id} onSelect={onSelectedRoom} />
+							))}
+						</div>
 
-					<div className='btn-booking col-3 pos-fixed end-0'>
-						<button onClick={onBooking} disabled={!(selectRoom.length > 0)}>
-							Book Now
-						</button>
-						<p>{selectRoom && selectRoom.length} room</p>
-						<RoomPrice
-							price={totalPrice}
-							message={`for ${
-								selectRoom && (selectRoom.length > 0) & getDateRange(startDate, endDate)
-									? getDateRange(startDate, endDate)
-									: 0
-							} night`}
-						/>
+						<div className='btn-booking col-3 pos-fixed end-0'>
+							<button onClick={onBooking} disabled={!(selectRoom.length > 0)}>
+								Book Now
+							</button>
+							<p>{selectRoom && selectRoom.length} room</p>
+							<RoomPrice
+								price={totalPrice ? totalPrice : 0}
+								message={`for ${dayDiff ? dayDiff : 0} night`}
+							/>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			)}
 		</div>
 	);
 };

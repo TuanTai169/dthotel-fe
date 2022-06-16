@@ -191,18 +191,6 @@ const EditBookingModal = (props) => {
 		});
 	};
 
-	// const onRemoveRoom = (e, selectRoom) => {
-	// 	e.preventDefault();
-
-	// 	let newArrayRoom = newRooms.filter((room) => room._id !== selectRoom._id);
-
-	// 	setRooms(newArrayRoom);
-	// 	setArrayRoom([...arrayRoom, selectRoom].sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1)));
-	// 	setEditBooking({
-	// 		...editBooking,
-	// 		rooms: newArrayRoom.map((room) => room._id),
-	// 	});
-	// };
 	const onChangeService = (listSelected) => {
 		const newService = listSelected.filter((s) => s.isProduct === false);
 		const newProduct = listSelected.filter((s) => s.isProduct === true);
@@ -235,6 +223,20 @@ const EditBookingModal = (props) => {
 		});
 	};
 
+	const isNotCheckIn = (rooms) => {
+		let check = false;
+		Array.isArray(rooms) &&
+			rooms.length > 0 &&
+			rooms.forEach((r) => {
+				const room = listRoom.find((x) => x._id === r._id);
+				if (room.status === RoomStatus.Fixing.name || room.status === RoomStatus.Cleaning.name) {
+					check = true;
+				}
+			});
+
+		return check;
+	};
+
 	//Render room Table
 	const tableRoomHead = ['No#', 'Number', 'Floor', 'Price (USD)', ''];
 	const renderRoomHead = tableRoomHead.map((item, index) => {
@@ -254,6 +256,7 @@ const EditBookingModal = (props) => {
 			</th>
 		);
 	});
+	console.log(isNotCheckIn(detail.rooms));
 
 	return (
 		<>
@@ -444,6 +447,7 @@ const EditBookingModal = (props) => {
 									onConform: () => handlerCheckIn(),
 								});
 							}}
+							disabled={isNotCheckIn(detail.rooms)}
 						>
 							<i className='bx bxs-user-check'></i>
 							<span>&ensp;Check in</span>
