@@ -160,11 +160,11 @@ const CheckOutModal = (props) => {
 	const detailProducts =
 		products.length > 0
 			? products.map((p) => {
-					const item = listService.find((x) => x._id === s.product);
+					const item = listService.find((x) => x._id === p.product);
 					if (item) {
 						return {
 							...item,
-							amount: s.amount,
+							amount: p.amount,
 						};
 					} else {
 						return;

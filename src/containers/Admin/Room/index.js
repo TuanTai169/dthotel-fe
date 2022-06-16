@@ -14,6 +14,7 @@ import ScrollToTop from '../../../components/Common/ScrollToTop';
 import { getAllBooking } from '../../../redux/actions/booking';
 import { getAllReceipt } from '../../../redux/actions/receipt';
 import { getAllRoom } from './../../../redux/actions/room';
+import { getStatistic } from './../../../redux/actions/receipt';
 
 const Rooms = () => {
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -94,6 +95,7 @@ const Rooms = () => {
 												dispatch(getAllBooking());
 												dispatch(getAllReceipt());
 												dispatch(getAllRoom());
+												dispatch(getStatistic());
 											}}
 											style={{ marginRight: '10px', color: '#fff' }}
 										>
