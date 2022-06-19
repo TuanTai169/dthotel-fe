@@ -9,7 +9,9 @@ const ServiceRevenueItem = (props) => {
 			<td>{service.service}</td>
 			<td>{service.bookingId}</td>
 			<td>{checkOutDate}</td>
+			<td>{service.amount}</td>
 			<td>{service.price}</td>
+			<td>{service.price * service.amount}</td>
 		</>
 	);
 };

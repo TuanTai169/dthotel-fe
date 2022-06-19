@@ -256,7 +256,6 @@ const EditBookingModal = (props) => {
 			</th>
 		);
 	});
-	console.log(isNotCheckIn(detail.rooms));
 
 	return (
 		<>
