@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RoomStatus } from '../../../assets/app/constants';
+import { RoomStatus, depositRange } from '../../../assets/app/constants';
 import CustomerForm from '../FormBooking/CustomerForm';
 import { totalRoomCharge, totalServiceCharge } from '../../../utils/calculateRoomPrice';
 import { getAllBooking, addBooking } from '../../../redux/actions/booking';
@@ -57,7 +57,7 @@ const BookingModal = (props) => {
 	const [newBooking, setNewBooking] = useState({
 		checkInDate: moment(startDate).format('YYYY-MM-DD HH:mm'),
 		checkOutDate: moment(endDate).format('YYYY-MM-DD HH:mm'),
-		deposit: 0,
+		deposit: 50,
 		discount: null,
 		rooms: [currentRoom._id],
 		customer: '',
@@ -88,9 +88,9 @@ const BookingModal = (props) => {
 
 			const VAT = 10;
 			return Number(
-				parseFloat(
-					(roomCharge + sumServicesPrice) * (1 + VAT / 100 - priceDiscount / 100) - deposit
-				).toFixed(2)
+				parseFloat((roomCharge + sumServicesPrice) * (1 + VAT / 100 - priceDiscount / 100)).toFixed(
+					2
+				)
 			);
 		};
 		setTotalPrice(calculatorPrice);
@@ -106,6 +106,7 @@ const BookingModal = (props) => {
 
 		const data = {
 			...newBooking,
+			deposit: Number(parseFloat((newBooking.deposit / 100) * totalPrice).toFixed(2)),
 			discount: newBooking.discount ? newBooking.discount._id : null,
 			products: newBooking.products.map((x) => {
 				return {
@@ -163,7 +164,7 @@ const BookingModal = (props) => {
 
 	const onChangeRoom = (listRoom) => {
 		setRooms(listRoom);
-		// setArrayRoom(arrayRoom.filter((room) => room._id !== selectRoom._id));
+
 		setNewBooking({
 			...newBooking,
 			rooms: listRoom.map((room) => room._id),
@@ -268,8 +269,6 @@ const BookingModal = (props) => {
 		);
 	});
 
-	const { deposit } = newBooking;
-
 	return (
 		<>
 			<Modal
@@ -329,13 +328,16 @@ const BookingModal = (props) => {
 							</Form.Group>
 							<Form.Group as={Col} controlId='formGridDeposit'>
 								<Form.Label>Deposit</Form.Label>
-								<Form.Control
-									type='number'
+								<Select
 									name='deposit'
-									value={deposit}
-									onChange={(e) => {
-										setNewBooking({ ...newBooking, deposit: e.target.value });
-									}}
+									options={depositRange}
+									defaultValue={{ name: '50%', value: 50 }}
+									getOptionLabel={(option) => option.name}
+									getOptionValue={(option) => option.value}
+									onChange={(item) => setNewBooking({ ...newBooking, deposit: item.value })}
+									className='basic-multi-select'
+									classNamePrefix='select type'
+									isClearable
 								/>
 							</Form.Group>
 							<Form.Group as={Col} controlId='formGridDiscount'>
@@ -348,6 +350,7 @@ const BookingModal = (props) => {
 									onChange={onChangeCoupon}
 									className='basic-select'
 									classNamePrefix='select coupon'
+									isClearable
 								/>
 							</Form.Group>
 						</Row>
@@ -425,13 +428,13 @@ const BookingModal = (props) => {
 									classNamePrefix='select service or product'
 								/>
 							</Form.Group>
-							<Table striped>
-								<thead>
-									<tr>{renderServiceHead}</tr>
-								</thead>
-								<tbody>
-									{(services.length > 0 || products.length > 0) &&
-										[...services, ...products].map((service, index) => (
+							{(services.length > 0 || products.length > 0) && (
+								<Table striped>
+									<thead>
+										<tr>{renderServiceHead}</tr>
+									</thead>
+									<tbody>
+										{[...services, ...products].map((service, index) => (
 											<tr key={service._id}>
 												<td>{index + 1}</td>
 												<td>{service.name}</td>
@@ -451,8 +454,9 @@ const BookingModal = (props) => {
 												</td>
 											</tr>
 										))}
-								</tbody>
-							</Table>
+									</tbody>
+								</Table>
+							)}
 							<ViewAllServiceModal
 								show={openViewService}
 								handlerModalClose={closeViewServiceModal}

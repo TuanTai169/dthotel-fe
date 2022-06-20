@@ -43,6 +43,7 @@ const CheckOutModal = (props) => {
 
 	const [editBooking, setEditBooking] = useState({
 		_id: _id,
+		code,
 		rooms: detail.rooms.map((r) => r._id),
 		customer: customer._id,
 		checkInDate: moment(rooms[0].checkInDate).format('YYYY-MM-DD HH:mm'),

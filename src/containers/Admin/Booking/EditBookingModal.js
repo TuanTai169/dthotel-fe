@@ -323,6 +323,7 @@ const EditBookingModal = (props) => {
 									onChange={(e) => {
 										setEditBooking({ ...editBooking, deposit: e.target.value });
 									}}
+									readOnly
 								/>
 							</Form.Group>
 							<Form.Group as={Col} controlId='formGridDiscount'>
@@ -336,6 +337,7 @@ const EditBookingModal = (props) => {
 									onChange={onChangeCoupon}
 									className='basic-select'
 									classNamePrefix='select coupon'
+									isDisabled
 								/>
 							</Form.Group>
 						</Row>

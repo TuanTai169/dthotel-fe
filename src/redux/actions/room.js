@@ -130,7 +130,7 @@ export const changeStatusRoom = (id, status) => {
 	};
 };
 
-//GET READY
+//UPLOAD IMAGE
 export const uploadImage = (id, formData) => {
 	return async (dispatch) => {
 		try {
@@ -166,6 +166,28 @@ export const checkAvailable = (data) => {
 				dispatch({
 					type: types.CHECK_AVAILABLE,
 					payload: response.data.listRoom,
+				});
+				dispatch({ type: types.SET_ROOM_LOADING, payload: false });
+				toast.success(response.data.message);
+			}
+		} catch (error) {
+			console.log(error);
+			dispatch({ type: types.SET_ROOM_LOADING, payload: false });
+			error.response && toast.error(error.response.data.message);
+		}
+	};
+};
+
+// CHANGE PRICE
+export const changePrice = (data) => {
+	return async (dispatch) => {
+		try {
+			dispatch({ type: types.SET_ROOM_LOADING, payload: true });
+			const response = await axios.put(`${HOST_API_URL}/room/change-price`, data);
+			if (response.data.success) {
+				dispatch({
+					type: types.CHANGE_PRICE,
+					payload: response.data,
 				});
 				dispatch({ type: types.SET_ROOM_LOADING, payload: false });
 				toast.success(response.data.message);

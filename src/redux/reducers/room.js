@@ -47,6 +47,10 @@ const roomReducer = (state = initialState, action) => {
 				...state,
 				rooms: payload,
 			};
+		case types.CHANGE_PRICE:
+			return {
+				...state,
+			};
 		case types.FIND_ROOM:
 			return {
 				...state,

@@ -8,3 +8,4 @@ export const UPDATE_ROOM = 'UPDATE_ROOM';
 export const DELETE_ROOM = 'DELETE_ROOM';
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const CHECK_AVAILABLE = 'CHECK_AVAILABLE';
+export const CHANGE_PRICE = 'CHANGE_PRICE';
