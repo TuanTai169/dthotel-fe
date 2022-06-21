@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateRoom, getAllRoom } from '../../../redux/actions/room';
 import { numberValidation } from '../../../utils/validation';
 import { RoomStatus } from '../../../assets/app/constants';
+import { uploadImage } from './../../../redux/actions/room';
 
 const EditRoomModal = (props) => {
 	const { show, handlerEditModalClose, handlerModalParentClose, room } = props;
 	const dispatch = useDispatch();
 
 	const [editRoom, setEditRoom] = useState(room);
+	const [roomImages, setRoomImages] = useState([]);
 	const convenienceList = useSelector((state) => state.convenience.conveniences);
 	const typesList = useSelector((state) => state.types.types);
 
@@ -47,6 +49,11 @@ const EditRoomModal = (props) => {
 		setEditRoom({ ...editRoom, bed: newBed });
 	};
 
+	const onChangeImages = (e) => {
+		e.preventDefault();
+		setRoomImages(e.target.files);
+	};
+
 	const handlerSubmit = (e) => {
 		e.preventDefault();
 		const data = {
@@ -58,7 +65,16 @@ const EditRoomModal = (props) => {
 			status: RoomStatus.Ready.name,
 		};
 
+		// add image into form data
 		dispatch(updateRoom(data));
+		if (roomImages.length > 0) {
+			const formData = new FormData();
+			for (let i = 0; i < roomImages.length; i++) {
+				formData.append(`files`, roomImages[i]);
+			}
+			dispatch(uploadImage(editRoom._id, formData));
+		}
+
 		resetEditPostData();
 		handlerModalParentClose();
 	};
@@ -254,6 +270,11 @@ const EditRoomModal = (props) => {
 								/>
 							</Form.Group>
 						</Row>
+
+						<Form.Group controlId='formFileMultiple' className='mb-3'>
+							<Form.Label>Images</Form.Label>
+							<Form.Control type='file' multiple onChange={onChangeImages} />
+						</Form.Group>
 
 						<Form.Group className='mb-3' controlId='formBasicDescription'>
 							<Form.Label>Description</Form.Label>

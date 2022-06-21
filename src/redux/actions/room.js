@@ -54,6 +54,7 @@ export const addRoom = (newRoom) => {
 				});
 				dispatch({ type: types.SET_ROOM_LOADING, payload: false });
 				toast.success(response.data.message);
+				return response.data.newRoom;
 			}
 		} catch (error) {
 			console.log(error);
