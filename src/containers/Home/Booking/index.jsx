@@ -63,7 +63,7 @@ const BookingPage = () => {
 		};
 
 		setData(data);
-		// setIsShowModal(true);
+		setIsShowModal(true);
 	};
 	const onChangeInputCustomer = (e) => {
 		const dataChange = { [e.target.name]: e.target.value };
