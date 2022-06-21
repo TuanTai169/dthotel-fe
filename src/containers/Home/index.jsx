@@ -20,6 +20,7 @@ import WebsiteTermPage from './Footer/Terms/Website';
 import './index.scss';
 import { Link, Route, Routes } from 'react-router-dom';
 import ScrollToTop from 'react-scroll-to-top';
+import Chatbot from '../../components/Chatbot';
 
 const Home = () => {
 	return (
@@ -48,7 +49,8 @@ const Home = () => {
 			<div className='home__footer'>
 				<Footer />
 			</div>
-			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a' }} />
+			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a', left: '20px' }} />
+			<Chatbot />
 		</div>
 	);
 };
