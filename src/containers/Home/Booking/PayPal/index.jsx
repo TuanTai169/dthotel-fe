@@ -27,8 +27,8 @@ const PayPal = (props) => {
 					});
 				},
 				onApprove: async (data, actions) => {
-					onSuccess();
 					await actions.order.capture();
+					onSuccess();
 				},
 				onError: (err) => {
 					console.log(err);

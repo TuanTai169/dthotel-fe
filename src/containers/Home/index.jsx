@@ -18,7 +18,7 @@ import PrivacyPage from './Footer/Terms/Privacy';
 import WebsiteTermPage from './Footer/Terms/Website';
 
 import './index.scss';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import ScrollToTop from 'react-scroll-to-top';
 import Chatbot from '../../components/Chatbot';
 
