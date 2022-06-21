@@ -27,8 +27,8 @@ function EditProfileModal(props) {
 			phoneValidation(editUser.phone) &&
 			textValidation(editUser.address)
 		) {
-			resetAddPostData();
 			dispatch(updateProfile(editUser, user._id));
+			resetAddPostData();
 		}
 	};
 
@@ -45,7 +45,7 @@ function EditProfileModal(props) {
 
 	return (
 		<div>
-			<Modal show={show} onHide={resetAddPostData} animation={false}>
+			<Modal show={show} onHide={resetAddPostData} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Edit Profile</Modal.Title>
 				</Modal.Header>

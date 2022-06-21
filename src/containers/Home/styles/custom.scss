@@ -4,6 +4,9 @@
 	color: $main-text-color;
 	background-color: $main-bg-color;
 }
+.text-home-color {
+	color: $main-text-color;
+}
 .format-home {
 	@extend .format-default;
 	border: none;

@@ -46,13 +46,13 @@ const ChangePasswordModal = (props) => {
 
 	return (
 		<div>
-			<Modal show={show} onHide={resetAddPostData} animation={false}>
+			<Modal show={show} onHide={resetAddPostData} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Change Password</Modal.Title>
 				</Modal.Header>
 				<Form onSubmit={handleSubmit}>
 					<Modal.Body>
-						<FloatingLabel controlId='floatingOldPass' label='Password' className='mb-3'>
+						<FloatingLabel controlId='floatingOldPass' label='Old Password' className='mb-3'>
 							<Form.Control
 								type={inputType}
 								placeholder='*'
@@ -63,7 +63,7 @@ const ChangePasswordModal = (props) => {
 							/>
 							<span className='password-toggle-icon'>{toggleIcon}</span>
 						</FloatingLabel>
-						<FloatingLabel controlId='floatingNewPass' label='Password' className='mb-3'>
+						<FloatingLabel controlId='floatingNewPass' label='New Password' className='mb-3'>
 							<Form.Control
 								type={inputType}
 								placeholder='*'

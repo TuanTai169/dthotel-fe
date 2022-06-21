@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { ButtonToolbar, Button } from 'react-bootstrap';
-import { changeStatusRoom } from '../../../redux/actions/room';
+import { changeStatusRoom, getAllRoom } from '../../../redux/actions/room';
 import { useDispatch } from 'react-redux';
 import BookingModal from '../Booking/BookingModal';
 
 import DialogChange from '../../../components/Dialog/DialogChange';
 import CheckOutModal from '../Receipt/CheckOutModal';
 import { RoomStatus } from '../../../assets/app/constants';
+import ViewAllRoomModal from './ViewAllRoomModal';
 
 const RoomActionButton = (props) => {
 	const dispatch = useDispatch();
@@ -25,8 +26,18 @@ const RoomActionButton = (props) => {
 
 	const [statusBooking, setStatusBooking] = useState('book');
 
-	const handlerCloseBookingModal = () => setIsOpenBooking(false);
-	const handlerCloseCheckOutModal = () => setIsOpenCheckOut(false);
+	const checkOutSuccess = () => {
+		setTimeout(() => dispatch(getAllRoom()), 5000);
+		setIsOpenCheckOut(false);
+		handlerModalClose();
+	};
+
+	const bookingSuccess = () => {
+		setTimeout(() => dispatch(getAllRoom()), 5000);
+		setIsOpenBooking(false);
+		handlerModalClose();
+	};
+
 	const handlerCloseViewRoomModal = () => setIsOpenViewRoom(false);
 
 	const { status, _id } = room;
@@ -90,9 +101,8 @@ const RoomActionButton = (props) => {
 						{isOpenBooking && (
 							<BookingModal
 								show={isOpenBooking}
-								handlerModalClose={handlerCloseBookingModal}
 								currentRoom={room}
-								handlerParentModalClose={handlerModalClose}
+								bookingSuccess={bookingSuccess}
 								status={statusBooking}
 							/>
 						)}
@@ -118,9 +128,8 @@ const RoomActionButton = (props) => {
 							{isOpenBooking && (
 								<BookingModal
 									show={isOpenBooking}
-									handlerModalClose={handlerCloseBookingModal}
+									bookingSuccess={bookingSuccess}
 									currentRoom={room}
-									handlerParentModalClose={handlerModalClose}
 									status={statusBooking}
 								/>
 							)}
@@ -166,8 +175,7 @@ const RoomActionButton = (props) => {
 						{isOpenCheckOut && (
 							<CheckOutModal
 								show={isOpenCheckOut}
-								handlerModalClose={handlerCloseCheckOutModal}
-								handlerParentModalClose={handlerModalClose}
+								checkOutSuccess={checkOutSuccess}
 								booking={booking}
 							/>
 						)}

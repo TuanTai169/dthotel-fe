@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const totalRoomCharge = (rooms, checkInDate, checkOutDate, listRoom) => {
+export const totalRoomCharge = (rooms, checkInDate, checkOutDate) => {
 	let total = 0;
 	let sumRoomsPrice = 0;
 
@@ -8,10 +8,7 @@ export const totalRoomCharge = (rooms, checkInDate, checkOutDate, listRoom) => {
 
 	if (Array.isArray(rooms) && rooms.length > 0) {
 		rooms.forEach((item) => {
-			const room = listRoom.find((x) => x._id === item.room);
-			if (room) {
-				sumRoomsPrice += room.price;
-			}
+			sumRoomsPrice += item.price;
 		});
 	}
 
@@ -39,7 +36,7 @@ export const totalServiceCharge = (services, products, listServices) => {
 	}
 	if (Array.isArray(products) && products.length > 0) {
 		products.forEach((s) => {
-			const item = listServices.find((x) => x._id === s.service);
+			const item = listServices.find((x) => x._id === s.product);
 			if (item) {
 				total += item.price * s.amount;
 			}
@@ -66,7 +63,7 @@ const earlyCheckIn = (checkInDate, roomCharge) => {
 
 	const start = moment(checkInDate, 'YYYY-MM-DD HH:mm');
 	const end = moment(checkInDate, 'YYYY-MM-DD').set({
-		hours: 14,
+		hours: 12,
 		minutes: 0,
 	});
 

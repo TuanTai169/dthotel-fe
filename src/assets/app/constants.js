@@ -68,15 +68,15 @@ module.exports = {
 	}),
 
 	imageDefault: {
-		src: 'https://drive.google.com/thumbnail?id=1wssym_RCzfAETooYk690s0mlcAv_CVhw',
+		src: 'https://drive.google.com/uc?id=1PAsb7t20MLjDaOnbszsqeDA56umgYXdB',
 		alt: 'default-img',
 	},
 	imagePayPal: {
-		src: 'https://drive.google.com/thumbnail?id=1Szl4kHiJKfAeWNe8TLVOqCGMi3BK42AS',
+		src: 'https://drive.google.com/uc?id=1Szl4kHiJKfAeWNe8TLVOqCGMi3BK42AS',
 		alt: 'paypal-img',
 	},
 	imageVNPay: {
-		src: 'https://drive.google.com/thumbnail?id=1U_g_-i0t-iOjnIZ8UIXKvFxI3rAcOOBK',
+		src: 'https://drive.google.com/uc?id=1U_g_-i0t-iOjnIZ8UIXKvFxI3rAcOOBK',
 		alt: 'vnpay-img',
 	},
 
@@ -101,6 +101,7 @@ module.exports = {
 			kitchen: 0,
 			desc: '',
 		},
+		images: [],
 		bed: {
 			single: 0,
 			double: 0,
@@ -130,4 +131,12 @@ module.exports = {
 		},
 		role: '',
 	},
+	depositRange: [
+		{ name: '50%', value: 50 },
+		{ name: '60%', value: 60 },
+		{ name: '70%', value: 70 },
+		{ name: '80%', value: 80 },
+		{ name: '90%', value: 90 },
+		{ name: '100%', value: 100 },
+	],
 };

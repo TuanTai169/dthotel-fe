@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonToolbar, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import lodash from 'lodash';
 
-import { RoomStatus } from '../../../assets/app/constants';
+import { RoomStatus, userRoles } from '../../../assets/app/constants';
 import RoomItem from './RoomItem';
 import AddRoomModal from './AddRoomModal';
 import ViewAllBookingModal from '../Booking/ViewAllBookingModal';
@@ -13,11 +13,15 @@ import FullLoading from '../../../components/Common/FullLoading';
 import ScrollToTop from '../../../components/Common/ScrollToTop';
 import { getAllBooking } from '../../../redux/actions/booking';
 import { getAllReceipt } from '../../../redux/actions/receipt';
+import { getAllRoom } from './../../../redux/actions/room';
+import { getStatistic } from './../../../redux/actions/receipt';
+import ChangePriceModal from './ChangePriceModal';
 
 const Rooms = () => {
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
-	const [isOpenBookingModal, seIsOpenBookingModal] = useState(false);
-	const [isOpenStatusRoomModal, seIsOpenStatusRoomModal] = useState(false);
+	const [isOpenBookingModal, setIsOpenBookingModal] = useState(false);
+	const [isOpenStatusRoomModal, setIsOpenStatusRoomModal] = useState(false);
+	const [isOpenChangePriceModal, setIsOpenChangePriceModal] = useState(false);
 	const dispatch = useDispatch();
 
 	const rooms = useSelector((state) => state.roomReducer.rooms);
@@ -36,8 +40,9 @@ const Rooms = () => {
 
 	//Close Add Modal
 	const handlerCloseAddModal = () => setIsOpenAddModal(false);
-	const handlerCloseBookingModal = () => seIsOpenBookingModal(false);
-	const handlerCloseStatusRoomModal = () => seIsOpenStatusRoomModal(false);
+	const handlerCloseBookingModal = () => setIsOpenBookingModal(false);
+	const handlerCloseStatusRoomModal = () => setIsOpenStatusRoomModal(false);
+	const handlerCloseChangePriceModal = () => setIsOpenChangePriceModal(false);
 
 	return (
 		<>
@@ -92,6 +97,8 @@ const Rooms = () => {
 											onClick={() => {
 												dispatch(getAllBooking());
 												dispatch(getAllReceipt());
+												dispatch(getAllRoom());
+												dispatch(getStatistic());
 											}}
 											style={{ marginRight: '10px', color: '#fff' }}
 										>
@@ -106,7 +113,7 @@ const Rooms = () => {
 									<span className='d-inline-block'>
 										<Button
 											onClick={() => {
-												seIsOpenBookingModal(true);
+												setIsOpenBookingModal(true);
 												dispatch(getAllBooking());
 											}}
 											style={{ marginRight: '10px' }}
@@ -122,19 +129,28 @@ const Rooms = () => {
 									<span className='d-inline-block'>
 										<Button
 											variant='danger'
-											onClick={() => seIsOpenStatusRoomModal(true)}
+											onClick={() => setIsOpenStatusRoomModal(true)}
 											style={{ marginRight: '10px', color: '#fff' }}
 										>
 											<i className='bx bx-calendar' style={{ fontSize: '22px' }}></i>
 										</Button>
 									</span>
 								</OverlayTrigger>
-
-								{role !== 'EMPLOYEE' && (
+								{role !== userRoles.Employee.name && (
+									<Button
+										variant='warning'
+										style={{ marginRight: '10px', color: '#fff' }}
+										onClick={() => setIsOpenChangePriceModal(true)}
+									>
+										Change Price
+									</Button>
+								)}
+								{role !== userRoles.Employee.name && (
 									<Button variant='success' onClick={() => setIsOpenAddModal(true)}>
 										Add Room
 									</Button>
 								)}
+
 								{isOpenBookingModal && (
 									<ViewAllBookingModal
 										show={isOpenBookingModal}
@@ -150,6 +166,13 @@ const Rooms = () => {
 									<ReservationCalendar
 										show={isOpenStatusRoomModal}
 										handlerModalClose={handlerCloseStatusRoomModal}
+									/>
+								)}
+								{isOpenChangePriceModal && (
+									<ChangePriceModal
+										show={isOpenChangePriceModal}
+										handlerModalClose={handlerCloseChangePriceModal}
+										rooms={rooms}
 									/>
 								)}
 							</ButtonToolbar>

@@ -40,8 +40,8 @@ const Sidebar = () => {
 			</div>
 
 			<div className='sidebar__footer'>
-				<p>Version 1.0</p>
-				<p>Copyright © 2018 DTHSOFT</p>
+				<p>Version 2.0</p>
+				<p>Copyright © 2022 DT HOTEL</p>
 			</div>
 		</div>
 	);

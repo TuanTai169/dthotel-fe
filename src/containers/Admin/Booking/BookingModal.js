@@ -6,9 +6,9 @@ import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RoomStatus } from '../../../assets/app/constants';
+import { RoomStatus, depositRange } from '../../../assets/app/constants';
 import CustomerForm from '../FormBooking/CustomerForm';
-import { totalRoomCharge } from '../../../utils/calculateRoomPrice';
+import { totalRoomCharge, totalServiceCharge } from '../../../utils/calculateRoomPrice';
 import { getAllBooking, addBooking } from '../../../redux/actions/booking';
 import { getAllRoom } from './../../../redux/actions/room';
 
@@ -18,7 +18,7 @@ import ViewAllServiceModal from '../Service/ViewAllServiceModal';
 import { BsDash, BsPlus } from 'react-icons/bs';
 
 const BookingModal = (props) => {
-	const { show, handlerModalClose, handlerParentModalClose, currentRoom, status } = props;
+	const { show, bookingSuccess, currentRoom, status } = props;
 	const dispatch = useDispatch();
 	let navigate = useNavigate();
 
@@ -57,7 +57,7 @@ const BookingModal = (props) => {
 	const [newBooking, setNewBooking] = useState({
 		checkInDate: moment(startDate).format('YYYY-MM-DD HH:mm'),
 		checkOutDate: moment(endDate).format('YYYY-MM-DD HH:mm'),
-		deposit: 0,
+		deposit: 50,
 		discount: null,
 		rooms: [currentRoom._id],
 		customer: '',
@@ -76,25 +76,22 @@ const BookingModal = (props) => {
 		setExcludeDates(exclude);
 
 		const calculatorPrice = () => {
-			const RoomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate);
+			const roomCharge = totalRoomCharge(rooms, checkInDate, checkOutDate);
+
 			let priceDiscount = 0;
-			const coupon = listCoupon.find((x) => x._id === discount);
+			const coupon = discount && listCoupon.find((x) => x._id === discount._id);
 			if (coupon) {
 				priceDiscount = coupon.discount;
 			}
-			const sumServicesPrice = services
-				.map((item) => item.price)
-				.reduce((prev, curr) => prev + curr, 0);
 
-			const sumProductsPrice = products
-				.map((item) => item.price)
-				.reduce((prev, curr) => prev + curr, 0);
+			const sumServicesPrice = totalServiceCharge(services, products, listService);
 
 			const VAT = 10;
-			return (
-				(RoomCharge + sumServicesPrice + sumProductsPrice) * (1 + VAT / 100 - priceDiscount / 100) -
-				deposit
-			).toFixed();
+			return Number(
+				parseFloat((roomCharge + sumServicesPrice) * (1 + VAT / 100 - priceDiscount / 100)).toFixed(
+					2
+				)
+			);
 		};
 		setTotalPrice(calculatorPrice);
 	}, [newBooking, rooms, services, products, listBooking]);
@@ -109,6 +106,8 @@ const BookingModal = (props) => {
 
 		const data = {
 			...newBooking,
+			deposit: Number(parseFloat((newBooking.deposit / 100) * totalPrice).toFixed(2)),
+			discount: newBooking.discount ? newBooking.discount._id : null,
 			products: newBooking.products.map((x) => {
 				return {
 					product: x.product,
@@ -126,7 +125,6 @@ const BookingModal = (props) => {
 		dispatch(addBooking(data, status));
 		setTimeout(() => {
 			dispatch(getAllBooking());
-			dispatch(getAllRoom());
 		}, 3000);
 		resetDataBooking();
 	};
@@ -135,8 +133,6 @@ const BookingModal = (props) => {
 	const closeViewServiceModal = () => setOpenViewService(false);
 
 	const resetDataBooking = () => {
-		handlerParentModalClose();
-		handlerModalClose();
 		setArrayRoom({
 			checkInDate: moment(startDate).format('YYYY-MM-DD HH:mm'),
 			checkOutDate: moment(endDate).format('YYYY-MM-DD HH:mm'),
@@ -147,6 +143,7 @@ const BookingModal = (props) => {
 			services: [],
 			products: [],
 		});
+		bookingSuccess();
 	};
 
 	//onChange
@@ -161,29 +158,16 @@ const BookingModal = (props) => {
 	const onChangeCoupon = (selectItem) => {
 		setNewBooking({
 			...newBooking,
-			discount: selectItem._id,
+			discount: selectItem,
 		});
 	};
 
 	const onChangeRoom = (listRoom) => {
 		setRooms(listRoom);
-		// setArrayRoom(arrayRoom.filter((room) => room._id !== selectRoom._id));
+
 		setNewBooking({
 			...newBooking,
 			rooms: listRoom.map((room) => room._id),
-		});
-	};
-
-	const onRemoveRoom = (e, selectRoom) => {
-		e.preventDefault();
-
-		let newArrayRoom = rooms.filter((room) => room._id !== selectRoom._id);
-
-		setRooms(newArrayRoom);
-		setArrayRoom([...arrayRoom, selectRoom].sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1)));
-		setNewBooking({
-			...newBooking,
-			rooms: newArrayRoom.map((room) => room._id),
 		});
 	};
 
@@ -285,8 +269,6 @@ const BookingModal = (props) => {
 		);
 	});
 
-	const { deposit } = newBooking;
-
 	return (
 		<>
 			<Modal
@@ -346,13 +328,16 @@ const BookingModal = (props) => {
 							</Form.Group>
 							<Form.Group as={Col} controlId='formGridDeposit'>
 								<Form.Label>Deposit</Form.Label>
-								<Form.Control
-									type='number'
+								<Select
 									name='deposit'
-									value={deposit}
-									onChange={(e) => {
-										setNewBooking({ ...newBooking, deposit: e.target.value });
-									}}
+									options={depositRange}
+									defaultValue={{ name: '50%', value: 50 }}
+									getOptionLabel={(option) => option.name}
+									getOptionValue={(option) => option.value}
+									onChange={(item) => setNewBooking({ ...newBooking, deposit: item.value })}
+									className='basic-multi-select'
+									classNamePrefix='select type'
+									isClearable
 								/>
 							</Form.Group>
 							<Form.Group as={Col} controlId='formGridDiscount'>
@@ -360,11 +345,12 @@ const BookingModal = (props) => {
 								<Select
 									name='discount'
 									options={listCoupon}
-									getOptionLabel={(option) => option.code}
+									getOptionLabel={(option) => option.code + '-' + option.discount + '%'}
 									getOptionValue={(option) => option._id}
 									onChange={onChangeCoupon}
 									className='basic-select'
 									classNamePrefix='select coupon'
+									isClearable
 								/>
 							</Form.Group>
 						</Row>
@@ -402,9 +388,7 @@ const BookingModal = (props) => {
 									getOptionValue={(option) => option._id}
 								/>
 							</Col>
-							{/* <Col sm={3}>
-								<Button onClick={() => setOpenViewRoom(true)}>Add New Room</Button>
-							</Col> */}
+
 							<Table striped>
 								<thead>
 									<tr>{renderRoomHead}</tr>
@@ -416,11 +400,6 @@ const BookingModal = (props) => {
 											<td>{room.roomNumber}</td>
 											<td>{room.floor}</td>
 											<td>{room.price}</td>
-											<td>
-												<button onClick={(e) => onRemoveRoom(e, room)} className='btn-remove'>
-													x
-												</button>
-											</td>
 										</tr>
 									))}
 								</tbody>
@@ -436,15 +415,6 @@ const BookingModal = (props) => {
 							<Col sm={9}>
 								<h5>Service and Product</h5>
 							</Col>
-							{/* <Col sm={3}>
-								<Button
-									variant='warning'
-									style={{ color: '#fff' }}
-									onClick={() => setOpenViewService(true)}
-								>
-									Add New Service
-								</Button>
-							</Col> */}
 
 							<Form.Group className='mb-3' controlId='formBasicService'>
 								<Select
@@ -458,33 +428,35 @@ const BookingModal = (props) => {
 									classNamePrefix='select service or product'
 								/>
 							</Form.Group>
-							<Table striped>
-								<thead>
-									<tr>{renderServiceHead}</tr>
-								</thead>
-								<tbody>
-									{[...services, ...products].map((service, index) => (
-										<tr key={service._id}>
-											<td>{index + 1}</td>
-											<td>{service.name}</td>
-											<td>{service.price}</td>
-											<td>{service.amount}</td>
-											<td className='d-flex align-items-center justify-content-around'>
-												<Button onClick={(e) => onAddService(e, service)}>
-													<BsPlus />
-												</Button>
-												<Button
-													variant='danger'
-													onClick={(e) => onSubtractService(e, service)}
-													disabled={!!(service.amount < 2)}
-												>
-													<BsDash />
-												</Button>
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</Table>
+							{(services.length > 0 || products.length > 0) && (
+								<Table striped>
+									<thead>
+										<tr>{renderServiceHead}</tr>
+									</thead>
+									<tbody>
+										{[...services, ...products].map((service, index) => (
+											<tr key={service._id}>
+												<td>{index + 1}</td>
+												<td>{service.name}</td>
+												<td>{service.price}</td>
+												<td>{service.amount}</td>
+												<td className='d-flex align-items-center justify-content-around'>
+													<Button onClick={(e) => onAddService(e, service)}>
+														<BsPlus />
+													</Button>
+													<Button
+														variant='danger'
+														onClick={(e) => onSubtractService(e, service)}
+														disabled={!!(service.amount < 2)}
+													>
+														<BsDash />
+													</Button>
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
+							)}
 							<ViewAllServiceModal
 								show={openViewService}
 								handlerModalClose={closeViewServiceModal}

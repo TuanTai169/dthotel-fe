@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import CustomerForm from '../FormBooking/CustomerForm';
 import { updateBooking, getAllBooking } from '../../../redux/actions/booking';
 import { checkStatusRoom, numberValidation } from '../../../utils/validation';
-import { totalRoomCharge } from '../../../utils/calculateRoomPrice';
+import { totalRoomCharge, totalServiceCharge } from '../../../utils/calculateRoomPrice';
 import DialogChange from '../../../components/Dialog/DialogChange';
 import ViewAllServiceModal from '../Service/ViewAllServiceModal';
+import { BookingStatus, RoomStatus } from '../../../assets/app/constants';
 
 const EditBookingModal = (props) => {
 	const { show, handlerModalClose, booking } = props;
@@ -17,15 +18,13 @@ const EditBookingModal = (props) => {
 	const {
 		_id,
 		code,
-		checkInDate,
-		checkOutDate,
 		customer,
 		rooms,
+		detail,
 		services,
+		products,
 		deposit,
 		discount,
-		roomCharge,
-		serviceCharge,
 		totalPrice,
 		status,
 	} = booking;
@@ -37,35 +36,46 @@ const EditBookingModal = (props) => {
 	const listRoom = useSelector((state) => state.roomReducer.rooms);
 	const listService = useSelector((state) => state.serviceReducer.services);
 	const listBooking = useSelector((state) => state.bookingReducer.bookings);
+	const listCoupon = useSelector((state) => state.couponReducer.coupons);
 
 	// USE STATE
-	const [startDate, setStartDate] = useState(new Date(checkInDate));
-	const [endDate, setEndDate] = useState(new Date(checkOutDate));
+	const [startDate, setStartDate] = useState(new Date(rooms[0].checkInDate));
+	const [endDate, setEndDate] = useState(new Date(rooms[0].checkOutDate));
 	const [excludeDates, setExcludeDates] = useState([]);
 
 	const [newCustomer, setCustomer] = useState(customer);
 	const [arrayRoom, setArrayRoom] = useState(
 		listRoom
-			.filter((room) => room.status === 'READY')
+			.filter((room) => room.status === RoomStatus.Ready.name)
 			.sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1))
 	);
-	const [newRooms, setRooms] = useState(rooms);
-	const [newServices, setNewServices] = useState(services);
-	const [arrayService, setArrayService] = useState(listService.map((service) => service));
+	const [newRooms, setRooms] = useState(detail.rooms);
+	const [newServices, setNewServices] = useState(detail.services);
+	const [newProducts, setNewProducts] = useState(detail.products);
+	const [arrayService, setArrayService] = useState(
+		listService.map((service) => {
+			return {
+				...service,
+				amount: 1,
+			};
+		})
+	);
 
 	const [sumPrice, setSumPrice] = useState(totalPrice);
-	const [roomPrice, setRoomPrice] = useState(roomCharge);
-	const [servicePrice, setServicePrice] = useState(serviceCharge);
+	const [roomPrice, setRoomPrice] = useState(0);
+	const [servicePrice, setServicePrice] = useState(0);
 
 	const [editBooking, setEditBooking] = useState({
 		_id: _id,
-		rooms: rooms.map((room) => room._id),
+		code: code,
+		rooms: rooms.map((room) => room.room),
 		customer: customer._id,
 		checkInDate: moment(startDate).format('YYYY-MM-DD HH:mm'),
 		checkOutDate: moment(endDate).format('YYYY-MM-DD HH:mm'),
 		services: services,
+		products: products,
 		deposit: deposit,
-		discount: discount,
+		discount: discount ? discount : null,
 		status: status,
 	});
 	const [conformDialog, setConformDialog] = useState({
@@ -77,39 +87,60 @@ const EditBookingModal = (props) => {
 
 	// useEffect
 	useEffect(() => {
-		const { checkInDate, checkOutDate, deposit, discount } = editBooking;
+		const { checkInDate, checkOutDate, services, products, deposit, discount } = editBooking;
 
 		const checkExcludeDate = checkStatusRoom(newRooms, listBooking);
 		const exclude = checkExcludeDate.map((item) => new Date(item));
 		setExcludeDates(exclude);
 
 		const calculatorPrice = () => {
-			const RoomCharge = totalRoomCharge(newRooms, checkInDate, checkOutDate);
-			const sumServicesPrice = newServices
-				.map((item) => item.price)
-				.reduce((prev, curr) => prev + curr, 0);
+			const roomCharge = totalRoomCharge(newRooms, checkInDate, checkOutDate);
+			setRoomPrice(roomCharge);
 
-			setRoomPrice(RoomCharge);
+			const sumServicesPrice = totalServiceCharge(services, products, listService);
 			setServicePrice(sumServicesPrice);
+
+			let priceDiscount = 0;
+			const coupon = listCoupon.find((x) => x._id === discount);
+			if (coupon) {
+				priceDiscount = coupon.discount;
+			}
+
 			const VAT = 10;
-			return (
-				(RoomCharge + sumServicesPrice) * (1 + VAT / 100 - discount / 100) -
-				deposit
-			).toFixed();
+			return Number(
+				parseFloat(
+					(roomCharge + sumServicesPrice) * (1 + VAT / 100 - priceDiscount / 100) - deposit
+				).toFixed(2)
+			);
 		};
 
 		setSumPrice(calculatorPrice);
-	}, [editBooking, newRooms, newServices, listBooking]);
+	}, [editBooking, newRooms, newServices, newProducts, listBooking]);
 
 	// Handler
 
 	const handlerSubmit = (e) => {
 		e.preventDefault();
-		if (numberValidation(editBooking.discount) && numberValidation(editBooking.deposit)) {
-			dispatch(updateBooking(editBooking));
-			setTimeout(() => dispatch(getAllBooking()), 3000);
-			resetDataBooking();
-		}
+		const data = {
+			...editBooking,
+			discount: discount && editBooking.discount ? editBooking.discount._id : null,
+			products: editBooking.products.map((x) => {
+				return {
+					product: x.product,
+					amount: x.amount,
+				};
+			}),
+			services: editBooking.services.map((x) => {
+				return {
+					service: x.service,
+					amount: x.amount,
+				};
+			}),
+		};
+
+		dispatch(updateBooking(data));
+		setTimeout(() => dispatch(getAllBooking()), 3000);
+		resetDataBooking();
 	};
 
 	const resetDataBooking = () => {
@@ -118,7 +149,25 @@ const EditBookingModal = (props) => {
 	};
 
 	const handlerCheckIn = () => {
-		dispatch(updateBooking({ ...editBooking, status: 'CHECK IN' }));
+		const data = {
+			...editBooking,
+			discount: discount && editBooking.discount ? editBooking.discount._id : null,
+			products: editBooking.products.map((x) => {
+				return {
+					product: x.product,
+					amount: x.amount,
+				};
+			}),
+			services: editBooking.services.map((x) => {
+				return {
+					service: x.service,
+					amount: x.amount,
+				};
+			}),
+			status: BookingStatus.checkIn.name,
+		};
+
+		dispatch(updateBooking(data));
 		setTimeout(() => dispatch(getAllBooking()), 3000);
 		handlerModalClose();
 	};
@@ -133,52 +182,63 @@ const EditBookingModal = (props) => {
 		});
 	};
 
-	const onChangeRoom = (selectRoom) => {
-		let newArrayRoom = [...newRooms, selectRoom];
-		setRooms(newArrayRoom);
-		setArrayRoom(arrayRoom.filter((room) => room._id !== selectRoom._id));
+	const onChangeRoom = (listRoom) => {
+		setRooms(listRoom);
+		// setArrayRoom(arrayRoom.filter((room) => room._id !== selectRoom._id));
 		setEditBooking({
 			...editBooking,
-			rooms: newArrayRoom.map((room) => room._id),
+			rooms: listRoom.map((room) => room._id),
 		});
 	};
 
-	const onRemoveRoom = (e, selectRoom) => {
-		e.preventDefault();
+	const onChangeService = (listSelected) => {
+		const newService = listSelected.filter((s) => s.isProduct === false);
+		const newProduct = listSelected.filter((s) => s.isProduct === true);
 
-		let newArrayRoom = newRooms.filter((room) => room._id !== selectRoom._id);
-
-		setRooms(newArrayRoom);
-		setArrayRoom([...arrayRoom, selectRoom].sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1)));
+		setNewServices([...newService]);
+		setNewProducts([...newProduct]);
 		setEditBooking({
 			...editBooking,
-			rooms: newArrayRoom.map((room) => room._id),
+			services: newService.map((s) => {
+				return {
+					service: s._id,
+					amount: s.amount,
+					price: s.price * s.amount,
+				};
+			}),
+			products: newProduct.map((s) => {
+				return {
+					product: s._id,
+					amount: s.amount,
+					price: s.price * s.amount,
+				};
+			}),
 		});
 	};
-	const onChangeService = (selectService) => {
-		let newArrayService = [...newServices, selectService];
-		setNewServices(newArrayService);
-		setArrayService(arrayService.filter((service) => service._id !== selectService._id));
+
+	const onChangeCoupon = (selectItem) => {
 		setEditBooking({
 			...editBooking,
-			services: newArrayService.map((service) => service._id),
+			discount: selectItem,
 		});
 	};
 
-	const onRemoveService = (e, selectService) => {
-		e.preventDefault();
+	const isNotCheckIn = (rooms) => {
+		let check = false;
+		Array.isArray(rooms) &&
+			rooms.length > 0 &&
+			rooms.forEach((r) => {
+				const room = listRoom.find((x) => x._id === r._id);
+				if (room.status === RoomStatus.Fixing.name || room.status === RoomStatus.Cleaning.name) {
+					check = true;
+				}
+			});
 
-		let newArrayService = newServices.filter((service) => service._id !== selectService._id);
-		setNewServices(newArrayService);
-		setArrayService([...arrayService, selectService]);
-		setEditBooking({
-			...editBooking,
-			services: newArrayService.map((service) => service._id),
-		});
+		return check;
 	};
 
 	//Render room Table
-	const tableRoomHead = ['No#', 'Number', 'Floor', 'Type', 'Price (USD)', ''];
+	const tableRoomHead = ['No#', 'Number', 'Floor', 'Price (USD)', ''];
 	const renderRoomHead = tableRoomHead.map((item, index) => {
 		return (
 			<th key={index} style={{ fontWeight: 500 }}>
@@ -254,16 +314,7 @@ const EditBookingModal = (props) => {
 									dateFormat='dd/MM/yyyy HH:mm'
 								/>
 							</Form.Group>
-							<Form.Group as={Col} controlId='formGridDiscount'>
-								<Form.Label>Discount (%)</Form.Label>
-								<Form.Control
-									type='number'
-									value={editBooking.discount}
-									onChange={(e) => {
-										setEditBooking({ ...editBooking, discount: e.target.value });
-									}}
-								/>
-							</Form.Group>
+
 							<Form.Group as={Col} controlId='formGridDeposit'>
 								<Form.Label>Deposit</Form.Label>
 								<Form.Control
@@ -272,6 +323,21 @@ const EditBookingModal = (props) => {
 									onChange={(e) => {
 										setEditBooking({ ...editBooking, deposit: e.target.value });
 									}}
+									readOnly
+								/>
+							</Form.Group>
+							<Form.Group as={Col} controlId='formGridDiscount'>
+								<Form.Label>Discount </Form.Label>
+								<Select
+									name='discount'
+									options={listCoupon}
+									getOptionLabel={(option) => option.code + '-' + option.discount + '%'}
+									getOptionValue={(option) => option._id}
+									defaultValue={discount ? listCoupon.filter((x) => x._id === discount._id) : null}
+									onChange={onChangeCoupon}
+									className='basic-select'
+									classNamePrefix='select coupon'
+									isDisabled
 								/>
 							</Form.Group>
 						</Row>
@@ -285,6 +351,7 @@ const EditBookingModal = (props) => {
 									onChange={onChangeCustomer}
 									getOptionLabel={(option) => option.name}
 									getOptionValue={(option) => option.name}
+									isDisabled
 								/>
 							</Col>
 							<CustomerForm customer={newCustomer} />
@@ -295,10 +362,13 @@ const EditBookingModal = (props) => {
 							</Col>
 							<Col sm={6}>
 								<Select
+									isMulti
+									name='rooms'
 									options={arrayRoom}
 									onChange={onChangeRoom}
+									defaultValue={detail.rooms}
 									getOptionLabel={(option) => option.roomNumber}
-									getOptionValue={(option) => option.roomNumber}
+									getOptionValue={(option) => option._id}
 								/>
 							</Col>
 							<Table striped>
@@ -311,14 +381,7 @@ const EditBookingModal = (props) => {
 											<td>{index + 1}</td>
 											<td>{room.roomNumber}</td>
 											<td>{room.floor}</td>
-											<td>{room.roomType}</td>
 											<td>{room.price}</td>
-
-											<td>
-												<button onClick={(e) => onRemoveRoom(e, room)} className='btn-remove'>
-													x
-												</button>
-											</td>
 										</tr>
 									))}
 								</tbody>
@@ -333,45 +396,37 @@ const EditBookingModal = (props) => {
 							</Col>
 							<Col sm={6}>
 								<Select
+									isMulti
+									name='services'
 									options={arrayService}
-									onChange={onChangeService}
+									defaultValue={[...newServices, ...newProducts]}
 									getOptionLabel={(option) => option.name}
-									getOptionValue={(option) => option.name}
+									getOptionValue={(option) => option._id}
+									onChange={onChangeService}
+									className='basic-multi-select'
+									classNamePrefix='select service or product'
 								/>
-							</Col>
-							<Col sm={3}>
-								<Button
-									variant='warning'
-									style={{ color: '#fff' }}
-									onClick={() => setOpenViewService(true)}
-								>
-									Add New Service
-								</Button>
 							</Col>
 							<Table striped>
 								<thead>
 									<tr>{renderServiceHead}</tr>
 								</thead>
 								<tbody>
-									{newServices.map((service, index) => (
-										<tr key={service._id}>
-											<td>{index + 1}</td>
-											<td>{service.name}</td>
-											<td>{service.price}</td>
-											<td>
-												<button onClick={(e) => onRemoveService(e, service)} className='btn-remove'>
-													x
-												</button>
-											</td>
-										</tr>
-									))}
+									{(newServices.length > 0 || newProducts.length > 0) &&
+										[...newServices, ...newProducts].map((service, index) => (
+											<tr key={service._id}>
+												<td>{index + 1}</td>
+												<td>{service.name}</td>
+												<td>{service.price}</td>
+											</tr>
+										))}
 								</tbody>
 							</Table>
-							<ViewAllServiceModal
+							{/* <ViewAllServiceModal
 								show={openViewService}
 								handlerModalClose={closeViewServiceModal}
 								getService={onChangeService}
-							/>
+							/> */}
 							<p>
 								Service Price (USD): <strong style={{ color: 'red' }}>{servicePrice}</strong>
 							</p>
@@ -393,6 +448,7 @@ const EditBookingModal = (props) => {
 									onConform: () => handlerCheckIn(),
 								});
 							}}
+							disabled={isNotCheckIn(detail.rooms)}
 						>
 							<i className='bx bxs-user-check'></i>
 							<span>&ensp;Check in</span>

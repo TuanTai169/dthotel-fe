@@ -26,6 +26,7 @@ function Customers() {
 		{ name: 'No#', field: 'id', sortable: false },
 		{ name: 'Name', field: 'name', sortable: true },
 		{ name: 'Email', field: 'email', sortable: true },
+		{ name: 'IdNumber', field: 'idNumber', sortable: false },
 		{ name: 'Phone', field: 'phone', sortable: false },
 		{ name: 'Action', field: 'action', sortable: false },
 	];
