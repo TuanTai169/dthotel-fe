@@ -69,3 +69,18 @@ export const getStatistic = () => {
 		}
 	};
 };
+
+export const getVnPayUrl = (data) => {
+	return async (dispatch) => {
+		try {
+			const res = await axios.post(`${HOST_API_URL}/payment/create_payment_url`, data);
+			if (!!res && res.data.success) {
+				return res.data.vnpUrl;
+			}
+			return undefined;
+		} catch (error) {
+			console.log(error);
+			error.response;
+		}
+	};
+};
