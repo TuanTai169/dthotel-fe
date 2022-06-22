@@ -73,7 +73,22 @@ const BookingPage = () => {
 				discount: null,
 			};
 
-			localStorage.setItem('currentBooking', JSON.stringify(data));
+			localStorage.setItem(
+				'currentBooking',
+				JSON.stringify({
+					rooms: rooms.map((x) => {
+						return {
+							_id: x._id,
+							name: x.name,
+						};
+					}),
+					checkInDate: moment(new Date(checkInDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
+					checkOutDate: moment(new Date(checkOutDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
+					customer,
+					deposit: parseFloat((totalPrice * 1.1 * 0.5).toFixed(2)),
+					total: totalPrice,
+				})
+			);
 			setData(data);
 			if (isPayPal) {
 				setIsShowModal(true);
@@ -104,7 +119,7 @@ const BookingPage = () => {
 	const onBookingSuccess = () => {
 		dispatch(addBookingInWeb(data));
 		localStorage.removeItem('roomsBooking');
-		navigate('/rooms');
+		navigate('/booking-success');
 	};
 
 	const expiredDate = moment(
@@ -161,9 +176,9 @@ const BookingPage = () => {
 								</div>
 								<div className='col-4 total-price'>
 									<h4>
-										<strong>{convertCurrency(room.price * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(room.price, 'USD')}</strong>
 									</h4>
-									<h5>{convertCurrency(room.price, 'USD')}</h5>
+									<h5>{convertCurrency(room.price * 23500, 'VND')}</h5>
 									<span className='show-policy' onClick={() => setShowPolicy(true)}>
 										Booking Policies <BiInfoCircle />
 									</span>
@@ -180,36 +195,36 @@ const BookingPage = () => {
 								<p>Accommodation charges</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice, 'USD')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 23500, 'VND')}</p>
 								</div>
 							</div>
 							<div className='d-flex justify-content-between'>
 								<p>Taxes 10%</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 0.1 * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 0.1, 'USD')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice * 0.1, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 0.1 * 23500, 'VND')}</p>
 								</div>
 							</div>
 							<div className='d-flex justify-content-between border-top-main-color'>
 								<p>Total price</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 1.1 * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 1.1, 'USD')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice * 1.1, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 1.1 * 23500, 'VND')}</p>
 								</div>
 							</div>
 							<div className='d-flex justify-content-between border-top-main-color'>
 								<p>Deposit</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 1.1 * 0.5 * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 1.1 * 0.5, 'USD')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice * 1.1 * 0.5, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 1.1 * 0.5 * 23500, 'VND')}</p>
 								</div>
 							</div>
 						</div>

@@ -16,6 +16,7 @@ import ContactPage from './Footer/Information/Contact';
 import BookandCancelPolicyPage from './Footer/Terms/Booking_Cancelation';
 import PrivacyPage from './Footer/Terms/Privacy';
 import WebsiteTermPage from './Footer/Terms/Website';
+import BookingSuccess from './Booking/Successful';
 
 import './index.scss';
 import { Route, Routes } from 'react-router-dom';
@@ -44,6 +45,7 @@ const Home = () => {
 					<Route path='web-term' element={<WebsiteTermPage />} />
 					<Route path='contact' element={<ContactPage />} />
 					<Route path='booking' element={<BookingPage />} />
+					<Route path='booking-success' element={<BookingSuccess />} />
 				</Routes>
 			</div>
 			<div className='home__footer'>

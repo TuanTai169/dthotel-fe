@@ -1,124 +1,133 @@
 @import './../../styles/variables';
 
-.receipt {
-	width: 100%;
-	background-color: white;
-	color: $black;
-	padding: 1vw 0;
+.booking-success {
+	padding: 0 10vw;
 
-	&__head {
-		width: 96%;
-		display: flex;
-		flex-direction: row;
-		margin: 0 2% 1vw;
-		border-left: solid 1vw $main-text-color;
-		border-right: solid 1vw $main-text-color;
-	}
-
-	&__hotelinfo {
-		padding-left: 1vw;
-
-		&__name {
-			font-size: 2.5vw;
-			font-weight: 800;
-			color: $main-text-color;
-		}
-	}
-
-	&__title {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	.receipt {
 		width: 100%;
-		font-weight: 600;
-	}
+		background-color: white;
+		color: $black;
+		padding: 1vw 0;
+		border: 2px solid $main-bg-color;
 
-	&__table {
-		padding: 0 3vw 0 6vw;
-
-		&__rowtotal,
-		&__rowtotal:hover {
-			color: $main-text-color;
-			background-color: white;
+		&__head {
+			width: 96%;
+			display: flex;
+			flex-direction: row;
+			margin: 0 2% 1vw;
+			border-left: solid 1vw $main-text-color;
+			border-right: solid 1vw $main-text-color;
 		}
 
-		&__row,
-		&__rowtotal {
-			border-bottom: solid 0 white;
-			width: 100%;
-			display: flex;
-			justify-content: space-between;
-			padding-right: 2vw;
+		&__hotelinfo {
+			padding-left: 1vw;
 
-			& :not(caption) {
-				// padding-left: 4vw;
-			}
-
-			&__title,
-			&__titlecost {
-				font-weight: 600;
-				flex: 1;
-			}
-
-			&__value,
-			&__valuecost {
-				flex: 1;
-			}
-
-			&__titlecost,
-			&__valuecost {
-				font-weight: 600;
-				font-size: 1.5vw;
+			&__name {
+				font-size: 2.5vw;
+				font-weight: 800;
 				color: $main-text-color;
 			}
 		}
 
-		&__row:hover,
-		&__rowcost:hover {
-			background-color: white;
-			color: black;
-		}
-		// &__rowtotal:hover {
-		// 	background-color: $main-bg-color;
-		// 	color: $main-text-color;
-		// }
-	}
-
-	&__line {
-		background-color: $main-text-color;
-		height: 0.2vw;
-		width: 96%;
-		margin: auto;
-	}
-
-	&__content {
-		text-align: justify;
-		padding: 1vw 2vw 0;
-	}
-
-	&__button {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 15vw;
-		height: 3vw;
-		margin: 2vw auto 2vw;
-		transition: 0.5s;
-
-		&:hover {
-			background-color: $main-bg-color;
-			color: $main-text-color;
-		}
-	}
-
-	&__footerpolicies {
-		text-align: justify;
-		color: rgb(152, 152, 152);
-		padding: 0 2vw;
-
 		&__title {
-			font-size: 1.5vw;
-			font-weight: 700;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			font-weight: 600;
+		}
+
+		&__table {
+			padding: 0 3vw 0 6vw;
+
+			&__rowtotal,
+			&__rowtotal:hover {
+				color: $main-text-color;
+				background-color: white;
+			}
+
+			&__row,
+			&__rowtotal {
+				border-bottom: solid 0 white;
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				padding-right: 2vw;
+
+				& :not(caption) {
+					// padding-left: 4vw;
+				}
+
+				&__title,
+				&__titlecost {
+					font-weight: 600;
+					flex: 1;
+				}
+
+				&__value,
+				&__valuecost {
+					flex: 1;
+					> .room {
+						border-left: 2px solid #ccc;
+						padding: 4px;
+					}
+				}
+
+				&__titlecost,
+				&__valuecost {
+					font-weight: 600;
+					font-size: 1.5vw;
+					color: red;
+				}
+			}
+
+			&__row:hover,
+			&__rowcost:hover {
+				background-color: white;
+				color: black;
+			}
+			// &__rowtotal:hover {
+			// 	background-color: $main-bg-color;
+			// 	color: $main-text-color;
+			// }
+		}
+
+		&__line {
+			background-color: $main-text-color;
+			height: 0.2vw;
+			width: 96%;
+			margin: auto;
+		}
+
+		&__content {
+			text-align: justify;
+			padding: 1vw 2vw 0;
+		}
+
+		&__button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 15vw;
+			height: 3vw;
+			margin: 2vw auto 2vw;
+			transition: 0.5s;
+
+			&:hover {
+				background-color: $main-bg-color;
+				color: $main-text-color;
+			}
+		}
+
+		&__footerpolicies {
+			text-align: justify;
+			color: rgb(152, 152, 152);
+			padding: 0 2vw;
+
+			&__title {
+				font-size: 1.5vw;
+				font-weight: 700;
+			}
 		}
 	}
 }
