@@ -47,11 +47,11 @@ export const addBooking = (newBooking, status) => {
 };
 
 // BOOKING/CHECK IN
-export const addBookingInWeb = (newBooking, status) => {
+export const addBookingInWeb = (newBooking) => {
 	return async (dispatch) => {
 		try {
 			dispatch({ type: types.SET_BOOKING_LOADING, payload: true });
-			const response = await axios.post(`${HOST_API_URL}/booking`, newBooking);
+			const response = await axios.post(`${HOST_API_URL}/booking/booking-in-web`, newBooking);
 			if (response.data.success) {
 				dispatch({
 					type: types.BOOKING_CHECK_IN,

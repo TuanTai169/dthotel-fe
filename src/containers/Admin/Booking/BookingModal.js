@@ -57,7 +57,7 @@ const BookingModal = (props) => {
 	const [newBooking, setNewBooking] = useState({
 		checkInDate: moment(startDate).format('YYYY-MM-DD HH:mm'),
 		checkOutDate: moment(endDate).format('YYYY-MM-DD HH:mm'),
-		deposit: 50,
+		deposit: status === 'book' ? 50 : 0,
 		discount: null,
 		rooms: [currentRoom._id],
 		customer: '',
@@ -326,20 +326,23 @@ const BookingModal = (props) => {
 									dateFormat='dd/MM/yyyy HH:mm'
 								/>
 							</Form.Group>
-							<Form.Group as={Col} controlId='formGridDeposit'>
-								<Form.Label>Deposit</Form.Label>
-								<Select
-									name='deposit'
-									options={depositRange}
-									defaultValue={{ name: '50%', value: 50 }}
-									getOptionLabel={(option) => option.name}
-									getOptionValue={(option) => option.value}
-									onChange={(item) => setNewBooking({ ...newBooking, deposit: item.value })}
-									className='basic-multi-select'
-									classNamePrefix='select type'
-									isClearable
-								/>
-							</Form.Group>
+							{status === 'book' && (
+								<Form.Group as={Col} controlId='formGridDeposit'>
+									<Form.Label>Deposit</Form.Label>
+									<Select
+										name='deposit'
+										options={depositRange}
+										defaultValue={{ name: '50%', value: 50 }}
+										getOptionLabel={(option) => option.name}
+										getOptionValue={(option) => option.value}
+										onChange={(item) => setNewBooking({ ...newBooking, deposit: item.value })}
+										className='basic-multi-select'
+										classNamePrefix='select type'
+										isClearable
+									/>
+								</Form.Group>
+							)}
+
 							<Form.Group as={Col} controlId='formGridDiscount'>
 								<Form.Label>Discount </Form.Label>
 								<Select
