@@ -7,18 +7,20 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 	const { receipt } = props;
 	const cashier = useSelector((state) => state.auth.user.name);
 
-	const content = receipt.booking.services.map((services) => (
-		<Row key={services._id}>
-			<Col sm={10}>
-				{' '}
-				<strong>{services.name}: </strong>
-			</Col>
-			<Col>
-				{' '}
-				<strong>{services.price}</strong>
-			</Col>
-		</Row>
-	));
+	const content = [...receipt.booking.detail.services, ...receipt.booking.detail.products].map(
+		(services) => (
+			<Row key={services._id}>
+				<Col sm={10}>
+					{' '}
+					<strong>{services.name}: </strong>
+				</Col>
+				<Col>
+					{' '}
+					<strong>{services.price}</strong>
+				</Col>
+			</Row>
+		)
+	);
 
 	//Render Table
 	const tableHead = ['Number', 'Price(USD)', 'CheckIn', 'CheckOut'];
@@ -31,12 +33,16 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 	});
 
 	//Room
-	const roomContent = receipt.booking.rooms.map((rooms) => (
+	const roomContent = receipt.booking.detail.rooms.map((rooms) => (
 		<tr key={rooms._id}>
 			<td style={{ textAlign: 'center' }}>{rooms.roomNumber}</td>
 			<td style={{ textAlign: 'center' }}>{rooms.price}</td>
-			<td style={{ textAlign: 'center' }}>{convertStringToDate(receipt.booking.checkInDate)}</td>
-			<td style={{ textAlign: 'center' }}>{convertStringToDate(receipt.booking.checkOutDate)}</td>
+			<td style={{ textAlign: 'center' }}>
+				{convertStringToDate(receipt.booking.detail.checkInDate)}
+			</td>
+			<td style={{ textAlign: 'center' }}>
+				{convertStringToDate(receipt.booking.detail.checkOutDate)}
+			</td>
 		</tr>
 	));
 
@@ -110,15 +116,16 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 							<tbody>{roomContent}</tbody>
 						</Table>
 						{
+							/* {
 							/*receipt.booking.earlyCheckIn > 0 && (*/
-							<Row>
-								<Col sm={10}>
-									<p>RoomCharge (USD): </p>
-								</Col>
-								<Col>
-									<p style={{ color: 'red' }}>{receipt.booking.roomCharge}</p>
-								</Col>
-							</Row>
+							// <Row>
+							// 	<Col sm={10}>
+							// 		<p>RoomCharge (USD): </p>
+							// 	</Col>
+							// 	<Col>
+							// 		<p style={{ color: 'red' }}>{receipt.booking.roomCharge}</p>
+							// 	</Col>
+							// </Row>
 						}
 						{
 							/*receipt.booking.earlyCheckIn > 0 && (*/
@@ -127,33 +134,31 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 									<p>EarlyCheckIn (USD): </p>
 								</Col>
 								<Col>
-									<p style={{ color: 'red' }}>{receipt.booking.earlyCheckIn}</p>
+									<p style={{ color: 'red' }}>{receipt.booking.detail.earlyCheckIn}</p>
 								</Col>
 							</Row>
 						}
-
 						{
 							/*receipt.booking.earlyCheckIn > 0 && (*/
 							<Row>
 								<Col sm={10}>LateCheckOut (USD):</Col>
 								<Col>
-									<p style={{ color: 'red' }}>{receipt.booking.lateCheckOut}</p>
+									<p style={{ color: 'red' }}>{receipt.booking.detail.lateCheckOut}</p>
 								</Col>
 							</Row>
 						}
-
-						<Row>
+						{/* <Row>
 							<Col sm={10}>
 								<strong>Amount (USD): </strong>
 							</Col>
 							<Col>
 								<strong style={{ color: 'red' }}>{receipt.booking.roomCharge}</strong>
 							</Col>
-						</Row>
+						</Row> */}
 					</Form.Group>
 				</Row>
 
-				{receipt.booking.services.length > 0 && (
+				{[...receipt.booking.detail.services, ...receipt.booking.detail.products].length > 0 && (
 					<Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 						<Form.Group as={Col} controlId='formGridService'>
 							<div
@@ -168,14 +173,14 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 							</div>
 							<div>{content}</div>
 
-							<Row>
+							{/* <Row>
 								<Col sm={10}>
 									<strong>Amount (USD): </strong>
 								</Col>
 								<Col>
 									<strong style={{ color: 'red' }}>{receipt.booking.serviceCharge}</strong>
 								</Col>
-							</Row>
+							</Row> */}
 						</Form.Group>
 					</Row>
 				)}
@@ -183,37 +188,39 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 				<div className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 					<Row>
 						<Col sm={10}>
-							<strong>Total Price: </strong>
+							<strong>Total Price </strong>
 						</Col>
 						<Col>
 							<strong>
-								{Math.ceil(receipt.booking.totalPrice / (1 + receipt.booking.VAT / 100))}
+								{receipt.booking.detail.totalPrice - receipt.booking.detail.totalPrice * 0.1}
 							</strong>
 						</Col>
 					</Row>
 					<Row>
 						<Col sm={10}>
-							<strong>VAT: </strong>
+							<strong>VAT </strong>
 						</Col>
 						<Col>
-							<strong>{receipt.booking.VAT}%</strong>
+							<strong>{10}%</strong>
 						</Col>
 					</Row>
 					<Row>
 						<Col sm={10}>
-							<strong>Discount: </strong>
+							<strong>Discount </strong>
 						</Col>
 						<Col>
-							<strong>{receipt.booking.discount}%</strong>
+							<strong>
+								{receipt.booking.detail.discount ? receipt.booking.detail.discount.discount : 0}%
+							</strong>
 						</Col>
 					</Row>
 
 					<Row>
 						<Col sm={10}>
-							<strong>Pay: </strong>
+							<strong>Pay </strong>
 						</Col>
 						<Col>
-							<strong style={{ color: 'red' }}>{receipt.booking.totalPrice}</strong>
+							<strong style={{ color: 'red' }}>{receipt.booking.detail.totalPrice}</strong>
 						</Col>
 					</Row>
 					{/* <div style={{ textAlign: "center", fontSize: "13px" }}>
@@ -223,15 +230,15 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 				<div className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 					<Row>
 						<Col sm={10}>
-							<strong>Deposit: </strong>
+							<strong>Deposit </strong>
 						</Col>
 						<Col>
-							<strong style={{ color: 'red' }}>{receipt.booking.deposit}</strong>
+							<strong style={{ color: 'red' }}>{receipt.booking.detail.deposit}</strong>
 						</Col>
 					</Row>
 					<Row>
 						<Col sm={10}>
-							<strong>Cash: </strong>
+							<strong>Cash </strong>
 						</Col>
 						<Col>
 							<strong style={{ color: 'red' }}>{receipt.paidOut}</strong>
@@ -239,7 +246,7 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 					</Row>
 					<Row>
 						<Col sm={10}>
-							<strong>Refund: </strong>
+							<strong>Refund </strong>
 						</Col>
 						<Col>
 							<strong style={{ color: 'red' }}>{receipt.refund}</strong>

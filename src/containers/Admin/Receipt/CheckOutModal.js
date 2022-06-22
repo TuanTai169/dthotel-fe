@@ -43,6 +43,7 @@ const CheckOutModal = (props) => {
 
 	const [editBooking, setEditBooking] = useState({
 		_id: _id,
+		code,
 		rooms: detail.rooms.map((r) => r._id),
 		customer: customer._id,
 		checkInDate: moment(rooms[0].checkInDate).format('YYYY-MM-DD HH:mm'),
@@ -160,11 +161,11 @@ const CheckOutModal = (props) => {
 	const detailProducts =
 		products.length > 0
 			? products.map((p) => {
-					const item = listService.find((x) => x._id === s.product);
+					const item = listService.find((x) => x._id === p.product);
 					if (item) {
 						return {
 							...item,
-							amount: s.amount,
+							amount: p.amount,
 						};
 					} else {
 						return;

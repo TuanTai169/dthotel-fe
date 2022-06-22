@@ -27,13 +27,13 @@ const RoomActionButton = (props) => {
 	const [statusBooking, setStatusBooking] = useState('book');
 
 	const checkOutSuccess = () => {
-		setTimeout(() => dispatch(getAllRoom()), 3000);
+		setTimeout(() => dispatch(getAllRoom()), 5000);
 		setIsOpenCheckOut(false);
 		handlerModalClose();
 	};
 
 	const bookingSuccess = () => {
-		setTimeout(() => dispatch(getAllRoom()), 3000);
+		setTimeout(() => dispatch(getAllRoom()), 5000);
 		setIsOpenBooking(false);
 		handlerModalClose();
 	};

@@ -119,7 +119,7 @@ const InfoRoomModal = (props) => {
 			>
 				<Modal.Header closeButton>
 					<Modal.Title>
-						ROOM {roomNumber} | {status}
+						ROOM {roomNumber} | {name}
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -151,7 +151,7 @@ const InfoRoomModal = (props) => {
 							/>
 						</Form.Group>
 
-						<Form.Group className='col-2 mb-3' controlId='formBasicAdult'>
+						<Form.Group className='col-3 mb-3' controlId='formBasicAdult'>
 							<Form.Label>Adult</Form.Label>
 							<Form.Control
 								type='number'
@@ -162,7 +162,7 @@ const InfoRoomModal = (props) => {
 								readOnly
 							/>
 						</Form.Group>
-						<Form.Group className='col-2 mb-3' controlId='formBasicChildren'>
+						<Form.Group className='col-3 mb-3' controlId='formBasicChildren'>
 							<Form.Label>Children</Form.Label>
 							<Form.Control
 								type='number'
@@ -173,26 +173,15 @@ const InfoRoomModal = (props) => {
 								readOnly
 							/>
 						</Form.Group>
-						<Form.Group className='col-2 mb-3' controlId='formBasicFloor'>
+					</Row>
+					<Row>
+						<Form.Group className='col-3 mb-3' controlId='formBasicFloor'>
 							<Form.Label>Floor</Form.Label>
 							<Form.Control
 								type='text'
 								placeholder='1'
 								name='floor'
 								value={floor || ''}
-								required
-								readOnly
-							/>
-						</Form.Group>
-					</Row>
-					<Row>
-						<Form.Group className='col-3 mb-3' controlId='formBasicRoomName'>
-							<Form.Label>Name</Form.Label>
-							<Form.Control
-								type='text'
-								placeholder='Room name'
-								name='name'
-								value={name || ''}
 								required
 								readOnly
 							/>

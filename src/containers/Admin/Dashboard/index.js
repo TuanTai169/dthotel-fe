@@ -19,9 +19,10 @@ const latestOrdersHead = ['#', 'booking id', 'user', 'date', 'mode of payment', 
 const generalStatus = {
 	CASH: 'primary',
 	PAYPAL: 'warning',
-	SINGLE: 'success',
-	DOUBLE: 'info',
-	DELUXE: 'danger',
+	Standard: 'secondary',
+	Superior: 'info',
+	Suite: 'success',
+	Deluxe: 'danger',
 };
 
 const Dashboard = () => {
@@ -35,7 +36,7 @@ const Dashboard = () => {
 	// const dispatch = useDispatch();
 	// useEffect(() => dispatch(getStatistic()), [dispatch, bookings, receipts]);
 
-	// TOP ROOM
+	// // TOP ROOM
 	let topRoomData = statistic.rooms
 		? statistic.rooms.sort((a, b) => (a.totalPrice < b.totalPrice ? 1 : -1)).slice(0, 5)
 		: null;
@@ -198,7 +199,7 @@ const Dashboard = () => {
 				categories: labelService,
 			},
 			title: {
-				text: 'Services',
+				text: 'Services and Products',
 			},
 		},
 	};
@@ -255,7 +256,7 @@ const Dashboard = () => {
 							</div>
 						</div>
 						<div className='card__footer'>
-							<Link to='/room-diagram'>view all</Link>
+							<Link to='/admin/room-diagram'>view all</Link>
 						</div>
 					</div>
 				</div>

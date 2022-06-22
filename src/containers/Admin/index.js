@@ -13,7 +13,10 @@ import { useDispatch } from 'react-redux';
 
 const Admin = () => {
 	const dispatch = useDispatch();
-	useEffect(() => dispatch(loadUser()), [dispatch]);
+	useEffect(() => {
+		dispatch(loadUser());
+		return () => {};
+	}, [dispatch]);
 	return (
 		<div className='admin'>
 			<Routes>

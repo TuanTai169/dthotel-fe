@@ -30,14 +30,14 @@ function Receipt() {
 	];
 
 	const currentData = useMemo(() => {
-		let computedReceipts = [...receipts].sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+		let computedReceipts = [...receipts];
 
 		if (search) {
 			computedReceipts = computedReceipts.filter(
 				(comment) =>
-					comment.booking.customer.name.toLowerCase().includes(search.toLowerCase()) ||
-					comment.booking.customer.email.toLowerCase().includes(search.toLowerCase()) ||
-					comment.booking.code.toLowerCase().includes(search.toLowerCase())
+					comment.booking.detail.customer.name.toLowerCase().includes(search.toLowerCase()) ||
+					comment.booking.detail.customer.email.toLowerCase().includes(search.toLowerCase()) ||
+					comment.booking.detail.code.toLowerCase().includes(search.toLowerCase())
 			);
 		}
 		setTotalItems(computedReceipts.length);

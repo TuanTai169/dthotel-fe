@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import moment from 'moment';
 
@@ -13,6 +13,9 @@ import PayPalModal from './PayPal/PayPalModal';
 import { addBookingInWeb } from '../../../redux/actions/booking';
 
 const BookingPage = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
 	const [showPolicy, setShowPolicy] = useState(false);
 	const [isAgree, setIsAgree] = useState(false);
 	const [isPayPal, setIsPayPal] = useState(true);
@@ -30,11 +33,17 @@ const BookingPage = () => {
 			child: 0,
 		},
 	});
-	const currentBooking = useSelector((state) => state.bookingReducer.currentBooking);
+	// const currentBooking = useSelector((state) => state.bookingReducer.currentBooking);
+	const currentBooking = JSON.parse(localStorage.getItem('currentBooking'));
 
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-
+	if (!currentBooking) {
+		return (
+			<div className='p-20'>
+				<h3>Couldn't find a room to book</h3>
+				<Link to='/rooms'>Go to book</Link>
+			</div>
+		);
+	}
 	const { rooms, capacity, checkInDate, checkOutDate, totalPrice } = currentBooking;
 	const { fname, lname, email, phone, idNumber, address } = customer;
 
@@ -53,7 +62,7 @@ const BookingPage = () => {
 		};
 		const data = {
 			rooms: rooms.map((x) => x._id),
-			checkInDate: moment(new Date(checkInDate).setHours(14, 0)).format('YYYY-MM-DD HH:ss'),
+			checkInDate: moment(new Date(checkInDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
 			checkOutDate: moment(new Date(checkOutDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
 			customer,
 			services: [],
@@ -63,7 +72,7 @@ const BookingPage = () => {
 		};
 
 		setData(data);
-		// setIsShowModal(true);
+		setIsShowModal(true);
 	};
 	const onChangeInputCustomer = (e) => {
 		const dataChange = { [e.target.name]: e.target.value };
@@ -76,6 +85,7 @@ const BookingPage = () => {
 	const onBookingSuccess = () => {
 		dispatch(addBookingInWeb(data));
 		navigate('/rooms');
+		localStorage.removeItem('currentBooking');
 	};
 
 	const expiredDate = moment(

@@ -10,7 +10,8 @@ a:hover {
 	font-family: $Montserrat;
 	overflow-y: hidden;
 	&__container {
-		margin-top: 17vh;
+		margin-top: 20vh;
+		min-height: 40vh;
 	}
 	&__header {
 		position: relative;
@@ -82,7 +83,7 @@ a:hover {
 
 		&__container {
 			width: 100%;
-			height: fit-content;
+			// height: fit-content;
 
 			&__description {
 				color: $white;

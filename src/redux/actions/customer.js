@@ -93,7 +93,6 @@ export const updateCustomer = (updateCustomer, id) => {
 	return async (dispatch) => {
 		try {
 			dispatch({ type: types.SET_CUSTOMER_LOADING, payload: true });
-			console.log('updateCustomer', updateCustomer);
 			const response = await axios.put(`${HOST_API_URL}/customer/update/${id}`, updateCustomer);
 			if (response.data.success) {
 				dispatch({

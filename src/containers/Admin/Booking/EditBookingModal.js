@@ -191,18 +191,6 @@ const EditBookingModal = (props) => {
 		});
 	};
 
-	// const onRemoveRoom = (e, selectRoom) => {
-	// 	e.preventDefault();
-
-	// 	let newArrayRoom = newRooms.filter((room) => room._id !== selectRoom._id);
-
-	// 	setRooms(newArrayRoom);
-	// 	setArrayRoom([...arrayRoom, selectRoom].sort((a, b) => (a.roomNumber < b.roomNumber ? -1 : 1)));
-	// 	setEditBooking({
-	// 		...editBooking,
-	// 		rooms: newArrayRoom.map((room) => room._id),
-	// 	});
-	// };
 	const onChangeService = (listSelected) => {
 		const newService = listSelected.filter((s) => s.isProduct === false);
 		const newProduct = listSelected.filter((s) => s.isProduct === true);
@@ -233,6 +221,20 @@ const EditBookingModal = (props) => {
 			...editBooking,
 			discount: selectItem,
 		});
+	};
+
+	const isNotCheckIn = (rooms) => {
+		let check = false;
+		Array.isArray(rooms) &&
+			rooms.length > 0 &&
+			rooms.forEach((r) => {
+				const room = listRoom.find((x) => x._id === r._id);
+				if (room.status === RoomStatus.Fixing.name || room.status === RoomStatus.Cleaning.name) {
+					check = true;
+				}
+			});
+
+		return check;
 	};
 
 	//Render room Table
@@ -321,6 +323,7 @@ const EditBookingModal = (props) => {
 									onChange={(e) => {
 										setEditBooking({ ...editBooking, deposit: e.target.value });
 									}}
+									readOnly
 								/>
 							</Form.Group>
 							<Form.Group as={Col} controlId='formGridDiscount'>
@@ -334,6 +337,7 @@ const EditBookingModal = (props) => {
 									onChange={onChangeCoupon}
 									className='basic-select'
 									classNamePrefix='select coupon'
+									isDisabled
 								/>
 							</Form.Group>
 						</Row>
@@ -444,6 +448,7 @@ const EditBookingModal = (props) => {
 									onConform: () => handlerCheckIn(),
 								});
 							}}
+							disabled={isNotCheckIn(detail.rooms)}
 						>
 							<i className='bx bxs-user-check'></i>
 							<span>&ensp;Check in</span>
