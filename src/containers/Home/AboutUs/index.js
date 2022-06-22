@@ -42,7 +42,7 @@ const index = () => {
 				</div>
 				<div className='abbody__history'>
 					<div className='abbody__history__description'>
-						<h3>SWISS-BELRESOT TUYEN LAM - DA LAT</h3>
+						<h3>DT HOTEL - DA LAT</h3>
 						<p>
 							DT Hotel - Dalat (Managed by SAM Tuyen Lam) is designed in Anglo-Normand style
 							architecture (architecture of the English-French countryside), a total of 151 rooms
@@ -52,11 +52,10 @@ const index = () => {
 							<br />
 							We located at the Tuyen Lam Lake National Tourist Area, in the middle of the Da Lat
 							valley, surrounded by pine forest and green golf course. This is one of the resorts
-							with open nature space in Da Lat. From a distance, the Swiss-Belresort is a fairytale
-							castle by white paint and European architectural style. At DT Hotel, Dalat we are care
-							about every single moment of customer, your saftifie is our happiness. Therefore, we
-							will try our best to bring the best services with morden equipments to our valued
-							guests.
+							with open nature space in Da Lat. From a distance, the DT Hotel is a fairytale castle
+							by white paint and European architectural style. At DT Hotel, Dalat we are care about
+							every single moment of customer, your saftifie is our happiness. Therefore, we will
+							try our best to bring the best services with morden equipments to our valued guests.
 						</p>
 					</div>
 					<div className='abbody__history__container'>
