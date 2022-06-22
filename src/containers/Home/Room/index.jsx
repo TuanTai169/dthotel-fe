@@ -111,7 +111,7 @@ const RoomPage = () => {
 			rooms: [...selectRoom],
 			totalPrice,
 		};
-		dispatch(setBooking(data));
+		localStorage.setItem('currentBooking', JSON.stringify(data));
 		navigate(`/booking`);
 	};
 
