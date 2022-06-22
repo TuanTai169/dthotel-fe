@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import DGV from './../../../assets/images/rooms_images/DGV.png';
 import Spa from './../../../assets/images/spa.png';
 import pinebranch1 from './../../../assets/images/pinebranch1.png';
 import pinebranch2 from './../../../assets/images/pinebranch2.png';
-import adventure from './../../../assets/images/adventure.png';
+import * as Room from './../Images/images';
 
 const LandingPage = () => {
 	return (
@@ -45,32 +43,47 @@ const LandingPage = () => {
 					</div>
 					<div className='home__cards__container__items'>
 						<div className='card-item'>
-							<img src={DGV} alt='Deluxe Goft View' className='card-item__image' />
+							<img
+								src={Room.DeluxeGolfView.url[0]}
+								alt='Deluxe Goft View'
+								className='card-item__image'
+							/>
 							<div className='card-item__information'>
 								<h2 className='card-item__information__title'>DELUXE GOFT VIEW</h2>
 								<p className='card-item__information__description'>
-									Swiss-Belresort Tuyền Lâm, Đà Lạt bố trí 72 phòng Deluxe Golf View hướng ra bể bơi
-									và có thể thấy được sân golf 18 lỗ tiêu chuẩn quốc tế đầy hiện đại.
+									Swiss-Belresort Lam Tuyen arranged 72 Deluxe Golf View rooms overlooking the pool
+									and the 18-hole golf course of international standard fully modern, which has
+									fully equipped with essential customer service,...
 								</p>
 							</div>
 						</div>
 						<div className='card-item'>
-							<img src={DGV} alt='Deluxe Goft View' className='card-item__image' />
+							<img
+								src={Room.DeluxeMountainView.url[0]}
+								alt='Deluxe Mountain View'
+								className='card-item__image'
+							/>
 							<div className='card-item__information'>
-								<h2 className='card-item__information__title'>DELUXE GOFT VIEW</h2>
+								<h2 className='card-item__information__title'>DELUXE MOUNTAIN VIEW</h2>
 								<p className='card-item__information__description'>
-									Swiss-Belresort Tuyền Lâm, Đà Lạt bố trí 72 phòng Deluxe Golf View hướng ra bể bơi
-									và có thể thấy được sân golf 18 lỗ tiêu chuẩn quốc tế đầy hiện đại.
+									Swiss-Belresort Lam Tuyen arranged 41 Deluxe Mountain View rooms overlooking the
+									hills or the golf course, which has fully equipped with essential customer
+									service, with King Bed,...
 								</p>
 							</div>
 						</div>
 						<div className='card-item'>
-							<img src={DGV} alt='Deluxe Goft View' className='card-item__image' />
+							<img
+								src={Room.StudioMountainView.url[0]}
+								alt='Studio Mountain View'
+								className='card-item__image'
+							/>
 							<div className='card-item__information'>
-								<h2 className='card-item__information__title'>DELUXE GOFT VIEW</h2>
+								<h2 className='card-item__information__title'>STUDIO MOUNTAIN VIEW</h2>
 								<p className='card-item__information__description'>
-									Swiss-Belresort Tuyền Lâm, Đà Lạt bố trí 72 phòng Deluxe Golf View hướng ra bể bơi
-									và có thể thấy được sân golf 18 lỗ tiêu chuẩn quốc tế đầy hiện đại.
+									Swiss-Belresort Lam Tuyen arranged 18 Studio Mountain View rooms, which is the
+									most suitable choice for families with small children. In addition to owning all
+									the standards of the deluxe rooms are more spacious room types...
 								</p>
 							</div>
 						</div>
@@ -122,41 +135,47 @@ const LandingPage = () => {
 					<div className='home__adventure__content__cards'>
 						<div className='home__adventure__content__cards__item'>
 							<div className='home__adventure__content__cards__item-content'>
-								<img className='adventure_img' src={adventure} alt='Adventure image' />
+								<img
+									className='adventure_img'
+									src='https://cdn.thecrazytourist.com/wp-content/uploads/2018/08/ccimage-shutterstock_369366323.jpg'
+									alt='Adventure image'
+								/>
 								<p className='adventure_description'>
-									A small village from a fairy tale located in the middle of a primeval forest.
+									<strong>Bao Dai’s Summer Palace</strong>
+									<br />
+									Bao Dai was famous for being the last emperor of Vietnam and ascended to the
+									throne was he was just 12 years old.
 								</p>
-								<div className='adventure_button'>
-									<Link className='adventure_button_link' to='/blogs'>
-										EXPLORE
-									</Link>
-								</div>
 							</div>
 						</div>
 						<div className='home__adventure__content__cards__item'>
 							<div className='home__adventure__content__cards__item-content'>
-								<img className='adventure_img' src={adventure} alt='Adventure image' />
+								<img
+									className='adventure_img'
+									src='https://cdn.thecrazytourist.com/wp-content/uploads/2018/08/ccimage-shutterstock_693067378.jpg'
+									alt='Adventure image'
+								/>
 								<p className='adventure_description'>
-									A small village from a fairy tale located in the middle of a primeval forest.
+									<strong>Datanla Waterfalls</strong>
+									<br />
+									Datanla Waterfalls is one of the most famous set of falls in Da Lat and you can
+									easily reach this gushing cataract from the center of town.
 								</p>
-								<div className='adventure_button'>
-									<Link className='adventure_button_link' to='/blogs'>
-										EXPLORE
-									</Link>
-								</div>
 							</div>
 						</div>
 						<div className='home__adventure__content__cards__item'>
 							<div className='home__adventure__content__cards__item-content'>
-								<img className='adventure_img' src={adventure} alt='Adventure image' />
+								<img
+									className='adventure_img'
+									src='https://cdn.thecrazytourist.com/wp-content/uploads/2018/08/ccimage-shutterstock_308632343.jpg'
+									alt='Adventure image'
+								/>
 								<p className='adventure_description'>
-									A small village from a fairy tale located in the middle of a primeval forest.
+									<strong>Truc Lam Pagoda</strong>
+									<br />
+									Truc Lam Pagoda is one of the newest temples in Da Lat but this also means that it
+									is one of the prettiest.
 								</p>
-								<div className='adventure_button'>
-									<Link className='adventure_button_link' to='/blogs'>
-										EXPLORE
-									</Link>
-								</div>
 							</div>
 						</div>
 					</div>

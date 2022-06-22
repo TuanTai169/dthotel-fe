@@ -1,6 +1,6 @@
 import React from 'react';
-
 import './index.scss';
+import * as Images from './../Images/images';
 
 const index = () => {
 	return (
@@ -62,30 +62,12 @@ const index = () => {
 						</p>
 					</div>
 					<div className='abbody__history__container'>
-						<img
-							src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/10/SBI-about-us.jpg'
-							className='abbody__overall__container__item'
-						/>
-						<img
-							src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/about_history2.jpg'
-							className='abbody__overall__container__item'
-						/>
-						<img
-							src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/about_history3.jpg'
-							className='abbody__overall__container__item'
-						/>
-						<img
-							src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/about_history5.jpg'
-							className='abbody__overall__container__item'
-						/>
-						<img
-							src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/about_history6.jpg'
-							className='abbody__overall__container__item'
-						/>
-						<img
-							src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/about_history7.jpg'
-							className='abbody__overall__container__item'
-						/>
+						<img src={Images.AboutUs.url[0]} className='abbody__overall__container__item' />
+						<img src={Images.AboutUs.url[1]} className='abbody__overall__container__item' />
+						<img src={Images.AboutUs.url[2]} className='abbody__overall__container__item' />
+						<img src={Images.AboutUs.url[3]} className='abbody__overall__container__item' />
+						<img src={Images.AboutUs.url[4]} className='abbody__overall__container__item' />
+						<img src={Images.AboutUs.url[5]} className='abbody__overall__container__item' />
 					</div>
 				</div>
 				<div className='abbody__room'>
@@ -119,20 +101,14 @@ const index = () => {
 				<div className='abbody__images__title'>Discover our Resort’s</div>
 				<div className='abbody__images'>
 					<div className='abbody__images__container'>
-						<img
-							className='flex2'
-							src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/at_the_resort.png'
-						/>
-						<img src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/at_the_resort2.jpg' />
-						<img src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/11/SBI-about-us-2.jpg' />
+						<img className='flex2' src={Images.AboutUsEnd.url[0]} />
+						<img src={Images.AboutUsEnd.url[2]} />
+						<img src={Images.AboutUsEnd.url[3]} />
 					</div>
 					<div className='abbody__images__container'>
-						<img src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/11/SBI-about-us-1.jpg' />
-						<img src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/10/SBI-about-us-2.jpg' />
-						<img
-							className='flex2'
-							src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/at_the_resort6.jpg'
-						/>
+						<img src={Images.AboutUsEnd.url[4]} />
+						<img src={Images.AboutUsEnd.url[5]} />
+						<img className='flex2' src={Images.AboutUsEnd.url[1]} />
 					</div>
 				</div>
 			</section>

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Form, Modal, Button, Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm, useWatch } from 'react-hook-form';
 import { addRoom } from '../../../redux/actions/room';
 import { numberValidation } from '../../../utils/validation';
 import { roomDefault, RoomStatus } from '../../../assets/app/constants';
+import * as Validation from './../../../utils/validation';
 
 const AddRoomModal = (props) => {
 	const { show, handlerModalClose } = props;
@@ -13,6 +15,15 @@ const AddRoomModal = (props) => {
 	const [newRoom, setNewRoom] = useState(roomDefault);
 	const convenienceList = useSelector((state) => state.convenience.conveniences);
 	const typesList = useSelector((state) => state.types.types);
+	const {
+		register,
+		watch,
+		formState: { errors },
+	} = useForm();
+
+	let NameValidation = true;
+	NameValidation =
+		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
 
 	const onChangeNewForm = (event) => {
 		setNewRoom({ ...newRoom, [event.target.name]: event.target.value });
@@ -83,21 +94,13 @@ const AddRoomModal = (props) => {
 									options={typesList}
 									getOptionLabel={(option) => option.nameTag}
 									getOptionValue={(option) => option._id}
-									onChange={onChangeType}
 									className='basic-multi-select'
 									classNamePrefix='select type'
 								/>
 							</Form.Group>
 							<Form.Group className='col-3 mb-3' controlId='formBasicPrice'>
 								<Form.Label>Price(USD)</Form.Label>
-								<Form.Control
-									type='number'
-									placeholder='0'
-									name='price'
-									value={price || ''}
-									onChange={onChangeNewForm}
-									required
-								/>
+								<Form.Control type='number' placeholder='0' name='price' min='1' />
 							</Form.Group>
 
 							<Form.Group className='col-3 mb-3' controlId='formBasicAdult'>
@@ -130,10 +133,12 @@ const AddRoomModal = (props) => {
 									type='text'
 									placeholder='Room name'
 									name='name'
-									value={name || ''}
-									onChange={onChangeNewForm}
 									required
+									{...register('name')}
 								/>
+								<p className='alertValidation'>
+									{NameValidation != true ? 'Please input a valid room name!' : ''}
+								</p>
 							</Form.Group>
 							<Form.Group className='col-3 mb-3' controlId='formBasicFloor'>
 								<Form.Label>Floor</Form.Label>
@@ -166,6 +171,7 @@ const AddRoomModal = (props) => {
 									type='number'
 									placeholder='0'
 									name='single'
+									min='0'
 									value={bed.single || ''}
 									onChange={onChangeBed}
 								/>
@@ -175,6 +181,7 @@ const AddRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='double'
 									value={bed.double || ''}
 									onChange={onChangeBed}
@@ -201,6 +208,7 @@ const AddRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='bedRoom'
 									value={bedRoom || ''}
 									onChange={onChangeDetail}
@@ -211,6 +219,7 @@ const AddRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='bathRoom'
 									value={bathRoom || ''}
 									onChange={onChangeDetail}
@@ -221,6 +230,7 @@ const AddRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='livingRoom'
 									value={livingRoom || ''}
 									onChange={onChangeDetail}
@@ -231,6 +241,7 @@ const AddRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='kitchen'
 									value={kitchen || ''}
 									onChange={onChangeDetail}
@@ -251,7 +262,9 @@ const AddRoomModal = (props) => {
 						</Form.Group>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button type='submit'>Save</Button>
+						<Button type='submit' disabled={!NameValidation}>
+							Save
+						</Button>
 						<Button variant='secondary' onClick={resetAddPostData}>
 							Close
 						</Button>

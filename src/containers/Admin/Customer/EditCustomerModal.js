@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Modal, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateCustomer } from '../../../redux/actions/customer';
 import {
@@ -10,12 +11,24 @@ import {
 	nameValidation,
 	textValidation,
 } from '../../../utils/validation';
+import * as Validation from '../../../utils/validation';
 
 function EditCustomerModal(props) {
 	const { show, handlerModalClose, customer } = props;
 	const dispatch = useDispatch();
 
 	const [editCustomer, setEditCustomer] = useState(customer);
+
+	const { register, watch } = new useForm();
+	let NameValidation = true;
+	let EmailValidation = true;
+	let IdValidation = true;
+	let PhoneValidation = true;
+	NameValidation =
+		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
+	EmailValidation = Validation.PatternEmail.test(watch('email'));
+	IdValidation = Validation.PatternId.test(watch('id'));
+	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
 
 	const onChangeNewForm = (event) =>
 		setEditCustomer({
@@ -64,21 +77,29 @@ function EditCustomerModal(props) {
 								type='text'
 								placeholder='Name'
 								name='name'
-								value={name || ''}
-								onChange={onChangeNewForm}
+								defaultValue={name || ''}
+								// onChange={onChangeNewForm}
 								required
+								{...register('name')}
 							/>
+							<p className='alertValidation'>
+								{NameValidation != true ? 'Please input a valid name!' : ''}
+							</p>
 						</FloatingLabel>
 						<FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
 							<Form.Control
 								type='text'
 								placeholder='Email'
 								name='email'
-								value={email || ''}
-								onChange={onChangeNewForm}
+								defaultValue={email || ''}
+								// onChange={onChangeNewForm}
 								required
-								disabled
+								// disabled
+								{...register('email')}
 							/>
+							<p className='alertValidation'>
+								{EmailValidation != true ? 'Please input a valid email!' : ''}
+							</p>
 						</FloatingLabel>
 
 						<Row>
@@ -88,10 +109,14 @@ function EditCustomerModal(props) {
 										type='text'
 										placeholder='Phone Number'
 										name='phone'
-										value={phone || ''}
-										onChange={onChangeNewForm}
+										defaultValue={phone || ''}
+										// onChange={onChangeNewForm}
 										required
+										{...register('phone')}
 									/>
+									<p className='alertValidation'>
+										{PhoneValidation != true ? 'Please input a valid phone number!' : ''}
+									</p>
 								</FloatingLabel>
 							</Col>
 							<Col>
@@ -100,10 +125,14 @@ function EditCustomerModal(props) {
 										type='text'
 										placeholder='Id Number'
 										name='idNumber'
-										value={idNumber || ''}
-										onChange={onChangeNewForm}
+										defaultValue={idNumber || ''}
+										// onChange={onChangeNewForm}
 										required
+										{...register('id')}
 									/>
+									<p className='alertValidation'>
+										{IdValidation != true ? 'Please input a valid ID number!' : ''}
+									</p>
 								</FloatingLabel>
 							</Col>
 						</Row>
@@ -114,7 +143,8 @@ function EditCustomerModal(props) {
 										type='number'
 										placeholder='Adult'
 										name='adult'
-										value={numberOfPeople.adult > 0 ? numberOfPeople.adult : 0}
+										min='1'
+										defaultValue={numberOfPeople.adult > 0 ? numberOfPeople.adult : 0}
 										onChange={onChangeNumberOfPeople}
 										required
 									/>
@@ -126,7 +156,8 @@ function EditCustomerModal(props) {
 										type='number'
 										placeholder='Child'
 										name='child'
-										value={numberOfPeople.child > 0 ? numberOfPeople.child : 0}
+										min='0'
+										defaultValue={numberOfPeople.child > 0 ? numberOfPeople.child : 0}
 										onChange={onChangeNumberOfPeople}
 										required
 									/>
@@ -138,7 +169,7 @@ function EditCustomerModal(props) {
 								as='textarea'
 								name='address'
 								placeholder='Address'
-								value={address || ''}
+								defaultValue={address || ''}
 								onChange={onChangeNewForm}
 								required
 							/>

@@ -126,3 +126,13 @@ function getDates(startDate, endDate) {
 	}
 	return dates;
 }
+export const PatternEmail = new RegExp(
+	/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+);
+export const PatternPhone = new RegExp(/^(03|05|07|08|09|01[2|6|8|9])+([0-9]{8}?)$/);
+export const PatternId = new RegExp(/([0-9]{12}?)$\b/);
+export const PatternPassword = new RegExp(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/);
+export const PatternName1 = new RegExp(
+	/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/
+);
+export const PatternName2 = new RegExp(/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?)?$/);
