@@ -22,6 +22,15 @@ const BookingModal = (props) => {
 	const dispatch = useDispatch();
 	let navigate = useNavigate();
 
+	const DepositOptions = [
+		{ value: '50', label: '50%' },
+		{ value: '60', label: '60%' },
+		{ value: '70', label: '70%' },
+		{ value: '80', label: '80%' },
+		{ value: '90', label: '90%' },
+		{ value: '100', label: '100%' },
+	];
+
 	//Get info by redux
 	const listCustomer = useSelector((state) => state.customerReducer.customers);
 	const listRoom = useSelector((state) => state.roomReducer.rooms);
@@ -344,7 +353,7 @@ const BookingModal = (props) => {
 							)}
 
 							<Form.Group as={Col} controlId='formGridDiscount'>
-								<Form.Label>Discount </Form.Label>
+								<Form.Label>Discount</Form.Label>
 								<Select
 									name='discount'
 									options={listCoupon}

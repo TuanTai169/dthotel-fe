@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { Form, Modal, Button, FloatingLabel } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { addService } from '../../../redux/actions/service';
 import { nameValidation, numberValidation } from '../../../utils/validation';
+import * as Validation from '../../../utils/validation';
 
 const AddServiceModal = (props) => {
 	const { show, handlerModalClose } = props;
 	const dispatch = useDispatch();
+
+	const { register, watch } = new useForm();
+	let NameValidation = true;
+	NameValidation =
+		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
 
 	const [newService, setNewService] = useState({
 		name: '',
@@ -45,10 +52,14 @@ const AddServiceModal = (props) => {
 								type='text'
 								placeholder='Name'
 								name='name'
-								value={name || ''}
-								onChange={onChangeNewForm}
+								defaultValue={name || ''}
+								// onChange={onChangeNewForm}
 								required
+								{...register('name')}
 							/>
+							<p className='alertValidation'>
+								{NameValidation != true ? 'Please input a valid name!' : ''}
+							</p>
 						</FloatingLabel>
 
 						<FloatingLabel controlId='floatingPrice' label='Price (USD)' className='mb-3'>
@@ -56,6 +67,7 @@ const AddServiceModal = (props) => {
 								type='number'
 								placeholder='0'
 								name='price'
+								min='0'
 								value={price || ''}
 								onChange={onChangeNewForm}
 								required
@@ -74,7 +86,7 @@ const AddServiceModal = (props) => {
 						</FloatingLabel>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant='primary' type='submit'>
+						<Button variant='primary' type='submit' disabled={!NameValidation}>
 							Save
 						</Button>
 						<Button variant='secondary' onClick={resetAddPostData}>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Modal, FloatingLabel, Button, Row, Col } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../../redux/actions/user';
 import usePasswordToggle from '../../../hooks/usePasswordToggle';
@@ -11,6 +12,7 @@ import {
 	textValidation,
 } from '../../../utils/validation';
 import { userDefault, userRoles } from '../../../assets/app/constants';
+import * as Validation from '../../../utils/validation';
 
 const AddUserModal = (props) => {
 	const { show, handlerModalClose } = props;
@@ -19,6 +21,17 @@ const AddUserModal = (props) => {
 
 	const [inputType, toggleIcon] = usePasswordToggle();
 	const [newUser, setNewUser] = useState({ ...userDefault });
+
+	const { register, watch } = new useForm();
+	let NameValidation,
+		EmailValidation,
+		PasswordValidation,
+		PhoneValidation = true;
+	NameValidation =
+		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
+	EmailValidation = Validation.PatternEmail.test(watch('email'));
+	PasswordValidation = Validation.PatternPassword.test(watch('password'));
+	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
 
 	const onChangeNewForm = (event) =>
 		setNewUser({
@@ -60,10 +73,14 @@ const AddUserModal = (props) => {
 								type='text'
 								placeholder='Name'
 								name='name'
-								value={name || ''}
-								onChange={onChangeNewForm}
+								// value={name || ''}
+								// onChange={onChangeNewForm}
 								required
+								{...register('name')}
 							/>
+							<p className='alertValidation'>
+								{NameValidation != true ? 'Please input a valid name!' : ''}
+							</p>
 						</FloatingLabel>
 
 						<FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
@@ -71,21 +88,29 @@ const AddUserModal = (props) => {
 								type='text'
 								placeholder='email'
 								name='email'
-								value={email || ''}
-								onChange={onChangeNewForm}
+								// value={email || ''}
+								// onChange={onChangeNewForm}
 								required
+								{...register('email')}
 							/>
+							<p className='alertValidation'>
+								{EmailValidation != true ? 'Please input a valid email!' : ''}
+							</p>
 						</FloatingLabel>
 						<FloatingLabel controlId='floatingPassword' label='Password' className='mb-3'>
 							<Form.Control
 								type={inputType}
 								placeholder='*'
 								name='password'
-								value={password || ''}
-								onChange={onChangeNewForm}
+								// value={password || ''}
+								// onChange={onChangeNewForm}
 								required
+								{...register('password')}
 							/>
 							<span className='password-toggle-icon'>{toggleIcon}</span>
+							<p className='alertValidation'>
+								{PasswordValidation != true ? 'Please input a valid password!' : ''}
+							</p>
 						</FloatingLabel>
 						<Row>
 							<Col>
@@ -94,10 +119,14 @@ const AddUserModal = (props) => {
 										type='text'
 										placeholder='Phone Number'
 										name='phone'
-										value={phone || ''}
-										onChange={onChangeNewForm}
+										// value={phone || ''}
+										// onChange={onChangeNewForm}
 										required
+										{...register('phone')}
 									/>
+									<p className='alertValidation'>
+										{PhoneValidation != true ? 'Please input a valid phone number!' : ''}
+									</p>
 								</FloatingLabel>
 							</Col>
 						</Row>
@@ -129,7 +158,13 @@ const AddUserModal = (props) => {
 						</FloatingLabel>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant='primary' type='submit'>
+						<Button
+							variant='primary'
+							type='submit'
+							disabled={
+								!(NameValidation && EmailValidation && PasswordValidation && PhoneValidation)
+							}
+						>
 							Save
 						</Button>
 						<Button variant='secondary' onClick={resetAddPostData}>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Modal, Button, FloatingLabel, Row, Col } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../../redux/actions/user';
 import {
@@ -9,6 +10,7 @@ import {
 	textValidation,
 } from '../../../utils/validation';
 import { userRoles } from '../../../assets/app/constants';
+import * as Validation from '../../../utils/validation';
 
 function EditUserModal(props) {
 	const { show, handlerModalClose, user } = props;
@@ -17,6 +19,12 @@ function EditUserModal(props) {
 	const currentRole = useSelector((state) => state.auth.user.roles);
 
 	const [editUser, setEditUser] = useState(user);
+	const { register, watch } = new useForm();
+	let NameValidation,
+		PhoneValidation = true;
+	NameValidation =
+		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
+	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
 
 	const onChangeNewForm = (event) =>
 		setEditUser({
@@ -57,10 +65,14 @@ function EditUserModal(props) {
 								type='text'
 								placeholder='Name'
 								name='name'
-								value={name || ''}
-								onChange={onChangeNewForm}
+								defaultValue={name || ''}
+								// onChange={onChangeNewForm}
 								required
+								{...register('name')}
 							/>
+							<p className='alertValidation'>
+								{NameValidation != true ? 'Please input a valid name!' : ''}
+							</p>
 						</FloatingLabel>
 						<FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
 							<Form.Control
@@ -81,10 +93,14 @@ function EditUserModal(props) {
 										type='text'
 										placeholder='Phone Number'
 										name='phone'
-										value={phone || ''}
-										onChange={onChangeNewForm}
+										defaultValue={phone || ''}
+										// onChange={onChangeNewForm}
 										required
+										{...register('phone')}
 									/>
+									<p className='alertValidation'>
+										{PhoneValidation != true ? 'Please input a valid phone number!' : ''}
+									</p>
 								</FloatingLabel>
 							</Col>
 							<Col>
@@ -113,7 +129,7 @@ function EditUserModal(props) {
 						</FloatingLabel>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant='primary' type='submit'>
+						<Button variant='primary' type='submit' disabled={!(NameValidation && PhoneValidation)}>
 							Save
 						</Button>
 						<Button variant='secondary' onClick={resetAddPostData}>

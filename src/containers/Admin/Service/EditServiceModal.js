@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Form, Modal, Button, FloatingLabel } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateService } from '../../../redux/actions/service';
 import { nameValidation, numberValidation } from '../../../utils/validation';
+import * as Validation from '../../../utils/validation';
 
 const EditServiceModal = (props) => {
 	const { show, handlerModalClose, service } = props;
 	const dispatch = useDispatch();
 
 	const [editService, setEditService] = useState(service);
+	const { register, watch } = new useForm();
+	let NameValidation = true;
+	NameValidation =
+		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
 
 	const onChangeNewForm = (event) =>
 		setEditService({
@@ -42,10 +48,13 @@ const EditServiceModal = (props) => {
 								type='text'
 								placeholder='Name'
 								name='name'
-								value={name || ''}
-								onChange={onChangeNewForm}
+								defaultValue={name || ''}
 								required
+								{...register('name')}
 							/>
+							<p className='alertValidation'>
+								{NameValidation != true ? 'Please input a valid name!' : ''}
+							</p>
 						</FloatingLabel>
 
 						<FloatingLabel controlId='floatingPrice' label='Price (USD)' className='mb-3'>
@@ -53,6 +62,7 @@ const EditServiceModal = (props) => {
 								type='number'
 								placeholder='0'
 								name='price'
+								min='0'
 								value={price || ''}
 								onChange={onChangeNewForm}
 								required
@@ -60,7 +70,7 @@ const EditServiceModal = (props) => {
 						</FloatingLabel>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant='primary' type='submit'>
+						<Button variant='primary' type='submit' disabled={!NameValidation}>
 							Save
 						</Button>
 						<Button variant='secondary' onClick={resetEditPostData}>

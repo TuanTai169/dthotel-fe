@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Modal, Button, Row, Col } from 'react-bootstrap';
+import { useForm, useWatch } from 'react-hook-form';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateRoom, getAllRoom } from '../../../redux/actions/room';
-import { numberValidation } from '../../../utils/validation';
+import * as Validation from '../../../utils/validation';
 import { RoomStatus } from '../../../assets/app/constants';
 import { uploadImage } from './../../../redux/actions/room';
 
@@ -15,6 +16,11 @@ const EditRoomModal = (props) => {
 	const [roomImages, setRoomImages] = useState([]);
 	const convenienceList = useSelector((state) => state.convenience.conveniences);
 	const typesList = useSelector((state) => state.types.types);
+	const { register, watch } = new useForm();
+
+	let NameValidation = true;
+	NameValidation =
+		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
 
 	useEffect(() => setEditRoom(room), [room]);
 	useEffect(() => {
@@ -55,6 +61,7 @@ const EditRoomModal = (props) => {
 	};
 
 	const handlerSubmit = (e) => {
+		console.log(NameValidation);
 		e.preventDefault();
 		const data = {
 			...editRoom,
@@ -158,10 +165,13 @@ const EditRoomModal = (props) => {
 									type='text'
 									placeholder='Room name'
 									name='name'
-									value={name || ''}
-									onChange={onChangeNewForm}
+									defaultValue={name || ''}
 									required
+									{...register('name')}
 								/>
+								<p className='alertValidation'>
+									{NameValidation != true ? 'Please input a valid room name!' : ''}
+								</p>
 							</Form.Group>
 							<Form.Group className='col-3 mb-3' controlId='formBasicFloor'>
 								<Form.Label>Floor</Form.Label>
@@ -196,6 +206,7 @@ const EditRoomModal = (props) => {
 									type='number'
 									placeholder='0'
 									name='single'
+									min='0'
 									value={bed.single || ''}
 									onChange={onChangeBed}
 								/>
@@ -205,6 +216,7 @@ const EditRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='double'
 									value={bed.double || ''}
 									onChange={onChangeBed}
@@ -234,6 +246,7 @@ const EditRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='bedRoom'
 									value={bedRoom || ''}
 									onChange={onChangeDetail}
@@ -244,6 +257,7 @@ const EditRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='bathRoom'
 									value={bathRoom || ''}
 									onChange={onChangeDetail}
@@ -254,6 +268,7 @@ const EditRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='livingRoom'
 									value={livingRoom || ''}
 									onChange={onChangeDetail}
@@ -264,6 +279,7 @@ const EditRoomModal = (props) => {
 								<Form.Control
 									type='number'
 									placeholder='0'
+									min='0'
 									name='kitchen'
 									value={kitchen || ''}
 									onChange={onChangeDetail}
@@ -289,7 +305,7 @@ const EditRoomModal = (props) => {
 						</Form.Group>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant='primary' type='submit'>
+						<Button variant='primary' type='submit' disabled={!NameValidation}>
 							Save
 						</Button>
 						<Button variant='secondary' onClick={resetEditPostData}>

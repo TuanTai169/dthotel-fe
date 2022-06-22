@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import './index.scss';
+import * as Images from './../Images/images';
 
 const index = () => {
 	var settings = {
@@ -25,34 +26,22 @@ const index = () => {
 					<div className='container'>
 						<Slider {...settings}>
 							<div>
-								<img
-									className='container__item'
-									src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/11/SBI-spa3.jpg'
-								/>
+								<img className='container__item' src={Images.Services.url[0]} />
 							</div>
 							<div>
-								<img
-									className='container__item'
-									src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/07/slider_page_spa.jpg'
-								/>
+								<img className='container__item' src={Images.Services.url[1]} />
 							</div>
 							<div>
-								<img
-									className='container__item'
-									src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/07/slider_page_spa2.jpg'
-								/>
+								<img className='container__item' src={Images.Services.url[2]} />
 							</div>
 							<div>
-								<img
-									className='container__item'
-									src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/10/SBI-spa-1-1.jpg'
-								/>
+								<img className='container__item' src={Images.Services.url[3]} />
 							</div>
 							<div>
-								<img
-									className='container__item'
-									src='https://samtuyenlamhotel.com.vn/wp-content/uploads/2017/11/SBI-spa6-1.jpg'
-								/>
+								<img className='container__item' src={Images.Services.url[4]} />
+							</div>
+							<div>
+								<img className='container__item' src={Images.Services.url[5]} />
 							</div>
 						</Slider>
 					</div>
