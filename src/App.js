@@ -15,7 +15,7 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path='/*' element={<Home />} />
-					<Route path='/admin/*' element={<Admin />} exact></Route>
+					<Route path='/admin/*' element={<Admin />} />
 					<Route path='*' element={<NotFound />} />
 				</Routes>
 			</Router>

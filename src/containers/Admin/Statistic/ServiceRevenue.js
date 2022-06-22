@@ -33,7 +33,9 @@ const ServiceRevenue = () => {
 		{ name: 'Service', field: 'service', sortable: false },
 		{ name: 'BookingID', field: 'bookingId', sortable: false },
 		{ name: 'CheckOutDate', field: 'checkOutDate', sortable: false },
-		{ name: 'Price', field: 'price', sortable: false },
+		{ name: 'Amount', field: 'amount', sortable: true },
+		{ name: 'Price', field: 'price', sortable: true },
+		{ name: 'Total Price', field: 'price', sortable: true },
 	];
 
 	const currentData = useMemo(() => {

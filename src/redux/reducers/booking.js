@@ -29,6 +29,7 @@ const bookingReducer = (state = initialState, action) => {
 			return {
 				...state,
 				bookings: [...state.bookings, payload],
+				booking: payload,
 			};
 		case types.UPDATE_BOOKING:
 			const newBookings = state.bookings.map((booking) =>

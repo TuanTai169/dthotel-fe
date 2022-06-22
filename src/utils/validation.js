@@ -1,6 +1,9 @@
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
 import _ from 'lodash';
 import moment from 'moment';
+
+// const { watch } = useForm();
 
 export const phoneValidation = (phone) => {
 	if (phone.length !== 10) {
@@ -22,7 +25,7 @@ export const IdNumberValidation = (IDNumber) => {
 	}
 	var pattern = new RegExp(/([0-9]{12})\b/g);
 	if (!pattern.test(IDNumber)) {
-		toast.error('Please enter valid phone number.');
+		toast.error('Please enter valid ID number.');
 		return false;
 	}
 	return true;
@@ -90,7 +93,7 @@ export const checkStatusRoom = (rooms, bookings) => {
 	for (const room of rooms) {
 		const roomId = room._id;
 		for (const booking of bookings) {
-			const item = booking.rooms.find((item) => item.room === roomId);
+			const item = booking.rooms.find((item) => item._id === roomId);
 			if (item) {
 				listBooking.push(booking);
 			}
@@ -98,8 +101,8 @@ export const checkStatusRoom = (rooms, bookings) => {
 	}
 
 	for (const book of listBooking) {
-		const checkIn = new Date(book.rooms[0].checkInDate);
-		const checkOut = new Date(book.rooms[0].checkOutDate);
+		const checkIn = new Date(book.checkInDate);
+		const checkOut = new Date(book.checkOutDate);
 
 		const dates = getDates(checkIn, checkOut);
 		dates.forEach((item) => {
@@ -136,3 +139,8 @@ export const PatternName1 = new RegExp(
 	/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/
 );
 export const PatternName2 = new RegExp(/^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?)?$/);
+
+// export const PasswordValidation = PatternPassword.test(watch('password'));
+// export const IdValidation = PatternId.test(watch('id'));
+// export const EmailValidation = PatternEmail.test(watch('email'));
+// export const PhoneValidation = PatternPhone.test(watch('phone'));

@@ -10,8 +10,8 @@ function DetailReceiptModal(props) {
 	const { show, handlerModalClose, receipt } = props;
 	const { booking, paidOut, refund, modeOfPayment } = receipt;
 
-	const checkInDateConvert = convertStringToDate(booking.checkInDate);
-	const checkOutDateConvert = convertStringToDate(booking.checkOutDate);
+	const checkInDateConvert = convertStringToDate(booking.detail.checkInDate);
+	const checkOutDateConvert = convertStringToDate(booking.detail.checkOutDate);
 
 	const [isViewOpen, setIsViewOpen] = useState(false);
 	const handlerModalViewClose = () => setIsViewOpen(false);
@@ -31,7 +31,7 @@ function DetailReceiptModal(props) {
 					<Modal.Title>{booking.code}</Modal.Title>
 					<div style={{ marginLeft: '30%', fontSize: '20px' }}>
 						Total Price (USD):{' '}
-						<strong style={{ color: 'red', fontSize: '20px' }}>{booking.totalPrice}</strong>
+						<strong style={{ color: 'red', fontSize: '20px' }}>{booking.detail.totalPrice}</strong>
 					</div>
 				</Modal.Header>
 				<Form>
@@ -49,12 +49,20 @@ function DetailReceiptModal(props) {
 							</Col>
 							<Col>
 								<FloatingLabel controlId='floatingDiscount' label='Discount (%)' className='mb-3'>
-									<Form.Control type='number' value={booking.discount} disabled />
+									<Form.Control
+										type='text'
+										value={booking.discount ? booking.discount?.discount : 0}
+										disabled
+									/>
 								</FloatingLabel>
 							</Col>
 							<Col>
 								<FloatingLabel controlId='floatingDeposit' label='Deposit (USD)' className='mb-3'>
-									<Form.Control type='text' value={booking.deposit} disabled />
+									<Form.Control
+										type='text'
+										value={booking.deposit ? booking.deposit : 0}
+										disabled
+									/>
 								</FloatingLabel>
 							</Col>
 						</Row>
@@ -72,7 +80,7 @@ function DetailReceiptModal(props) {
 
 							<Col>
 								<FloatingLabel controlId='floatingVAT' label='VAT(%) ' className='mb-3'>
-									<Form.Control type='text' value={booking.VAT} readOnly />
+									<Form.Control type='text' value={10} readOnly />
 								</FloatingLabel>
 							</Col>
 
@@ -90,32 +98,34 @@ function DetailReceiptModal(props) {
 						<Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 							<Form.Group controlId='formGridCustomer'>
 								<h5>Customer</h5>
-								<CustomerForm customer={booking.customer} />
+								<CustomerForm customer={booking.detail.customer} />
 							</Form.Group>
 						</Row>
 						<Row className='mb-3' style={{ borderBottom: '1px solid #bbb' }}>
 							<Form.Group controlId='formGridRoom'>
 								<div className='form-label'>
 									<h5>Room</h5>
-									<p>
+									{/* <p>
 										Room Price (USD): <strong style={{ color: 'red' }}>{booking.roomCharge}</strong>
-									</p>
+									</p> */}
 								</div>
-								<RoomForm rooms={booking.rooms} />
+								<RoomForm rooms={booking.detail.rooms} />
 							</Form.Group>
 						</Row>
 
-						{receipt.booking.services.length > 0 && (
+						{[...booking.detail.services, ...booking.detail.products].length > 0 && (
 							<Row className='mb-3'>
 								<Form.Group as={Col} controlId='formGridService'>
 									<div className='form-label'>
-										<h5>Service</h5>
-										<p>
+										<h5>Services and Products</h5>
+										{/* <p>
 											Service Price (USD):{' '}
 											<strong style={{ color: 'red' }}>{booking.serviceCharge}</strong>
-										</p>
+										</p> */}
 									</div>
-									<ServiceForm services={booking.services} />
+									<ServiceForm
+										services={[...booking.detail.services, ...booking.detail.products]}
+									/>
 								</Form.Group>
 							</Row>
 						)}
@@ -125,11 +135,13 @@ function DetailReceiptModal(props) {
 							<Button variant='danger' onClick={() => setIsViewOpen(true)}>
 								Print
 							</Button>
-							<PrintBill
-								handlerModalClose={handlerModalViewClose}
-								show={isViewOpen}
-								receipt={receipt}
-							/>
+							{isViewOpen && (
+								<PrintBill
+									handlerModalClose={handlerModalViewClose}
+									show={isViewOpen}
+									receipt={receipt}
+								/>
+							)}
 						</ButtonToolbar>
 						<Button variant='secondary' onClick={handlerModalClose}>
 							Close

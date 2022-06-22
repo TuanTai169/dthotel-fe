@@ -7,12 +7,14 @@ import { addRoom } from '../../../redux/actions/room';
 import { numberValidation } from '../../../utils/validation';
 import { roomDefault, RoomStatus } from '../../../assets/app/constants';
 import * as Validation from './../../../utils/validation';
+import { uploadImage } from './../../../redux/actions/room';
 
 const AddRoomModal = (props) => {
 	const { show, handlerModalClose } = props;
 	const dispatch = useDispatch();
 
 	const [newRoom, setNewRoom] = useState(roomDefault);
+	const [roomImages, setRoomImages] = useState([]);
 	const convenienceList = useSelector((state) => state.convenience.conveniences);
 	const typesList = useSelector((state) => state.types.types);
 	const {
@@ -53,18 +55,35 @@ const AddRoomModal = (props) => {
 		setNewRoom({ ...newRoom, bed: newBed });
 	};
 
-	const handlerSubmit = (e) => {
+	const onChangeImages = (e) => {
 		e.preventDefault();
-		const data = {
-			...newRoom,
-			floor: parseInt(newRoom.floor),
-			price: parseInt(newRoom.price),
-			roomType: newRoom.roomType._id,
-			convenience: newRoom.convenience.length > 0 ? newRoom.convenience.map((x) => x._id) : [],
-			status: RoomStatus.Ready.name,
-		};
-		dispatch(addRoom(data));
-		resetAddPostData();
+		setRoomImages(e.target.files);
+	};
+
+	const handlerSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			const data = {
+				...newRoom,
+				floor: parseInt(newRoom.floor),
+				price: parseInt(newRoom.price),
+				roomType: newRoom.roomType._id,
+				convenience: newRoom.convenience.length > 0 ? newRoom.convenience.map((x) => x._id) : [],
+				status: RoomStatus.Ready.name,
+			};
+			// add image into form data
+			const room = await dispatch(addRoom(data));
+			if (room && roomImages.length > 0) {
+				const formData = new FormData();
+				for (let i = 0; i < roomImages.length; i++) {
+					formData.append(`files`, roomImages[i]);
+				}
+				dispatch(uploadImage(room._id, formData));
+			}
+
+			resetAddPostData();
+		} catch (error) {}
 	};
 	const resetAddPostData = () => {
 		setNewRoom(roomDefault);
@@ -248,6 +267,11 @@ const AddRoomModal = (props) => {
 								/>
 							</Form.Group>
 						</Row>
+
+						<Form.Group controlId='formFileMultiple' className='mb-3'>
+							<Form.Label>Images</Form.Label>
+							<Form.Control type='file' multiple onChange={onChangeImages} />
+						</Form.Group>
 
 						<Form.Group className='mb-3' controlId='formBasicDescription'>
 							<Form.Label>Description</Form.Label>

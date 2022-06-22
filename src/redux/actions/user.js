@@ -1,7 +1,9 @@
 import * as types from '../constants/user';
+import * as authType from '../constants/auth';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { HOST_API_URL } from '../constants/api';
+import setAuthToken from '../../utils/setAuthToken';
 
 // READ ALL USER
 export const getAllUser = () => {
@@ -80,6 +82,15 @@ export const changePassword = (updateUser, id) => {
 				dispatch({
 					type: types.UPDATE_USER,
 					payload: response.data.updatedUser,
+				});
+				localStorage.removeItem('token');
+				setAuthToken(null);
+				dispatch({
+					type: authType.SET_AUTH,
+					payload: {
+						isAuthenticated: false,
+						user: null,
+					},
 				});
 				dispatch({ type: types.SET_USER_LOADING, payload: false });
 				toast.success(response.data.message);

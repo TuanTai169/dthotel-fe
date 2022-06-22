@@ -16,7 +16,10 @@ const Profile = () => {
 	const isLoading = useSelector((state) => state.userReducer.isUserLoading);
 	const role = useSelector((state) => state.auth.user.roles);
 	const dispatch = useDispatch();
-	useEffect(() => dispatch(loadUser()), [dispatch, users]);
+	useEffect(() => {
+		dispatch(loadUser());
+		return () => {};
+	}, [dispatch, users]);
 
 	const [isEditOpen, setIsEditOpen] = useState(false);
 	const [isChangePassOpen, setIsChangePassOpen] = useState(false);
@@ -32,7 +35,7 @@ const Profile = () => {
 
 			if (!file) toast.error('No files were uploaded');
 
-			if (file.size > 1024 * 1024) toast.error('Size too large');
+			if (file.size > 1024 * 1024 * 5) toast.error('Size too large');
 
 			if (file.type !== 'image/jpeg' && file.type !== 'image/png')
 				toast.error('File format is incorrect');
@@ -40,13 +43,13 @@ const Profile = () => {
 			let formData = new FormData();
 			formData.append('file', file);
 
-			const res = await axios.post(`${HOST_API_URL}/user/upload-avatar/${user._id}`, formData, {
+			const res = await axios.put(`${HOST_API_URL}/user/upload-avatar/${user._id}`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 				},
 			});
 			toast.success(res.data.message);
-			setAvatar(res.data.url);
+			setAvatar(res.data.updatedImg);
 			dispatch(loadUser());
 		} catch (err) {
 			err.response && toast.error(err.response.data.message);
@@ -62,17 +65,20 @@ const Profile = () => {
 					{' '}
 					<Row>
 						<h4>
-							{role === 'ADMIN'
+							{role === 'Admin'
 								? 'Admin Profile'
-								: role === 'MANAGER'
+								: role === 'Manager'
 								? 'Manager Profile'
 								: 'Employee Profile'}
 						</h4>
 					</Row>
 					<Row>
 						<Col sm={4}>
-							<div className='profile-img'>
-								<img src={avatar ? avatar : user.image} alt='' />
+							<div className='profile-img p-32'>
+								<img
+									src={avatar ? avatar.src : user.image.src}
+									alt={avatar ? avatar.alt : user.image.alt}
+								/>
 								<div className='file btn btn-lg btn-primary'>
 									<input
 										type='file'

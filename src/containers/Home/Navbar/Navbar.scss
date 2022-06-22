@@ -8,6 +8,7 @@ Link:hover {
 .header {
 	width: 100%;
 	font-family: $Montserrat;
+	height: fit-content;
 
 	&__nav {
 		left: 0;
@@ -21,10 +22,12 @@ Link:hover {
 			font-weight: 500;
 			padding: 2vw 2vw;
 			width: 100%;
+			display: flex;
+			padding-left: 0;
 
 			&__items {
 				width: 100%;
-				font-size: 1.4vw;
+				font-size: 1.6vw;
 				list-style: none;
 				display: flex;
 				flex-direction: row;
@@ -32,9 +35,6 @@ Link:hover {
 				align-items: center;
 				margin-bottom: 0;
 
-				@include maxWidth(1200px) {
-					font-size: 18px;
-				}
 				&__link {
 					color: $main-text-color;
 					text-decoration: none;
