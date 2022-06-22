@@ -49,10 +49,10 @@ const index = () => {
 				<div className='body__title'>
 					<p className='body__title__0'>Recover yourself at Zen Spa</p>
 					<h2 className='body__title__1'>
-						Swiss-Belresort Zen Spa will take care and regenerate energy for your body.
+						DT Hotel Zen Spa will take care and regenerate energy for your body.
 					</h2>
 					<h1 className='body__title__2'>
-						Spa of <span style={{ color: '#ffce6a' }}>Swiss-Belresort Tuyen Lam</span>
+						Spa of <span style={{ color: '#ffce6a' }}>DT Hotel</span>
 					</h1>
 				</div>
 				<div className='body__container'>

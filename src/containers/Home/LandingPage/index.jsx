@@ -51,9 +51,7 @@ const LandingPage = () => {
 							<div className='card-item__information'>
 								<h2 className='card-item__information__title'>DELUXE GOFT VIEW</h2>
 								<p className='card-item__information__description'>
-									Swiss-Belresort Lam Tuyen arranged 72 Deluxe Golf View rooms overlooking the pool
-									and the 18-hole golf course of international standard fully modern, which has
-									fully equipped with essential customer service,...
+									{Room.DeluxeGolfView.shortDesc}
 								</p>
 							</div>
 						</div>
@@ -66,9 +64,7 @@ const LandingPage = () => {
 							<div className='card-item__information'>
 								<h2 className='card-item__information__title'>DELUXE MOUNTAIN VIEW</h2>
 								<p className='card-item__information__description'>
-									Swiss-Belresort Lam Tuyen arranged 41 Deluxe Mountain View rooms overlooking the
-									hills or the golf course, which has fully equipped with essential customer
-									service, with King Bed,...
+									{Room.DeluxeMountainView.shortDesc}
 								</p>
 							</div>
 						</div>
@@ -81,9 +77,7 @@ const LandingPage = () => {
 							<div className='card-item__information'>
 								<h2 className='card-item__information__title'>STUDIO MOUNTAIN VIEW</h2>
 								<p className='card-item__information__description'>
-									Swiss-Belresort Lam Tuyen arranged 18 Studio Mountain View rooms, which is the
-									most suitable choice for families with small children. In addition to owning all
-									the standards of the deluxe rooms are more spacious room types...
+									{Room.StudioMountainView.shortDesc}
 								</p>
 							</div>
 						</div>

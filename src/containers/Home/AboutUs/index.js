@@ -15,9 +15,8 @@ const index = () => {
 						<h3>Perfect place</h3>
 						<h1>SPECIAL SPACE</h1>
 						<p>
-							Swiss-Belresort Tuyen Lam is the famous resort in Tuyen Lam Lake National Tourist
-							Area, surrounded by pipe tree hills, green grass and rolling curves of the golf
-							course.
+							DT Hotel is the famous resort in Tuyen Lam Lake National Tourist Area, surrounded by
+							pipe tree hills, green grass and rolling curves of the golf course.
 						</p>
 					</div>
 					<div className='abbody__special__item'>
@@ -45,20 +44,19 @@ const index = () => {
 					<div className='abbody__history__description'>
 						<h3>SWISS-BELRESOT TUYEN LAM - DA LAT</h3>
 						<p>
-							Swiss-Belresort Tuyen Lam - Dalat (Managed by SAM Tuyen Lam) is designed in
-							Anglo-Normand style architecture (architecture of the English-French countryside), a
-							total of 151 rooms are decorated by Bright, sophisticated color, fully equipped to
-							make you feel comfortable and pleasant to relax with friends and family or long
-							business trip.
+							DT Hotel - Dalat (Managed by SAM Tuyen Lam) is designed in Anglo-Normand style
+							architecture (architecture of the English-French countryside), a total of 151 rooms
+							are decorated by Bright, sophisticated color, fully equipped to make you feel
+							comfortable and pleasant to relax with friends and family or long business trip.
 							<br />
 							<br />
 							We located at the Tuyen Lam Lake National Tourist Area, in the middle of the Da Lat
 							valley, surrounded by pine forest and green golf course. This is one of the resorts
 							with open nature space in Da Lat. From a distance, the Swiss-Belresort is a fairytale
-							castle by white paint and European architectural style. At Swiss-belresort Tuyen Lam,
-							Dalat we are care about every single moment of customer, your saftifie is our
-							happiness. Therefore, we will try our best to bring the best services with morden
-							equipments to our valued guests.
+							castle by white paint and European architectural style. At DT Hotel, Dalat we are care
+							about every single moment of customer, your saftifie is our happiness. Therefore, we
+							will try our best to bring the best services with morden equipments to our valued
+							guests.
 						</p>
 					</div>
 					<div className='abbody__history__container'>
