@@ -27,6 +27,7 @@ const InfoRoomModal = (props) => {
 		bed,
 		status,
 	} = room;
+
 	const { bedRoom, bathRoom, livingRoom, kitchen, desc } = detail;
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 	const [conformDialog, setConformDialog] = useState({
@@ -130,7 +131,7 @@ const InfoRoomModal = (props) => {
 								name='types'
 								options={typesList}
 								defaultValue={typesList.filter((x) => {
-									if ((roomType._id === x._id) > -1) return x;
+									if (roomType.type === x.type) return x;
 								})}
 								getOptionLabel={(option) => option.nameTag}
 								getOptionValue={(option) => option._id}

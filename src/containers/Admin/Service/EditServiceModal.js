@@ -11,7 +11,7 @@ const EditServiceModal = (props) => {
 	const dispatch = useDispatch();
 
 	const [editService, setEditService] = useState(service);
-	const { register, watch } = new useForm();
+	const { register, watch, handleSubmit } = new useForm();
 	let NameValidation = true;
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
@@ -22,7 +22,7 @@ const EditServiceModal = (props) => {
 			[event.target.name]: event.target.value,
 		});
 
-	const handleSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
 
 		resetEditPostData();
@@ -40,7 +40,7 @@ const EditServiceModal = (props) => {
 				<Modal.Header closeButton>
 					<Modal.Title>Edit Service</Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<FloatingLabel controlId='floatingName' label='Name' className='mb-3'>
 							<Form.Control

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import moment from 'moment';
 
@@ -11,6 +12,7 @@ import { convertCurrency } from '../../../utils/calculateRoomPrice';
 import './style.scss';
 import PayPalModal from './PayPal/PayPalModal';
 import { addBookingInWeb } from '../../../redux/actions/booking';
+import * as Validation from '../../../utils/validation';
 import { getVnPayUrl } from '../../../redux/actions/receipt';
 
 const BookingPage = () => {
@@ -34,6 +36,23 @@ const BookingPage = () => {
 			child: 0,
 		},
 	});
+	const currentBooking = useSelector((state) => state.bookingReducer.currentBooking);
+
+	const { register, watch } = new useForm();
+	let FirstNameValidation,
+		LastNameValidation,
+		EmailValidation,
+		IdValidation,
+		PhoneValidation = true;
+	FirstNameValidation =
+		Validation.PatternName1.test(watch('firstName')) ||
+		Validation.PatternName2.test(watch('firstName'));
+	LastNameValidation =
+		Validation.PatternName1.test(watch('lastName')) ||
+		Validation.PatternName2.test(watch('lastName'));
+	EmailValidation = Validation.PatternEmail.test(watch('email'));
+	IdValidation = Validation.PatternId.test(watch('idNumber'));
+	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
 
 	const roomsBooking = JSON.parse(localStorage.getItem('roomsBooking'));
 
@@ -278,7 +297,20 @@ const BookingPage = () => {
 								</label>
 							</div>
 							<div className='flex-center'>
-								<button className='btn-home' onClick={onBooking} disabled={!isAgree}>
+								<button
+									className='btn-home'
+									onClick={onBooking}
+									disabled={
+										!(
+											isAgree &&
+											FirstNameValidation &&
+											LastNameValidation &&
+											EmailValidation &&
+											IdValidation &&
+											PhoneValidation
+										)
+									}
+								>
 									Confirm and Book
 								</button>
 							</div>
@@ -302,10 +334,14 @@ const BookingPage = () => {
 										className='form-control input-text-home'
 										id='fname'
 										name='fname'
-										value={fname}
-										onChange={onChangeInputCustomer}
+										// value={fname}
+										// onChange={onChangeInputCustomer}
 										required
+										{...register('firstName')}
 									/>
+									<p className='alertValidation'>
+										{FirstNameValidation != true ? 'Please input a valid name!' : ''}
+									</p>
 								</div>
 							</div>
 
@@ -316,10 +352,14 @@ const BookingPage = () => {
 									className='form-control input-text-home'
 									id='lname'
 									name='lname'
-									value={lname}
-									onChange={onChangeInputCustomer}
+									// value={lname}
+									// onChange={onChangeInputCustomer}
 									required
+									{...register('lastName')}
 								/>
+								<p className='alertValidation'>
+									{LastNameValidation != true ? 'Please input a valid name!' : ''}
+								</p>
 							</div>
 							<div className='form-group mb-32'>
 								<label htmlFor='email'>Email*</label>
@@ -328,10 +368,14 @@ const BookingPage = () => {
 									className='form-control input-text-home'
 									id='email'
 									name='email'
-									value={email}
-									onChange={onChangeInputCustomer}
+									// value={email}
+									// onChange={onChangeInputCustomer}
 									required
+									{...register('email')}
 								/>
+								<p className='alertValidation'>
+									{EmailValidation != true ? 'Please input a valid email!' : ''}
+								</p>
 							</div>
 							<div className='row'>
 								<div className='form-group mb-32 col-sm-6'>
@@ -341,10 +385,14 @@ const BookingPage = () => {
 										className='form-control input-text-home'
 										id='phone'
 										name='phone'
-										value={phone}
-										onChange={onChangeInputCustomer}
+										// value={phone}
+										// onChange={onChangeInputCustomer}
 										required
+										{...register('phone')}
 									/>
+									<p className='alertValidation'>
+										{PhoneValidation != true ? 'Please input a valid phone number!' : ''}
+									</p>
 								</div>
 								<div className='form-group mb-32 col-sm-6'>
 									<label htmlFor='idNumber'>ID Number*</label>
@@ -353,10 +401,14 @@ const BookingPage = () => {
 										className='form-control input-text-home'
 										id='idNumber'
 										name='idNumber'
-										value={idNumber}
-										onChange={onChangeInputCustomer}
+										// value={idNumber}
+										// onChange={onChangeInputCustomer}
 										required
+										{...register('idNumber')}
 									/>
+									<p className='alertValidation'>
+										{IdValidation != true ? 'Please input a valid ID number!' : ''}
+									</p>
 								</div>
 							</div>
 

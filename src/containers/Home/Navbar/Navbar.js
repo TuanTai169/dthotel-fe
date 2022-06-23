@@ -22,7 +22,7 @@ const Navbar = () => {
 								</Link>
 							</li>
 							<li>
-								<img src={logo} alt='Swiss Logo' className='header__nav__content__items__logo' />
+								<img src={logo} alt='DT Logo' className='header__nav__content__items__logo' />
 							</li>
 							<li>
 								<Link className='header__nav__content__items__link' to='/services'>

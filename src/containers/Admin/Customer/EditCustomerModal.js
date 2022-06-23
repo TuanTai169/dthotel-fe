@@ -3,14 +3,7 @@ import { Form, Modal, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { useForm, handleSubmit } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateCustomer } from '../../../redux/actions/customer';
-import {
-	phoneValidation,
-	IdNumberValidation,
-	emailValidation,
-	numberValidation,
-	nameValidation,
-	textValidation,
-} from '../../../utils/validation';
+
 import * as Validation from '../../../utils/validation';
 
 function EditCustomerModal(props) {
@@ -70,10 +63,12 @@ function EditCustomerModal(props) {
 								defaultValue={name || ''}
 								// onChange={onChangeNewForm}
 								required
-								{...register('name')}
+								{...register('name', {
+									required: 'Name is required!',
+								})}
 							/>
 							<p className='alertValidation'>
-								{NameValidation != true ? 'Please input a valid name!' : ''}
+								{NameValidation == true ? '' : 'Please input a valid name!'}
 							</p>
 						</FloatingLabel>
 						<FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
@@ -88,7 +83,7 @@ function EditCustomerModal(props) {
 								// {...register('email')}
 							/>
 							<p className='alertValidation'>
-								{EmailValidation != true ? 'Please input a valid email!' : ''}
+								{EmailValidation == true ? '' : 'Please input a valid email!'}
 							</p>
 						</FloatingLabel>
 

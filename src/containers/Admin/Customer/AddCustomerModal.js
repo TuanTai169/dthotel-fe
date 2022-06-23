@@ -10,7 +10,6 @@ import * as Validation from '../../../utils/validation';
 const AddCustomerModal = (props) => {
 	const { show, handlerModalClose } = props;
 	const dispatch = useDispatch();
-
 	const { register, watch, handleSubmit } = new useForm();
 	const [newCustomer, setNewCustomer] = useState({ ...customerDefault });
 	const onChangeNewForm = (event) =>

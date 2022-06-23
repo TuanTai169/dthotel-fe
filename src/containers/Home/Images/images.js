@@ -5,9 +5,9 @@ export const DeluxeGolfView = {
 		'https://drive.google.com/uc?export=view&id=1Mxng0pUtgxJL2DytugDjv1vinJwkuoN9',
 		'https://drive.google.com/uc?export=view&id=1Kzl4a9e3ZwcJSY5YB7yBXG80VRl03lFl',
 	],
-	desc: 'Swiss-Belresort Lam Tuyen arranged 72 Deluxe Golf View rooms overlooking the pool and the 18-hole golf course of international standard fully modern, which has fully equipped with essential customer service, with King Bed, Hollywood Bed, or Twin Bed; fully equipped toilet both cabin and modern baths.',
+	desc: 'DT Resort arranged 72 Deluxe Golf View rooms overlooking the pool and the 18-hole golf course of international standard fully modern, which has fully equipped with essential customer service, with King Bed, Hollywood Bed, or Twin Bed; fully equipped toilet both cabin and modern baths.',
 	shortDesc:
-		'Swiss-Belresort Lam Tuyen arranged 72 Deluxe Golf View rooms overlooking the pool and the 18-hole golf course of international standard fully modern, which has fully equipped with essential customer service,...',
+		'DT Resort arranged 72 Deluxe Golf View rooms overlooking the pool and the 18-hole golf course of international standard fully modern, which has fully equipped with essential customer service,...',
 };
 export const FamilyDeluxeGolfView = {
 	url: [
@@ -37,9 +37,9 @@ export const StudioMountainView = {
 		'https://drive.google.com/uc?export=view&id=1jjDhCKvewrqVf-C6gl2nTYQKkh4IttpJ',
 		'https://drive.google.com/uc?export=view&id=1TPcPlqcaHNTkBfIXnTOSqoRTBEgxNVJq',
 	],
-	desc: 'Swiss-Belresort Lam Tuyen arranged 18 Studio Mountain View rooms, which is the most suitable choice for families with small children. In addition to owning all the standards of the deluxe rooms are more spacious room types, the balcony is not available due to safety enhancement, however, its window is widely open to show romantic view outside.',
+	desc: 'DT Resort arranged 18 Studio Mountain View rooms, which is the most suitable choice for families with small children. In addition to owning all the standards of the deluxe rooms are more spacious room types, the balcony is not available due to safety enhancement, however, its window is widely open to show romantic view outside.',
 	shortDesc:
-		'Swiss-Belresort Lam Tuyen arranged 18 Studio Mountain View rooms, which is the most suitable choice for families with small children. In addition to owning all the standards of the deluxe rooms are more spacious room types...',
+		'DT Resort arranged 18 Studio Mountain View rooms, which is the most suitable choice for families with small children. In addition to owning all the standards of the deluxe rooms are more spacious room types...',
 };
 export const DeluxeMountainView = {
 	url: [
@@ -48,9 +48,9 @@ export const DeluxeMountainView = {
 		'https://drive.google.com/uc?export=view&id=1tqi5HFNGtnvqeP0L9IPqhIrDnPOtgONQ',
 		'https://drive.google.com/uc?export=view&id=1Lh6daL4dsVfj1LYXxS8Q3P3nEqRW432L',
 	],
-	desc: 'Swiss-Belresort Lam Tuyen arranged 41 Deluxe Mountain View rooms overlooking the hills or the golf course, which has fully equipped with essential customer service, with King Bed, Hollywood Bed, or Twin Bed, has various accomodations such as beautiful bathtub and modern bathroom. Deluxe Mountain View is currently the most favorite room at our resort.',
+	desc: 'DT Resort arranged 41 Deluxe Mountain View rooms overlooking the hills or the golf course, which has fully equipped with essential customer service, with King Bed, Hollywood Bed, or Twin Bed, has various accomodations such as beautiful bathtub and modern bathroom. Deluxe Mountain View is currently the most favorite room at our resort.',
 	shortDesc:
-		'Swiss-Belresort Lam Tuyen arranged 41 Deluxe Mountain View rooms overlooking the hills or the golf course, which has fully equipped with essential customer service, with King Bed,...',
+		'DT Resort arranged 41 Deluxe Mountain View rooms overlooking the hills or the golf course, which has fully equipped with essential customer service, with King Bed,...',
 };
 export const KingSuiteMountainView = {
 	url: [
@@ -58,9 +58,9 @@ export const KingSuiteMountainView = {
 		'https://drive.google.com/uc?export=view&id=1HlF7RorQfE3VGIVvZ40NB1pB5vIewctM',
 		'https://drive.google.com/uc?export=view&id=1On0cdqLybtRd8hzPE1QkMNbQAo4XZmdy',
 	],
-	desc: 'Swiss-Belresort Tuyen Lam, Da Lat arranged 9 King Suite Mountain View rooms, which is a premium-class with seating areas to lounge, relax, suitable for those who prefer the comfort, amenities or business trips and long vacation.',
+	desc: 'DT Hotel, Da Lat arranged 9 King Suite Mountain View rooms, which is a premium-class with seating areas to lounge, relax, suitable for those who prefer the comfort, amenities or business trips and long vacation.',
 	shortDesc:
-		'Swiss-Belresort Tuyen Lam, Da Lat arranged 9 King Suite Mountain View rooms, which is a premium-class with seating areas to lounge, relax, suitable for those who prefer the comfort, amenities or business trips and long vacation.',
+		'DT Hotel, Da Lat arranged 9 King Suite Mountain View rooms, which is a premium-class with seating areas to lounge, relax, suitable for those who prefer the comfort, amenities or business trips and long vacation.',
 };
 export const RoyalSuiteMountainView = {
 	url: [

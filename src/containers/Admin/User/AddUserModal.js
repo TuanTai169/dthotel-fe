@@ -22,7 +22,7 @@ const AddUserModal = (props) => {
 	const [inputType, toggleIcon] = usePasswordToggle();
 	const [newUser, setNewUser] = useState({ ...userDefault });
 
-	const { register, watch } = new useForm();
+	const { register, watch, handleSubmit } = new useForm();
 	let NameValidation,
 		EmailValidation,
 		PasswordValidation,
@@ -39,7 +39,7 @@ const AddUserModal = (props) => {
 			[event.target.name]: event.target.value,
 		});
 
-	const handleSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
 
 		dispatch(addUser(newUser));
@@ -51,7 +51,7 @@ const AddUserModal = (props) => {
 		handlerModalClose();
 	};
 
-	const { name, email, password, phone, address, role } = newUser;
+	const { address, role } = newUser;
 
 	return (
 		<>
@@ -59,7 +59,7 @@ const AddUserModal = (props) => {
 				<Modal.Header closeButton>
 					<Modal.Title>Add New User</Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<FloatingLabel controlId='floatingTextarea' label='Name' className='mb-3'>
 							<Form.Control

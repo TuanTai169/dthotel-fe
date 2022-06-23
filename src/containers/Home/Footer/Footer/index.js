@@ -12,7 +12,7 @@ const index = () => {
 			<section className='footer'>
 				<div className='footer__container'>
 					<div className='footer__container__img'>
-						<img src={logo} alt='Swiss Logo' className='header__nav__content__items__logo' />
+						<img src={logo} alt='DT Logo' className='header__nav__content__items__logo' />
 					</div>
 					<div className='footer__container__infoterm'>
 						<div className='footer__container__infoterm__title'>Hotel Information</div>
