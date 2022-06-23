@@ -19,7 +19,8 @@ function EditUserModal(props) {
 	const currentRole = useSelector((state) => state.auth.user.roles);
 
 	const [editUser, setEditUser] = useState(user);
-	const { register, watch } = new useForm();
+
+	const { register, watch, handleSubmit } = new useForm();
 	let NameValidation, PhoneValidation;
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
@@ -33,17 +34,11 @@ function EditUserModal(props) {
 			[event.target.name]: event.target.value,
 		});
 
-	const handleSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
-		if (
-			nameValidation(editUser.name) &&
-			emailValidation(editUser.email) &&
-			phoneValidation(editUser.phone) &&
-			textValidation(editUser.address)
-		) {
-			resetAddPostData();
-			dispatch(updateUser(editUser, user._id));
-		}
+
+		resetAddPostData();
+		dispatch(updateUser({ ...editUser, ...data }, user._id));
 	};
 
 	const resetAddPostData = () => {
@@ -59,7 +54,7 @@ function EditUserModal(props) {
 				<Modal.Header closeButton>
 					<Modal.Title>Edit {name}</Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<FloatingLabel controlId='floatingName' label='Name' className='mb-3'>
 							<Form.Control

@@ -10,7 +10,7 @@ const AddServiceModal = (props) => {
 	const { show, handlerModalClose } = props;
 	const dispatch = useDispatch();
 
-	const { register, watch } = new useForm();
+	const { register, watch, handleSubmit } = new useForm();
 	let NameValidation = true;
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
@@ -24,14 +24,13 @@ const AddServiceModal = (props) => {
 	const onChangeNewForm = (event) =>
 		setNewService({ ...newService, [event.target.name]: event.target.value });
 
-	const handleSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
-		if (nameValidation(newService.name) && numberValidation(newService.price)) {
-			resetAddPostData();
-			dispatch(
-				addService({ ...newService, isProduct: newService.isProduct === '1' ? true : false })
-			);
-		}
+
+		resetAddPostData();
+		dispatch(
+			addService({ ...newService, ...data, isProduct: newService.isProduct === '1' ? true : false })
+		);
 	};
 
 	const resetAddPostData = () => {
@@ -45,7 +44,7 @@ const AddServiceModal = (props) => {
 				<Modal.Header closeButton>
 					<Modal.Title>Add Service</Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<FloatingLabel controlId='floatingName' label='Name' className='mb-3'>
 							<Form.Control

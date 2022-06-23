@@ -22,7 +22,7 @@ const AddUserModal = (props) => {
 	const [inputType, toggleIcon] = usePasswordToggle();
 	const [newUser, setNewUser] = useState({ ...userDefault });
 
-	const { register, watch } = new useForm();
+	const { register, watch, handleSubmit } = new useForm();
 	let NameValidation,
 		EmailValidation,
 		PasswordValidation,
@@ -39,18 +39,11 @@ const AddUserModal = (props) => {
 			[event.target.name]: event.target.value,
 		});
 
-	const handleSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
-		if (
-			nameValidation(newUser.name) &&
-			emailValidation(newUser.email) &&
-			passwordValidation(newUser.password) &&
-			phoneValidation(newUser.phone) &&
-			textValidation(newUser.address)
-		) {
-			dispatch(addUser(newUser));
-			resetAddPostData();
-		}
+
+		dispatch(addUser({ ...newUser, ...data }));
+		resetAddPostData();
 	};
 
 	const resetAddPostData = () => {
@@ -58,7 +51,7 @@ const AddUserModal = (props) => {
 		handlerModalClose();
 	};
 
-	const { name, email, password, phone, address, role } = newUser;
+	const { address, role } = newUser;
 
 	return (
 		<>
@@ -66,7 +59,7 @@ const AddUserModal = (props) => {
 				<Modal.Header closeButton>
 					<Modal.Title>Add New User</Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<FloatingLabel controlId='floatingTextarea' label='Name' className='mb-3'>
 							<Form.Control
@@ -140,8 +133,8 @@ const AddUserModal = (props) => {
 										{currentRole === userRoles.Admin.name && (
 											<option value={userRoles.Admin.name}>{userRoles.Admin.name}</option>
 										)}
-										{/* <option value={userRoles?.Manager.name}>{userRoles.Manager.name}</option>
-										<option value={userRoles?.Employee.name}>{userRoles.Employee.name}</option> */}
+										<option value={userRoles?.Manager.name}>{userRoles.Manager.name}</option>
+										<option value={userRoles?.Employee.name}>{userRoles.Employee.name}</option>
 									</Form.Select>
 								</FloatingLabel>
 							</Col>

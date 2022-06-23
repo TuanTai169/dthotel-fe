@@ -3,14 +3,7 @@ import { Form, Modal, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateCustomer } from '../../../redux/actions/customer';
-import {
-	phoneValidation,
-	IdNumberValidation,
-	emailValidation,
-	numberValidation,
-	nameValidation,
-	textValidation,
-} from '../../../utils/validation';
+
 import * as Validation from '../../../utils/validation';
 
 function EditCustomerModal(props) {
@@ -46,7 +39,7 @@ function EditCustomerModal(props) {
 	};
 	const onSubmit = (data, e) => {
 		e.preventDefault();
-		console.log(data);
+
 		dispatch(updateCustomer({ ...editCustomer, ...data }, customer._id));
 		resetAddPostData();
 	};
