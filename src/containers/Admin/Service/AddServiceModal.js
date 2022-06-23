@@ -26,11 +26,8 @@ const AddServiceModal = (props) => {
 
 	const onSubmit = (data, e) => {
 		e.preventDefault();
-
+		dispatch(addService({ ...newService, isProduct: newService.isProduct === '1' ? true : false }));
 		resetAddPostData();
-		dispatch(
-			addService({ ...newService, ...data, isProduct: newService.isProduct === '1' ? true : false })
-		);
 	};
 
 	const resetAddPostData = () => {

@@ -16,11 +16,13 @@ import ContactPage from './Footer/Information/Contact';
 import BookandCancelPolicyPage from './Footer/Terms/Booking_Cancelation';
 import PrivacyPage from './Footer/Terms/Privacy';
 import WebsiteTermPage from './Footer/Terms/Website';
+import BookingSuccess from './Booking/Successful';
 
 import './index.scss';
 import { Route, Routes } from 'react-router-dom';
 import ScrollToTop from 'react-scroll-to-top';
 import Chatbot from '../../components/Chatbot';
+import ChatBotAI from '../../components/ChatBotAI';
 
 const Home = () => {
 	return (
@@ -44,13 +46,15 @@ const Home = () => {
 					<Route path='web-term' element={<WebsiteTermPage />} />
 					<Route path='contact' element={<ContactPage />} />
 					<Route path='booking' element={<BookingPage />} />
+					<Route path='booking-success' element={<BookingSuccess />} />
 				</Routes>
 			</div>
 			<div className='home__footer'>
 				<Footer />
 			</div>
 			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a', left: '20px' }} />
-			<Chatbot />
+			{/* <Chatbot /> */}
+			<ChatBotAI />
 		</div>
 	);
 };

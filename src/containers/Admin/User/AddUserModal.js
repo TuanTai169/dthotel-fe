@@ -42,7 +42,7 @@ const AddUserModal = (props) => {
 	const onSubmit = (data, e) => {
 		e.preventDefault();
 
-		dispatch(addUser({ ...newUser, ...data }));
+		dispatch(addUser(newUser));
 		resetAddPostData();
 	};
 

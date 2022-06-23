@@ -16,7 +16,7 @@ function EditUserModal(props) {
 	const { show, handlerModalClose, user } = props;
 
 	const dispatch = useDispatch();
-	const currentRole = useSelector((state) => state.auth.user.roles);
+	const currentRole = useSelector((state) => state.auth.user.role);
 
 	const [editUser, setEditUser] = useState(user);
 
@@ -36,9 +36,8 @@ function EditUserModal(props) {
 
 	const onSubmit = (data, e) => {
 		e.preventDefault();
-
 		resetAddPostData();
-		dispatch(updateUser({ ...editUser, ...data }, user._id));
+		dispatch(updateUser(editUser, user._id));
 	};
 
 	const resetAddPostData = () => {

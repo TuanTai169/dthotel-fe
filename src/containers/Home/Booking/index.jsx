@@ -13,6 +13,7 @@ import './style.scss';
 import PayPalModal from './PayPal/PayPalModal';
 import { addBookingInWeb } from '../../../redux/actions/booking';
 import * as Validation from '../../../utils/validation';
+import { getVnPayUrl } from '../../../redux/actions/receipt';
 
 const BookingPage = () => {
 	const dispatch = useDispatch();
@@ -50,10 +51,12 @@ const BookingPage = () => {
 		Validation.PatternName1.test(watch('lastName')) ||
 		Validation.PatternName2.test(watch('lastName'));
 	EmailValidation = Validation.PatternEmail.test(watch('email'));
-	IdValidation = Validation.PatternId.test(watch('id'));
+	IdValidation = Validation.PatternId.test(watch('idNumber'));
 	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
 
-	if (!currentBooking) {
+	const roomsBooking = JSON.parse(localStorage.getItem('roomsBooking'));
+
+	if (!roomsBooking) {
 		return (
 			<div className='p-20'>
 				<h3>Couldn't find a room to book</h3>
@@ -61,36 +64,69 @@ const BookingPage = () => {
 			</div>
 		);
 	}
-	const { rooms, capacity, checkInDate, checkOutDate, totalPrice } = currentBooking;
+	const { rooms, capacity, checkInDate, checkOutDate, totalPrice } = roomsBooking;
 	const { fname, lname, email, phone, idNumber, address } = customer;
 
-	const onBooking = (e) => {
+	const onBooking = async (e) => {
 		e.preventDefault();
-		const customer = {
-			name: lname + ' ' + fname,
-			email,
-			phone,
-			idNumber,
-			address,
-			numberOfPeople: {
-				adult: capacity.adult,
-				child: capacity.child,
-			},
-		};
-		const data = {
-			rooms: rooms.map((x) => x._id),
-			checkInDate: moment(new Date(checkInDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
-			checkOutDate: moment(new Date(checkOutDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
-			customer,
-			services: [],
-			products: [],
-			deposit: parseFloat((totalPrice * 1.1 * 0.5).toFixed(2)),
-			discount: null,
-		};
+		try {
+			const customer = {
+				name: lname + ' ' + fname,
+				email,
+				phone,
+				idNumber,
+				address,
+				numberOfPeople: {
+					adult: capacity.adult,
+					child: capacity.child,
+				},
+			};
+			const data = {
+				rooms: rooms.map((x) => x._id),
+				checkInDate: moment(new Date(checkInDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
+				checkOutDate: moment(new Date(checkOutDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
+				customer,
+				services: [],
+				products: [],
+				deposit: parseFloat((totalPrice * 1.1 * 0.5).toFixed(2)),
+				discount: null,
+			};
 
-		setData(data);
-		setIsShowModal(true);
+			localStorage.setItem(
+				'currentBooking',
+				JSON.stringify({
+					rooms: rooms.map((x) => {
+						return {
+							_id: x._id,
+							name: x.name,
+						};
+					}),
+					checkInDate: moment(new Date(checkInDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
+					checkOutDate: moment(new Date(checkOutDate).setHours(12, 0)).format('YYYY-MM-DD HH:ss'),
+					customer,
+					deposit: parseFloat((totalPrice * 1.1 * 0.5).toFixed(2)),
+					total: totalPrice,
+				})
+			);
+			setData(data);
+			if (isPayPal) {
+				setIsShowModal(true);
+			} else {
+				let vnPayData = {
+					orderType: 'billpayment',
+					amount: parseFloat((totalPrice * 1.1 * 0.5 * 23500).toFixed(2)),
+					orderDescription: 'Booking in DTHOTEL',
+					bankCode: '',
+					language: 'vn',
+				};
+				const url = await dispatch(getVnPayUrl(vnPayData));
+				dispatch(addBookingInWeb(data));
+				localStorage.removeItem('roomsBooking');
+				window.location.href = url;
+			}
+		} catch (error) {}
 	};
+
 	const onChangeInputCustomer = (e) => {
 		const dataChange = { [e.target.name]: e.target.value };
 		setCustomer({ ...customer, ...dataChange });
@@ -101,8 +137,8 @@ const BookingPage = () => {
 
 	const onBookingSuccess = () => {
 		dispatch(addBookingInWeb(data));
-		navigate('/rooms');
-		localStorage.removeItem('currentBooking');
+		localStorage.removeItem('roomsBooking');
+		navigate('/booking-success');
 	};
 
 	const expiredDate = moment(
@@ -159,9 +195,9 @@ const BookingPage = () => {
 								</div>
 								<div className='col-4 total-price'>
 									<h4>
-										<strong>{convertCurrency(room.price * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(room.price, 'USD')}</strong>
 									</h4>
-									<h5>{convertCurrency(room.price, 'USD')}</h5>
+									<h5>{convertCurrency(room.price * 23500, 'VND')}</h5>
 									<span className='show-policy' onClick={() => setShowPolicy(true)}>
 										Booking Policies <BiInfoCircle />
 									</span>
@@ -178,36 +214,36 @@ const BookingPage = () => {
 								<p>Accommodation charges</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice, 'USD')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 23500, 'VND')}</p>
 								</div>
 							</div>
 							<div className='d-flex justify-content-between'>
 								<p>Taxes 10%</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 0.1 * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 0.1, 'USD')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice * 0.1, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 0.1 * 23500, 'VND')}</p>
 								</div>
 							</div>
 							<div className='d-flex justify-content-between border-top-main-color'>
 								<p>Total price</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 1.1 * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 1.1, 'USD')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice * 1.1, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 1.1 * 23500, 'VND')}</p>
 								</div>
 							</div>
 							<div className='d-flex justify-content-between border-top-main-color'>
 								<p>Deposit</p>
 								<div className='price'>
 									<span>
-										<strong>{convertCurrency(totalPrice * 1.1 * 0.5 * 23500, 'VND')}</strong>
+										<strong>{convertCurrency(totalPrice * 1.1 * 0.5, 'USD')}</strong>
 									</span>
-									<p>{convertCurrency(totalPrice * 1.1 * 0.5, 'USD')}</p>
+									<p>{convertCurrency(totalPrice * 1.1 * 0.5 * 23500, 'VND')}</p>
 								</div>
 							</div>
 						</div>
@@ -368,7 +404,7 @@ const BookingPage = () => {
 										// value={idNumber}
 										// onChange={onChangeInputCustomer}
 										required
-										{...register('id')}
+										{...register('idNumber')}
 									/>
 									<p className='alertValidation'>
 										{IdValidation != true ? 'Please input a valid ID number!' : ''}

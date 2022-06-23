@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Modal, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, handleSubmit } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateCustomer } from '../../../redux/actions/customer';
 
@@ -12,18 +12,16 @@ function EditCustomerModal(props) {
 
 	const [editCustomer, setEditCustomer] = useState(customer);
 
-	const { register, handleSubmit, watch, required } = new useForm();
-	let NameValidation, EmailValidation, IdValidation, PhoneValidation;
+	const { register, watch, handleSubmit } = new useForm();
+	let NameValidation = true;
+	let EmailValidation = true;
+	let IdValidation = true;
+	let PhoneValidation = true;
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
-	if (watch('email')) EmailValidation = Validation.PatternEmail.test(watch('email'));
-	else EmailValidation = true;
-
-	if (watch('id')) IdValidation = Validation.PatternId.test(watch('id'));
-	else IdValidation = true;
-
-	if (watch('phone')) PhoneValidation = Validation.PatternPhone.test(watch('phone'));
-	else PhoneValidation = true;
+	EmailValidation = Validation.PatternEmail.test(watch('email'));
+	IdValidation = Validation.PatternId.test(watch('idNumber'));
+	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
 
 	const onChangeNewForm = (event) =>
 		setEditCustomer({
@@ -39,7 +37,6 @@ function EditCustomerModal(props) {
 	};
 	const onSubmit = (data, e) => {
 		e.preventDefault();
-
 		dispatch(updateCustomer({ ...editCustomer, ...data }, customer._id));
 		resetAddPostData();
 	};
@@ -62,7 +59,7 @@ function EditCustomerModal(props) {
 							<Form.Control
 								type='text'
 								placeholder='Name'
-								name='name'
+								// name='name'
 								defaultValue={name || ''}
 								// onChange={onChangeNewForm}
 								required
@@ -78,12 +75,12 @@ function EditCustomerModal(props) {
 							<Form.Control
 								type='text'
 								placeholder='Email'
-								name='email'
+								// name='email'
 								defaultValue={email || ''}
 								// onChange={onChangeNewForm}
 								required
-								// disabled
-								{...register('email')}
+								disabled
+								// {...register('email')}
 							/>
 							<p className='alertValidation'>
 								{EmailValidation == true ? '' : 'Please input a valid email!'}
@@ -96,7 +93,7 @@ function EditCustomerModal(props) {
 									<Form.Control
 										type='text'
 										placeholder='Phone Number'
-										name='phone'
+										// name='phone'
 										defaultValue={phone || ''}
 										// onChange={onChangeNewForm}
 										required
@@ -116,7 +113,7 @@ function EditCustomerModal(props) {
 										defaultValue={idNumber || ''}
 										// onChange={onChangeNewForm}
 										required
-										{...register('id')}
+										{...register('idNumber')}
 									/>
 									<p className='alertValidation'>
 										{IdValidation != true ? 'Please input a valid ID number!' : ''}

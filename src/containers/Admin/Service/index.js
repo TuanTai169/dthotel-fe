@@ -19,7 +19,7 @@ function Services() {
 	//GET LIST SERVICE
 	const services = useSelector((state) => state.serviceReducer.services);
 	const isLoading = useSelector((state) => state.serviceReducer.isServiceLoading);
-	const role = useSelector((state) => state.auth.user.roles);
+	const role = useSelector((state) => state.auth.user.role);
 
 	//Header table
 	const headers = [
@@ -81,7 +81,7 @@ function Services() {
 							<ButtonToolbar>
 								<Button
 									variant='success'
-									className={role === 'EMPLOYEE' ? 'disabled' : ''}
+									className={role === 'Employee' ? 'disabled' : ''}
 									onClick={() => setIsOpen(true)}
 								>
 									Add Service

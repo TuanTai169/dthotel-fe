@@ -26,7 +26,6 @@ const AddCustomerModal = (props) => {
 	};
 	const onSubmit = (data, e) => {
 		e.preventDefault();
-
 		dispatch(addCustomer({ ...newCustomer, ...data }));
 		resetAddPostData();
 	};
@@ -60,8 +59,6 @@ const AddCustomerModal = (props) => {
 								type='text'
 								placeholder='Name'
 								name='name'
-								// value={name || ''}
-								// onChange={onChangeNewForm}
 								required
 								{...register('name')}
 							/>
@@ -74,8 +71,6 @@ const AddCustomerModal = (props) => {
 								type='text'
 								placeholder='Email'
 								name='email'
-								// value={email || ''}
-								// onChange={onChangeNewForm}
 								required
 								{...register('email')}
 							/>
@@ -91,8 +86,6 @@ const AddCustomerModal = (props) => {
 										type='text'
 										placeholder='Phone Number'
 										name='phone'
-										// value={phone || ''}
-										// onChange={onChangeNewForm}
 										required
 										{...register('phone')}
 									/>
@@ -107,8 +100,6 @@ const AddCustomerModal = (props) => {
 										type='text'
 										placeholder='Id Number'
 										name='idNumber'
-										// value={idNumber || ''}
-										// onChange={onChangeNewForm}
 										required
 										{...register('idNumber')}
 									/>

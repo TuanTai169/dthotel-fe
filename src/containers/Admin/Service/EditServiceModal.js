@@ -26,7 +26,7 @@ const EditServiceModal = (props) => {
 		e.preventDefault();
 
 		resetEditPostData();
-		dispatch(updateService({ ...editService, ...data }));
+		dispatch(updateService(editService));
 	};
 
 	const resetEditPostData = () => {

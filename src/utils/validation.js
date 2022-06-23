@@ -6,10 +6,6 @@ import moment from 'moment';
 // const { watch } = useForm();
 
 export const phoneValidation = (phone) => {
-	if (phone.length !== 10) {
-		toast.error('Please enter valid phone number.');
-		return false;
-	}
 	var pattern = new RegExp(/(0[3|5|7|8|9])+([0-9]{8})\b/g);
 	if (!pattern.test(phone)) {
 		toast.error('Please enter valid phone number.');
@@ -19,10 +15,6 @@ export const phoneValidation = (phone) => {
 };
 
 export const IdNumberValidation = (IDNumber) => {
-	if (IDNumber.length !== 12) {
-		toast.error('Please enter valid ID number.');
-		return false;
-	}
 	var pattern = new RegExp(/([0-9]{12})\b/g);
 	if (!pattern.test(IDNumber)) {
 		toast.error('Please enter valid ID number.');
