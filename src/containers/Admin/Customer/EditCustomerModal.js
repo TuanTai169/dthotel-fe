@@ -19,16 +19,18 @@ function EditCustomerModal(props) {
 
 	const [editCustomer, setEditCustomer] = useState(customer);
 
-	const { register, watch } = new useForm();
-	let NameValidation = true;
-	let EmailValidation = true;
-	let IdValidation = true;
-	let PhoneValidation = true;
+	const { register, handleSubmit, watch, required } = new useForm();
+	let NameValidation, EmailValidation, IdValidation, PhoneValidation;
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
-	EmailValidation = Validation.PatternEmail.test(watch('email'));
-	IdValidation = Validation.PatternId.test(watch('id'));
-	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
+	if (watch('email')) EmailValidation = Validation.PatternEmail.test(watch('email'));
+	else EmailValidation = true;
+
+	if (watch('id')) IdValidation = Validation.PatternId.test(watch('id'));
+	else IdValidation = true;
+
+	if (watch('phone')) PhoneValidation = Validation.PatternPhone.test(watch('phone'));
+	else PhoneValidation = true;
 
 	const onChangeNewForm = (event) =>
 		setEditCustomer({
@@ -42,20 +44,11 @@ function EditCustomerModal(props) {
 		};
 		setEditCustomer({ ...editCustomer, numberOfPeople: newNumberOfPeople });
 	};
-	const handleSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
-		if (
-			nameValidation(editCustomer.name) &&
-			emailValidation(editCustomer.email) &&
-			phoneValidation(editCustomer.phone) &&
-			IdNumberValidation(editCustomer.idNumber) &&
-			textValidation(editCustomer.address) &&
-			numberValidation(editCustomer.numberOfPeople.adult) &&
-			numberValidation(editCustomer.numberOfPeople.child)
-		) {
-			dispatch(updateCustomer(editCustomer, customer._id));
-			resetAddPostData();
-		}
+		console.log(data);
+		dispatch(updateCustomer({ ...editCustomer, ...data }, customer._id));
+		resetAddPostData();
 	};
 
 	const resetAddPostData = () => {
@@ -70,7 +63,7 @@ function EditCustomerModal(props) {
 				<Modal.Header closeButton>
 					<Modal.Title>Edit Customer</Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<FloatingLabel controlId='floatingTextarea' label='Name' className='mb-3'>
 							<Form.Control
@@ -80,10 +73,12 @@ function EditCustomerModal(props) {
 								defaultValue={name || ''}
 								// onChange={onChangeNewForm}
 								required
-								{...register('name')}
+								{...register('name', {
+									required: 'Name is required!',
+								})}
 							/>
 							<p className='alertValidation'>
-								{NameValidation != true ? 'Please input a valid name!' : ''}
+								{NameValidation == true ? '' : 'Please input a valid name!'}
 							</p>
 						</FloatingLabel>
 						<FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
@@ -98,7 +93,7 @@ function EditCustomerModal(props) {
 								{...register('email')}
 							/>
 							<p className='alertValidation'>
-								{EmailValidation != true ? 'Please input a valid email!' : ''}
+								{EmailValidation == true ? '' : 'Please input a valid email!'}
 							</p>
 						</FloatingLabel>
 

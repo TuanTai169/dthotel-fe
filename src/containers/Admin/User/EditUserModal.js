@@ -20,11 +20,12 @@ function EditUserModal(props) {
 
 	const [editUser, setEditUser] = useState(user);
 	const { register, watch } = new useForm();
-	let NameValidation,
-		PhoneValidation = true;
+	let NameValidation, PhoneValidation;
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
-	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
+
+	if (watch('phone')) PhoneValidation = Validation.PatternPhone.test(watch('phone'));
+	else PhoneValidation = true;
 
 	const onChangeNewForm = (event) =>
 		setEditUser({
