@@ -9,7 +9,7 @@ import DialogDelete from '../../../components/Dialog/DialogDelete';
 const ServiceItem = (props) => {
 	const { service } = props;
 	const dispatch = useDispatch();
-	const role = useSelector((state) => state.auth.user.roles);
+	const role = useSelector((state) => state.auth.user.role);
 
 	const [isViewOpen, setIsViewOpen] = useState(false);
 	const [isEditOpen, setIsEditOpen] = useState(false);
@@ -37,7 +37,7 @@ const ServiceItem = (props) => {
 					</Button>
 					<Button
 						variant='primary'
-						className={role === 'EMPLOYEE' ? 'disabled' : 'btn btn-edit'}
+						className={role === 'Employee' ? 'disabled' : 'btn btn-edit'}
 						style={{ marginLeft: '12px' }}
 						onClick={() => setIsEditOpen(true)}
 					>
@@ -45,7 +45,7 @@ const ServiceItem = (props) => {
 					</Button>
 					<Button
 						variant='danger'
-						className={role === 'EMPLOYEE' ? 'disabled' : 'btn btn-delete'}
+						className={role === 'Employee' ? 'disabled' : 'btn btn-delete'}
 						style={{ marginLeft: '12px' }}
 						onClick={() =>
 							setConformDialog({

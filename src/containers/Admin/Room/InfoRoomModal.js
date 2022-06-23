@@ -35,7 +35,7 @@ const InfoRoomModal = (props) => {
 		message: '',
 	});
 
-	const role = useSelector((state) => state.auth.user.roles);
+	const role = useSelector((state) => state.auth.user.role);
 	const bookings = useSelector((state) => state.bookingReducer.bookings);
 	const convenienceList = useSelector((state) => state.convenience.conveniences);
 	const typesList = useSelector((state) => state.types.types);

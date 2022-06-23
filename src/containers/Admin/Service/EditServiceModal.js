@@ -24,10 +24,9 @@ const EditServiceModal = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (nameValidation(editService.name) && numberValidation(editService.price)) {
-			resetEditPostData();
-			dispatch(updateService(editService));
-		}
+
+		resetEditPostData();
+		dispatch(updateService(editService));
 	};
 
 	const resetEditPostData = () => {

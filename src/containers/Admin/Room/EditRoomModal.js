@@ -61,7 +61,6 @@ const EditRoomModal = (props) => {
 	};
 
 	const handlerSubmit = (e) => {
-		console.log(NameValidation);
 		e.preventDefault();
 		const data = {
 			...editRoom,

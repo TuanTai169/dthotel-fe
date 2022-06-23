@@ -26,12 +26,8 @@ const AddServiceModal = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (nameValidation(newService.name) && numberValidation(newService.price)) {
-			resetAddPostData();
-			dispatch(
-				addService({ ...newService, isProduct: newService.isProduct === '1' ? true : false })
-			);
-		}
+		dispatch(addService({ ...newService, isProduct: newService.isProduct === '1' ? true : false }));
+		resetAddPostData();
 	};
 
 	const resetAddPostData = () => {

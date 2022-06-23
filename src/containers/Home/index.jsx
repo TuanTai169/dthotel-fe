@@ -22,6 +22,7 @@ import './index.scss';
 import { Route, Routes } from 'react-router-dom';
 import ScrollToTop from 'react-scroll-to-top';
 import Chatbot from '../../components/Chatbot';
+import ChatBotAI from '../../components/ChatBotAI';
 
 const Home = () => {
 	return (
@@ -52,7 +53,8 @@ const Home = () => {
 				<Footer />
 			</div>
 			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a', left: '20px' }} />
-			<Chatbot />
+			{/* <Chatbot /> */}
+			<ChatBotAI />
 		</div>
 	);
 };

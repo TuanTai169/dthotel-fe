@@ -16,7 +16,7 @@ function EditUserModal(props) {
 	const { show, handlerModalClose, user } = props;
 
 	const dispatch = useDispatch();
-	const currentRole = useSelector((state) => state.auth.user.roles);
+	const currentRole = useSelector((state) => state.auth.user.role);
 
 	const [editUser, setEditUser] = useState(user);
 	const { register, watch } = new useForm();
@@ -34,15 +34,8 @@ function EditUserModal(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (
-			nameValidation(editUser.name) &&
-			emailValidation(editUser.email) &&
-			phoneValidation(editUser.phone) &&
-			textValidation(editUser.address)
-		) {
-			resetAddPostData();
-			dispatch(updateUser(editUser, user._id));
-		}
+		resetAddPostData();
+		dispatch(updateUser(editUser, user._id));
 	};
 
 	const resetAddPostData = () => {

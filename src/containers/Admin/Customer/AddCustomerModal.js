@@ -3,14 +3,7 @@ import { Form, Modal, FloatingLabel, Button, Row, Col } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { addCustomer } from '../../../redux/actions/customer';
-import {
-	phoneValidation,
-	IdNumberValidation,
-	emailValidation,
-	nameValidation,
-	numberValidation,
-	textValidation,
-} from '../../../utils/validation';
+
 import { customerDefault } from '../../../assets/app/constants';
 import * as Validation from '../../../utils/validation';
 
@@ -18,6 +11,7 @@ const AddCustomerModal = (props) => {
 	const { show, handlerModalClose } = props;
 	const dispatch = useDispatch();
 
+	const { register, watch, handleSubmit } = new useForm();
 	const [newCustomer, setNewCustomer] = useState({ ...customerDefault });
 	const onChangeNewForm = (event) =>
 		setNewCustomer({
@@ -31,20 +25,10 @@ const AddCustomerModal = (props) => {
 		};
 		setNewCustomer({ ...newCustomer, numberOfPeople: newNumberOfPeople });
 	};
-	const handleSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
-		if (
-			nameValidation(newCustomer.name) &&
-			emailValidation(newCustomer.email) &&
-			phoneValidation(newCustomer.phone) &&
-			IdNumberValidation(newCustomer.idNumber) &&
-			textValidation(newCustomer.address) &&
-			numberValidation(newCustomer.numberOfPeople.adult) &&
-			numberValidation(newCustomer.numberOfPeople.child)
-		) {
-			dispatch(addCustomer(newCustomer));
-			resetAddPostData();
-		}
+		dispatch(addCustomer({ ...newCustomer, ...data }));
+		resetAddPostData();
 	};
 
 	const resetAddPostData = () => {
@@ -52,7 +36,6 @@ const AddCustomerModal = (props) => {
 		handlerModalClose();
 	};
 
-	const { register, watch } = new useForm();
 	let NameValidation,
 		EmailValidation,
 		IdValidation,
@@ -60,25 +43,23 @@ const AddCustomerModal = (props) => {
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
 	EmailValidation = Validation.PatternEmail.test(watch('email'));
-	IdValidation = Validation.PatternId.test(watch('id'));
+	IdValidation = Validation.PatternId.test(watch('idNumber'));
 	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
 
-	const { name, email, phone, address, idNumber, numberOfPeople } = newCustomer;
+	const { address, numberOfPeople } = newCustomer;
 	return (
 		<>
 			<Modal show={show} onHide={resetAddPostData} animation={false} dialogClassName='admin-modal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Add Customer</Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<FloatingLabel controlId='floatingTextarea' label='Name' className='mb-3'>
 							<Form.Control
 								type='text'
 								placeholder='Name'
 								name='name'
-								// value={name || ''}
-								// onChange={onChangeNewForm}
 								required
 								{...register('name')}
 							/>
@@ -91,8 +72,6 @@ const AddCustomerModal = (props) => {
 								type='text'
 								placeholder='Email'
 								name='email'
-								// value={email || ''}
-								// onChange={onChangeNewForm}
 								required
 								{...register('email')}
 							/>
@@ -108,8 +87,6 @@ const AddCustomerModal = (props) => {
 										type='text'
 										placeholder='Phone Number'
 										name='phone'
-										// value={phone || ''}
-										// onChange={onChangeNewForm}
 										required
 										{...register('phone')}
 									/>
@@ -124,10 +101,8 @@ const AddCustomerModal = (props) => {
 										type='text'
 										placeholder='Id Number'
 										name='idNumber'
-										// value={idNumber || ''}
-										// onChange={onChangeNewForm}
 										required
-										{...register('id')}
+										{...register('idNumber')}
 									/>
 									<p className='alertValidation'>
 										{IdValidation != true ? 'Please input a valid ID number!' : ''}

@@ -1,0 +1,15 @@
+@import '../../containers/Home/styles/_variables.scss';
+
+.chat-bot-ai {
+	height: 100px;
+
+	.rcw-conversation-container > .rcw-header {
+		background-color: $main-text-color;
+	}
+	.rcw-launcher {
+		background-color: $main-text-color;
+	}
+	.rcw-messages-container {
+		max-height: 280px;
+	}
+}

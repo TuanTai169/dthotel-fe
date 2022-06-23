@@ -41,16 +41,9 @@ const AddUserModal = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (
-			nameValidation(newUser.name) &&
-			emailValidation(newUser.email) &&
-			passwordValidation(newUser.password) &&
-			phoneValidation(newUser.phone) &&
-			textValidation(newUser.address)
-		) {
-			dispatch(addUser(newUser));
-			resetAddPostData();
-		}
+
+		dispatch(addUser(newUser));
+		resetAddPostData();
 	};
 
 	const resetAddPostData = () => {
@@ -140,8 +133,8 @@ const AddUserModal = (props) => {
 										{currentRole === userRoles.Admin.name && (
 											<option value={userRoles.Admin.name}>{userRoles.Admin.name}</option>
 										)}
-										{/* <option value={userRoles?.Manager.name}>{userRoles.Manager.name}</option>
-										<option value={userRoles?.Employee.name}>{userRoles.Employee.name}</option> */}
+										<option value={userRoles?.Manager.name}>{userRoles.Manager.name}</option>
+										<option value={userRoles?.Employee.name}>{userRoles.Employee.name}</option>
 									</Form.Select>
 								</FloatingLabel>
 							</Col>

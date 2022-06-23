@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Modal, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, handleSubmit } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateCustomer } from '../../../redux/actions/customer';
 import {
@@ -19,7 +19,7 @@ function EditCustomerModal(props) {
 
 	const [editCustomer, setEditCustomer] = useState(customer);
 
-	const { register, watch } = new useForm();
+	const { register, watch, handleSubmit } = new useForm();
 	let NameValidation = true;
 	let EmailValidation = true;
 	let IdValidation = true;
@@ -27,7 +27,7 @@ function EditCustomerModal(props) {
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
 	EmailValidation = Validation.PatternEmail.test(watch('email'));
-	IdValidation = Validation.PatternId.test(watch('id'));
+	IdValidation = Validation.PatternId.test(watch('idNumber'));
 	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
 
 	const onChangeNewForm = (event) =>
@@ -42,20 +42,10 @@ function EditCustomerModal(props) {
 		};
 		setEditCustomer({ ...editCustomer, numberOfPeople: newNumberOfPeople });
 	};
-	const handleSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
-		if (
-			nameValidation(editCustomer.name) &&
-			emailValidation(editCustomer.email) &&
-			phoneValidation(editCustomer.phone) &&
-			IdNumberValidation(editCustomer.idNumber) &&
-			textValidation(editCustomer.address) &&
-			numberValidation(editCustomer.numberOfPeople.adult) &&
-			numberValidation(editCustomer.numberOfPeople.child)
-		) {
-			dispatch(updateCustomer(editCustomer, customer._id));
-			resetAddPostData();
-		}
+		dispatch(updateCustomer({ ...editCustomer, ...data }, customer._id));
+		resetAddPostData();
 	};
 
 	const resetAddPostData = () => {
@@ -70,13 +60,13 @@ function EditCustomerModal(props) {
 				<Modal.Header closeButton>
 					<Modal.Title>Edit Customer</Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<FloatingLabel controlId='floatingTextarea' label='Name' className='mb-3'>
 							<Form.Control
 								type='text'
 								placeholder='Name'
-								name='name'
+								// name='name'
 								defaultValue={name || ''}
 								// onChange={onChangeNewForm}
 								required
@@ -90,12 +80,12 @@ function EditCustomerModal(props) {
 							<Form.Control
 								type='text'
 								placeholder='Email'
-								name='email'
+								// name='email'
 								defaultValue={email || ''}
 								// onChange={onChangeNewForm}
 								required
-								// disabled
-								{...register('email')}
+								disabled
+								// {...register('email')}
 							/>
 							<p className='alertValidation'>
 								{EmailValidation != true ? 'Please input a valid email!' : ''}
@@ -108,7 +98,7 @@ function EditCustomerModal(props) {
 									<Form.Control
 										type='text'
 										placeholder='Phone Number'
-										name='phone'
+										// name='phone'
 										defaultValue={phone || ''}
 										// onChange={onChangeNewForm}
 										required
@@ -128,7 +118,7 @@ function EditCustomerModal(props) {
 										defaultValue={idNumber || ''}
 										// onChange={onChangeNewForm}
 										required
-										{...register('id')}
+										{...register('idNumber')}
 									/>
 									<p className='alertValidation'>
 										{IdValidation != true ? 'Please input a valid ID number!' : ''}

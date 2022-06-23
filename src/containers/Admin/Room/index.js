@@ -26,7 +26,7 @@ const Rooms = () => {
 
 	const rooms = useSelector((state) => state.roomReducer.rooms);
 	const isLoading = useSelector((state) => state.roomReducer.isRoomLoading);
-	const role = useSelector((state) => state.auth.user.roles);
+	const role = useSelector((state) => state.auth.user.role);
 
 	//Group BY FLOOR
 	const roomGroupedByFloor = lodash.groupBy(rooms, 'floor');

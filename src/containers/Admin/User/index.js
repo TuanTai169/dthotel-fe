@@ -20,7 +20,7 @@ function Users() {
 	//GET LIST CUS
 	const users = useSelector((state) => state.userReducer.users);
 	const isLoading = useSelector((state) => state.userReducer.isUserLoading);
-	const role = useSelector((state) => state.auth.user.roles);
+	const role = useSelector((state) => state.auth.user.role);
 
 	//Header table
 	const headers = [
@@ -87,7 +87,7 @@ function Users() {
 								<ButtonToolbar>
 									<Button
 										variant='success'
-										className={role === 'EMPLOYEE' ? 'disabled' : ''}
+										className={role === 'Employee' ? 'disabled' : ''}
 										onClick={() => setIsOpen(true)}
 									>
 										Add user
