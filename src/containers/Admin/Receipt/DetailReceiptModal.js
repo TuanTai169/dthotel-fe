@@ -29,10 +29,10 @@ function DetailReceiptModal(props) {
 			>
 				<Modal.Header closeButton>
 					<Modal.Title>{booking.code}</Modal.Title>
-					<div style={{ marginLeft: '30%', fontSize: '20px' }}>
+					{/* <div style={{ marginLeft: '30%', fontSize: '20px' }}>
 						Total Price (USD):{' '}
 						<strong style={{ color: 'red', fontSize: '20px' }}>{booking.detail.totalPrice}</strong>
-					</div>
+					</div> */}
 				</Modal.Header>
 				<Form>
 					<Modal.Body>

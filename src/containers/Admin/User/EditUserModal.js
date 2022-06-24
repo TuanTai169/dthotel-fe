@@ -37,7 +37,7 @@ function EditUserModal(props) {
 	const onSubmit = (data, e) => {
 		e.preventDefault();
 		resetAddPostData();
-		dispatch(updateUser(editUser, user._id));
+		dispatch(updateUser({ ...editUser, ...data }, user._id));
 	};
 
 	const resetAddPostData = () => {
@@ -107,6 +107,7 @@ function EditUserModal(props) {
 										)}
 										<option value={userRoles.Manager.name}>{userRoles.Manager.name}</option>
 										<option value={userRoles.Employee.name}>{userRoles.Employee.name}</option>
+										<option value={userRoles.Cleaner.name}>{userRoles.Cleaner.name}</option>
 									</Form.Select>
 								</FloatingLabel>
 							</Col>

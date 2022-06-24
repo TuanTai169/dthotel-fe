@@ -5,7 +5,7 @@ import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateRoom, getAllRoom } from '../../../redux/actions/room';
 import * as Validation from '../../../utils/validation';
-import { RoomStatus } from '../../../assets/app/constants';
+import { RoomStatus, userRoles } from '../../../assets/app/constants';
 import { uploadImage } from './../../../redux/actions/room';
 
 const EditRoomModal = (props) => {
@@ -15,8 +15,9 @@ const EditRoomModal = (props) => {
 	const [editRoom, setEditRoom] = useState(room);
 	const [roomImages, setRoomImages] = useState([]);
 	const convenienceList = useSelector((state) => state.convenience.conveniences);
+	const users = useSelector((state) => state.userReducer.users);
 	const typesList = useSelector((state) => state.types.types);
-	const { register, watch } = new useForm();
+	const { register, watch, handleSubmit } = new useForm();
 
 	let NameValidation = true;
 	NameValidation =
@@ -41,6 +42,10 @@ const EditRoomModal = (props) => {
 		setEditRoom({ ...editRoom, convenience: arrConvenience });
 	};
 
+	const onChangeCleaner = (user) => {
+		setEditRoom({ ...editRoom, cleaner: user });
+	};
+
 	const onChangeDetail = (e) => {
 		if (e.target.name === 'desc') {
 			let newDetail = { ...editRoom.detail, [e.target.name]: e.target.value };
@@ -60,19 +65,22 @@ const EditRoomModal = (props) => {
 		setRoomImages(e.target.files);
 	};
 
-	const handlerSubmit = (e) => {
+	const onSubmit = (data, e) => {
 		e.preventDefault();
-		const data = {
+		const json = {
 			...editRoom,
+			name: data.name,
 			floor: parseInt(editRoom.floor),
 			price: parseInt(editRoom.price),
 			roomType: editRoom.roomType._id,
 			convenience: editRoom.convenience.length > 0 ? editRoom.convenience.map((x) => x._id) : [],
-			status: RoomStatus.Ready.name,
+			status: editRoom.status,
+			cleaner: editRoom.cleaner?._id,
 		};
 
+		console.log(json);
 		// add image into form data
-		dispatch(updateRoom(data));
+		dispatch(updateRoom(json));
 		if (roomImages.length > 0) {
 			const formData = new FormData();
 			for (let i = 0; i < roomImages.length; i++) {
@@ -90,7 +98,9 @@ const EditRoomModal = (props) => {
 		setEditRoom(room);
 	};
 
-	const { roomType, convenience, roomNumber, name, floor, price, capacity, detail, bed } = editRoom;
+	const cleanerList = users.filter((user) => user.role === userRoles.Cleaner.name);
+	const { roomType, convenience, cleaner, roomNumber, name, floor, price, capacity, detail, bed } =
+		editRoom;
 	const { bedRoom, bathRoom, livingRoom, kitchen, desc } = detail;
 
 	return (
@@ -104,7 +114,7 @@ const EditRoomModal = (props) => {
 				<Modal.Header closeButton>
 					<Modal.Title>EDIT ROOM </Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handlerSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<Row>
 							<Form.Group className='col-3 mb-3' controlId='formBasicType'>
@@ -221,7 +231,25 @@ const EditRoomModal = (props) => {
 									onChange={onChangeBed}
 								/>
 							</Form.Group>
-							<Form.Group className='col-6 mb-3' controlId='formBasicConvenience'>
+							<Form.Group className='col-6 mb-3' controlId='formBasicCleaner'>
+								<Form.Label>Cleaner</Form.Label>
+								<Select
+									name='cleaner'
+									options={cleanerList}
+									defaultValue={cleanerList.filter((x) => {
+										if (cleaner?._id === x._id) return x;
+									})}
+									getOptionLabel={(option) => option.name}
+									getOptionValue={(option) => option._id}
+									onChange={onChangeCleaner}
+									className='basic-select'
+									classNamePrefix='select cleaner'
+								/>
+							</Form.Group>
+						</Row>
+
+						<Row>
+							<Form.Group className='col-12 mb-3' controlId='formBasicConvenience'>
 								<Form.Label>Convenience</Form.Label>
 								<Select
 									isMulti
@@ -238,7 +266,6 @@ const EditRoomModal = (props) => {
 								/>
 							</Form.Group>
 						</Row>
-
 						<Row>
 							<Form.Group className='col-3 mb-3' controlId='formBasicBedRoom'>
 								<Form.Label>BedRoom</Form.Label>

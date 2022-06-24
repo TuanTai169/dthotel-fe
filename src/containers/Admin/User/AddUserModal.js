@@ -4,13 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../../redux/actions/user';
 import usePasswordToggle from '../../../hooks/usePasswordToggle';
-import {
-	phoneValidation,
-	emailValidation,
-	passwordValidation,
-	nameValidation,
-	textValidation,
-} from '../../../utils/validation';
+
 import { userDefault, userRoles } from '../../../assets/app/constants';
 import * as Validation from '../../../utils/validation';
 
@@ -42,7 +36,7 @@ const AddUserModal = (props) => {
 	const onSubmit = (data, e) => {
 		e.preventDefault();
 
-		dispatch(addUser(newUser));
+		dispatch(addUser({ ...newUser, ...data }));
 		resetAddPostData();
 	};
 
@@ -135,6 +129,7 @@ const AddUserModal = (props) => {
 										)}
 										<option value={userRoles?.Manager.name}>{userRoles.Manager.name}</option>
 										<option value={userRoles?.Employee.name}>{userRoles.Employee.name}</option>
+										<option value={userRoles?.Cleaner.name}>{userRoles.Cleaner.name}</option>
 									</Form.Select>
 								</FloatingLabel>
 							</Col>

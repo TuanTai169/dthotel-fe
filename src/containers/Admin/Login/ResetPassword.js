@@ -34,20 +34,18 @@ const ResetPassword = () => {
 	const onChangeData = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value });
 	};
-	const handlerResetPass = async () => {
-		if (passwordValidation(password) && matchPasswordValidation(password, confirmPassword)) {
-			try {
-				const res = await axios.post(`${HOST_API_URL}/auth/reset-password/${token}`, {
-					password,
-				});
-				navigate('/admin/login');
-				return toast.success(res.data.message);
-			} catch (err) {
-				err.response.data.message && toast.error(err.response.data.message);
-			}
+	const handlerResetPass = async (data) => {
+		try {
+			const password = data.password;
+			const res = await axios.post(`${HOST_API_URL}/auth/reset-password/${token}`, {
+				password,
+			});
+			navigate('/admin/login');
+			return toast.success(res.data.message);
+		} catch (err) {
+			err.response.data.message && toast.error(err.response.data.message);
 		}
 	};
-	const { password, confirmPassword } = data;
 
 	return (
 		<div className='login-page'>
@@ -97,7 +95,7 @@ const ResetPassword = () => {
 
 			<Button
 				className='login-btn-submit'
-				onClick={handlerResetPass}
+				onClick={handleSubmit(handlerResetPass)}
 				disabled={!(ConfirmPasswordValidation && PasswordValidation)}
 			>
 				Reset Password

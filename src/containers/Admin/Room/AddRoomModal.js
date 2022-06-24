@@ -4,8 +4,8 @@ import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useWatch } from 'react-hook-form';
 import { addRoom } from '../../../redux/actions/room';
-import { numberValidation } from '../../../utils/validation';
-import { roomDefault, RoomStatus } from '../../../assets/app/constants';
+
+import { roomDefault, RoomStatus, userRoles } from '../../../assets/app/constants';
 import * as Validation from './../../../utils/validation';
 import { uploadImage } from './../../../redux/actions/room';
 
@@ -16,11 +16,14 @@ const AddRoomModal = (props) => {
 	const [newRoom, setNewRoom] = useState(roomDefault);
 	const [roomImages, setRoomImages] = useState([]);
 	const convenienceList = useSelector((state) => state.convenience.conveniences);
+	const users = useSelector((state) => state.userReducer.users);
 	const typesList = useSelector((state) => state.types.types);
+
 	const {
 		register,
 		watch,
 		formState: { errors },
+		handleSubmit,
 	} = useForm();
 
 	let NameValidation = true;
@@ -39,6 +42,10 @@ const AddRoomModal = (props) => {
 	};
 	const onChangeConvenience = (arrConvenience) => {
 		setNewRoom({ ...newRoom, convenience: arrConvenience });
+	};
+
+	const onChangeCleaner = (user) => {
+		setNewRoom({ ...newRoom, cleaner: user });
 	};
 
 	const onChangeDetail = (e) => {
@@ -60,20 +67,23 @@ const AddRoomModal = (props) => {
 		setRoomImages(e.target.files);
 	};
 
-	const handlerSubmit = async (e) => {
+	const onSubmit = async (data, e) => {
 		e.preventDefault();
 
 		try {
-			const data = {
+			const json = {
 				...newRoom,
+				name: data.name,
 				floor: parseInt(newRoom.floor),
 				price: parseInt(newRoom.price),
 				roomType: newRoom.roomType._id,
 				convenience: newRoom.convenience.length > 0 ? newRoom.convenience.map((x) => x._id) : [],
 				status: RoomStatus.Ready.name,
+				cleaner: newRoom.cleaner._id,
 			};
 			// add image into form data
-			const room = await dispatch(addRoom(data));
+
+			const room = await dispatch(addRoom(json));
 			if (room && roomImages.length > 0) {
 				const formData = new FormData();
 				for (let i = 0; i < roomImages.length; i++) {
@@ -90,7 +100,9 @@ const AddRoomModal = (props) => {
 		handlerModalClose();
 	};
 
-	const { roomNumber, name, floor, price, capacity, detail, bed } = newRoom;
+	const listCleaner = users.filter((user) => user.role === userRoles.Cleaner.name);
+
+	const { roomNumber, price, floor, capacity, detail, bed } = newRoom;
 	const { bedRoom, bathRoom, livingRoom, kitchen, desc } = detail;
 	return (
 		<>
@@ -103,7 +115,7 @@ const AddRoomModal = (props) => {
 				<Modal.Header closeButton>
 					<Modal.Title>ADD ROOM </Modal.Title>
 				</Modal.Header>
-				<Form onSubmit={handlerSubmit}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
 						<Row>
 							<Form.Group className='col-3 mb-3' controlId='formBasicType'>
@@ -113,13 +125,21 @@ const AddRoomModal = (props) => {
 									options={typesList}
 									getOptionLabel={(option) => option.nameTag}
 									getOptionValue={(option) => option._id}
-									className='basic-multi-select'
+									className='basic-select'
 									classNamePrefix='select type'
+									onChange={onChangeType}
 								/>
 							</Form.Group>
 							<Form.Group className='col-3 mb-3' controlId='formBasicPrice'>
 								<Form.Label>Price(USD)</Form.Label>
-								<Form.Control type='number' placeholder='0' name='price' min='1' />
+								<Form.Control
+									type='number'
+									placeholder='0'
+									name='price'
+									min='1'
+									value={price || ''}
+									onChange={onChangeNewForm}
+								/>
 							</Form.Group>
 
 							<Form.Group className='col-3 mb-3' controlId='formBasicAdult'>
@@ -206,7 +226,21 @@ const AddRoomModal = (props) => {
 									onChange={onChangeBed}
 								/>
 							</Form.Group>
-							<Form.Group className='col-6 mb-3' controlId='formBasicConvenience'>
+							<Form.Group className='col-6 mb-3' controlId='formBasicCleaner'>
+								<Form.Label>Cleaner</Form.Label>
+								<Select
+									name='cleaner'
+									options={listCleaner}
+									getOptionLabel={(option) => option.name}
+									getOptionValue={(option) => option._id}
+									onChange={onChangeCleaner}
+									className='basic-select'
+									classNamePrefix='select cleaner'
+								/>
+							</Form.Group>
+						</Row>
+						<Row>
+							<Form.Group className='col-12 mb-3' controlId='formBasicConvenience'>
 								<Form.Label>Convenience</Form.Label>
 								<Select
 									isMulti

@@ -53,8 +53,8 @@ const Home = () => {
 				<Footer />
 			</div>
 			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a', left: '20px' }} />
-			{/* <Chatbot /> */}
-			<ChatBotAI />
+			<Chatbot />
+			{/* <ChatBotAI /> */}
 		</div>
 	);
 };

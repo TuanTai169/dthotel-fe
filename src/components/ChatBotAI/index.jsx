@@ -13,7 +13,7 @@ import 'react-chat-widget/lib/styles.css';
 
 const ChatBotAI = () => {
 	useEffect(() => {
-		addResponseMessage('Welcome to this awesome chat!');
+		addResponseMessage('Welcome to this DTH chat !');
 	}, []);
 
 	const handleNewUserMessage = async (newMessage) => {

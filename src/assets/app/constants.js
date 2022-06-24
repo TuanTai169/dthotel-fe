@@ -60,7 +60,7 @@ module.exports = {
 	}),
 
 	userRoles: Object.freeze({
-		Staff: { name: 'Staff', value: 0 },
+		Cleaner: { name: 'Cleaner', value: 0 },
 		Employee: { name: 'Employee', value: 1 },
 		Manager: { name: 'Manager', value: 2 },
 		Admin: { name: 'Admin', value: 3 },
@@ -106,7 +106,8 @@ module.exports = {
 			single: 0,
 			double: 0,
 		},
-		convenience: ['', ''],
+		convenience: [],
+		cleaner: '',
 	},
 	customerDefault: {
 		name: '',

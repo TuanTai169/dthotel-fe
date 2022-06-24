@@ -26,6 +26,7 @@ const AddCustomerModal = (props) => {
 	};
 	const onSubmit = (data, e) => {
 		e.preventDefault();
+		console.log({ ...newCustomer, ...data });
 		dispatch(addCustomer({ ...newCustomer, ...data }));
 		resetAddPostData();
 	};
