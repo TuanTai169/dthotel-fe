@@ -19,9 +19,12 @@ function EditCustomerModal(props) {
 	let PhoneValidation = true;
 	NameValidation =
 		Validation.PatternName1.test(watch('name')) || Validation.PatternName2.test(watch('name'));
-	EmailValidation = Validation.PatternEmail.test(watch('email'));
-	IdValidation = Validation.PatternId.test(watch('idNumber'));
-	PhoneValidation = Validation.PatternPhone.test(watch('phone'));
+	if (watch('email')) EmailValidation = Validation.PatternEmail.test(watch('email'));
+	else EmailValidation = true;
+	if (watch('idNumber')) IdValidation = Validation.PatternId.test(watch('idNumber'));
+	else IdValidation = true;
+	if (watch('phone')) PhoneValidation = Validation.PatternPhone.test(watch('phone'));
+	else PhoneValidation = true;
 
 	const onChangeNewForm = (event) =>
 		setEditCustomer({
