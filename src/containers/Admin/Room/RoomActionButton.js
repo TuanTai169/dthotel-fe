@@ -52,7 +52,7 @@ const RoomActionButton = (props) => {
 		<>
 			<ButtonToolbar>
 				{/* CHECK OUT */}
-				{status !== RoomStatus.Fixing.name && status !== RoomStatus.Occupied.name && (
+				{status === RoomStatus.Ready.name && (
 					<Button
 						variant='secondary'
 						style={{ marginLeft: '4px' }}
@@ -63,7 +63,7 @@ const RoomActionButton = (props) => {
 					</Button>
 				)}
 				{/* READY */}
-				{(status === RoomStatus.Cleaning.name || status === RoomStatus.Fixing.name) && (
+				{status === RoomStatus.Fixing.name && (
 					<Button
 						variant='success'
 						style={{ marginLeft: '4px' }}
