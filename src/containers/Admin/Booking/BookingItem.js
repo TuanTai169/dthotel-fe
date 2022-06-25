@@ -21,7 +21,7 @@ const BookingItem = (props) => {
 		message: '',
 	});
 
-	const { code, customer, rooms, status, detail } = booking;
+	const { code, rooms, status, detail } = booking;
 
 	const checkInDateConvert = convertStringToDate(rooms[0].checkInDate);
 	const checkOutDateConvert = convertStringToDate(rooms[0].checkOutDate);
@@ -39,7 +39,7 @@ const BookingItem = (props) => {
 	return (
 		<>
 			<td>{code}</td>
-			<td>{customer.name}</td>
+			<td>{detail.customer.name}</td>
 			<td>{renderRoom}</td>
 			<td>{checkInDateConvert}</td>
 			<td>{checkOutDateConvert}</td>
