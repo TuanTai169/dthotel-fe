@@ -9,7 +9,7 @@ export class ChatBotFPT extends Component {
 		let objPreDefineLiveChat = {
 				appCode: '15f3c3ed620c2f84e4e7451417bf7ff4',
 				themes: '',
-				appName: prefixNameLiveChat ? prefixNameLiveChat : 'Live support',
+				appName: prefixNameLiveChat ? prefixNameLiveChat : 'Live DTH support',
 				thumb: '',
 				icon_bot: '',
 			},
@@ -34,7 +34,7 @@ export class ChatBotFPT extends Component {
 		};
 	}
 	render() {
-		return <div>ChatBotFPT</div>;
+		return <div></div>;
 	}
 }
 

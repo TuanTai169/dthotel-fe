@@ -10,7 +10,6 @@ import StatusCard from '../../../components/Common/status-card';
 import { numberWithCommas } from '../../../utils/convertWithCommas';
 import { getStatistic } from '../../../redux/actions/receipt';
 import { convertStringToDate } from '../../../utils/convertDateTime';
-import ScrollToTop from './../../../components/Common/ScrollToTop';
 
 const topRoomHeads = ['#', 'Room', 'Type', 'total spending'];
 
@@ -33,8 +32,11 @@ const Dashboard = () => {
 	const receipts = useSelector((state) => state.receiptReducer.receipts);
 	const statistic = useSelector((state) => state.receiptReducer.statistic);
 
-	// const dispatch = useDispatch();
-	// useEffect(() => dispatch(getStatistic()), [dispatch, bookings, receipts]);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getStatistic());
+		return () => {};
+	}, [dispatch, bookings, receipts]);
 
 	// // TOP ROOM
 	let topRoomData = statistic.rooms
@@ -355,7 +357,6 @@ const Dashboard = () => {
 					</div>
 				</div>
 			</div>
-			<ScrollToTop />
 		</>
 	);
 };

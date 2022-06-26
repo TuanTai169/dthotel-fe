@@ -10,7 +10,7 @@ import ViewAllBookingModal from '../Booking/ViewAllBookingModal';
 import ReservationCalendar from './ReservationCalendar';
 
 import FullLoading from '../../../components/Common/FullLoading';
-import ScrollToTop from '../../../components/Common/ScrollToTop';
+
 import { getAllBooking } from '../../../redux/actions/booking';
 import { getAllReceipt } from '../../../redux/actions/receipt';
 import { getAllRoom } from './../../../redux/actions/room';
@@ -195,7 +195,6 @@ const Rooms = () => {
 					</div>
 				</>
 			)}
-			<ScrollToTop />
 		</>
 	);
 };

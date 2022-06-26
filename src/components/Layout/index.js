@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import themeAction from '../../redux/actions/theme';
 import Sidebar from '../Sidebar';
 import TopNav from '../Topnav';
-import NotFound from '../Common/NotFound';
 
 import Dashboard from '../../containers/Admin/Dashboard';
 import Customers from '../../containers/Admin/Customer';
