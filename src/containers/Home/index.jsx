@@ -21,8 +21,7 @@ import BookingSuccess from './Booking/Successful';
 import './index.scss';
 import { Route, Routes } from 'react-router-dom';
 import ScrollToTop from 'react-scroll-to-top';
-import Chatbot from '../../components/Chatbot';
-import ChatBotAI from '../../components/ChatBotAI';
+import ChatBotFPT from '../../components/ChatBotFPT';
 
 const Home = () => {
 	return (
@@ -53,8 +52,7 @@ const Home = () => {
 				<Footer />
 			</div>
 			<ScrollToTop smooth color='$dark-blue' style={{ backgroundColor: '#ffce6a', left: '20px' }} />
-			<Chatbot />
-			{/* <ChatBotAI /> */}
+			<ChatBotFPT />
 		</div>
 	);
 };

@@ -14,6 +14,7 @@ import './style.scss';
 import { getAllRoom, checkAvailable } from './../../../redux/actions/room';
 
 import FullLoading from './../../../components/Common/FullLoading/index';
+import { RoomStatus } from '../../../assets/app/constants';
 
 const capacityDefault = {
 	adult: 1,
@@ -36,8 +37,10 @@ const RoomPage = () => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const listRoom = useSelector((state) => state.roomReducer.rooms);
+	const rooms = useSelector((state) => state.roomReducer.rooms);
 	const isLoading = useSelector((state) => state.roomReducer.isRoomLoading);
+
+	const listRoom = rooms.filter((r) => r.status !== RoomStatus.Occupied.name);
 
 	useEffect(() => {
 		dispatch(getAllRoom());

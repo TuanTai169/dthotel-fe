@@ -57,12 +57,12 @@ const index = () => {
 										</Slider>
 									</div>
 									<div className='body__button '>
-										<Link className='body__button__link' to='/rooms'>
-											<RoomPrice
-												price={room.price ? room.price : 0}
-												message={`for 1 night`}
-												className='text-home-color'
-											/>
+										<RoomPrice
+											price={room.price ? room.price : 0}
+											message={`for 1 night`}
+											className='text-home-color'
+										/>
+										<Link className='body__button__link top-100' to='/rooms'>
 											<p>Book now</p>
 										</Link>
 									</div>
