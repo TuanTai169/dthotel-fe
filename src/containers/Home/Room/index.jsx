@@ -1,5 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -24,6 +25,7 @@ const capacityDefault = {
 };
 
 const RoomPage = () => {
+	const { t } = useTranslation();
 	const [dateRange, setDateRange] = useState([
 		new Date(),
 		new Date(new Date().getTime() + 12 * 60 * 60 * 1000 * 2),
@@ -137,12 +139,12 @@ const RoomPage = () => {
 				<>
 					<section className='row select-booking'>
 						<div className='col-5 flex-center'>
-							<span className='web-name'>Rooms</span>
+							<span className='web-name'>{t('rooms.title')}</span>
 						</div>
 						<div className='col-7'>
 							<div className='row'>
 								<div className='col-6 select-date'>
-									<label className='text-title'>Check-in/Check-out</label>
+									<label className='text-title'>{t('rooms.checkIn&Checkout')}</label>
 									<DatePicker
 										selectsRange={true}
 										startDate={startDate}
@@ -151,7 +153,7 @@ const RoomPage = () => {
 										customInput={<ExampleCustomInput />}
 									/>
 								</div>
-								<div className='col-6 select-people'>
+								<div className='col-6 select-people p-20'>
 									<SelectNumberPeople
 										value={capacity.adult}
 										name='adult'
@@ -166,7 +168,7 @@ const RoomPage = () => {
 									{capacity && capacity.child > 0 && (
 										<div className='old-of-child format-default row'>
 											<div className='mb-3 col-6'>
-												<label htmlFor='under12'>Child under 12</label>
+												<label htmlFor='under12'>{t('rooms.childUnder12')}</label>
 												<input
 													type='number'
 													className='form-control input-text-home'
@@ -179,7 +181,7 @@ const RoomPage = () => {
 												/>
 											</div>
 											<div className='mb-3 col-6'>
-												<label htmlFor='over12'>Child over 12</label>
+												<label htmlFor='over12'>{t('rooms.childOver12')}</label>
 												<input
 													type='number'
 													className='form-control input-text-home'
@@ -197,7 +199,7 @@ const RoomPage = () => {
 							</div>
 							<div className='flex-center'>
 								<span className='btn-home' onClick={onCheckAvailability}>
-									Check availability
+									{t('rooms.checkAvailability')}
 								</span>
 							</div>
 						</div>
@@ -213,12 +215,14 @@ const RoomPage = () => {
 
 								<div className='btn-booking col-3 pos-fixed end-0'>
 									<button onClick={onBooking} disabled={!(selectRoom.length > 0)}>
-										Book Now
+										{t('rooms.bookNow')}
 									</button>
-									<p>{selectRoom && selectRoom.length} room</p>
+									<p>
+										{selectRoom && selectRoom.length} {t('rooms.room')}
+									</p>
 									<RoomPrice
 										price={totalPrice ? totalPrice : 0}
-										message={`for ${dayDiff ? dayDiff : 0} night`}
+										message={`${t('rooms.for')} ${dayDiff ? dayDiff : 0} ${t('rooms.night')}`}
 									/>
 								</div>
 							</div>

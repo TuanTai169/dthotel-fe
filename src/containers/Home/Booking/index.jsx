@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { Modal } from 'react-bootstrap';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 import { BiInfoCircle } from 'react-icons/bi';
 import { imagePayPal, imageVNPay } from '../../../assets/app/constants';
@@ -14,8 +14,10 @@ import PayPalModal from './PayPal/PayPalModal';
 import { addBookingInWeb } from '../../../redux/actions/booking';
 import * as Validation from '../../../utils/validation';
 import { getVnPayUrl } from '../../../redux/actions/receipt';
+import PolicyModal from './PolicyModal';
 
 const BookingPage = () => {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -59,8 +61,8 @@ const BookingPage = () => {
 	if (!roomsBooking) {
 		return (
 			<div className='p-20'>
-				<h3>Couldn't find a room to book</h3>
-				<Link to='/rooms'>Go to book</Link>
+				<h3>{t('booking.notFound.content')}</h3>
+				<Link to='/rooms'>{t('booking.notFound.link')}</Link>
 			</div>
 		);
 	}
@@ -91,8 +93,6 @@ const BookingPage = () => {
 				deposit: parseFloat((totalPrice * 1.1 * 0.5).toFixed(2)),
 				discount: null,
 			};
-
-			console.log(customer);
 
 			localStorage.setItem(
 				'currentBooking',
@@ -143,6 +143,8 @@ const BookingPage = () => {
 		navigate('/booking-success');
 	};
 
+	const onClosePolicy = () => setShowPolicy(false);
+
 	const expiredDate = moment(
 		new Date(new Date(checkInDate).getTime() - 12 * 60 * 60 * 1000 * 3)
 	).format('YYYY-MM-DD');
@@ -151,13 +153,13 @@ const BookingPage = () => {
 		<div className='format-default booking-page'>
 			<form className='booking-page-form'>
 				<div className='title flex-center'>
-					<span className='web-name'>Booking Detail</span>
+					<span className='web-name'>{t('booking.title')}</span>
 				</div>
 				<div className='time-check'>
-					<p>Check-in: {checkInDate} from 14:00 </p>
-					<p>Check-out: {checkOutDate} until 12:00 </p>
+					<p>{t('booking.detail.checkInDate', { checkInDate: checkInDate })} </p>
+					<p>{t('booking.detail.checkOutDate', { checkOutDate: checkOutDate })}</p>
 					<span className='show-policy' onClick={() => navigate('/rooms')}>
-						(Traveling on different dates?)
+						{t('booking.detail.diffDate')}
 					</span>
 				</div>
 				<div className='mx-0'>
@@ -166,15 +168,18 @@ const BookingPage = () => {
 							<div className='room-info row' key={room._id}>
 								<div className='col-8 px-0'>
 									<h4>{room.name}</h4>
-									<span>Free cancellation before {expiredDate}</span>
-									<p>Breakfast included</p>
-									<p>{`Details: 1 room, ${getDateRange(
-										checkInDate,
-										checkOutDate
-									)} nights  included in price`}</p>
+									<span>
+										{t('booking.detail.freeCancelled')} {expiredDate}
+									</span>
+									<p>{t('booking.detail.breakfastIncluded')} </p>
+									<p>
+										{t('booking.detail.detail1Room', {
+											rangeDate: getDateRange(checkInDate, checkOutDate),
+										})}
+									</p>
 									<div className='row'>
 										<div className='col-3'>
-											<label htmlFor='adults'>Number of adults</label>
+											<label htmlFor='adults'>{t('booking.detail.numberOfAdults')}</label>
 											<input
 												type='text'
 												className='form-control input-text-home'
@@ -184,7 +189,7 @@ const BookingPage = () => {
 										</div>
 										<div className='col-3'>
 											<div className='form-group mb-3'>
-												<label htmlFor='child'>Number of child</label>
+												<label htmlFor='child'>{t('booking.detail.numberOfChild')}</label>
 												<input
 													type='text'
 													className='form-control input-text-home'
@@ -201,7 +206,8 @@ const BookingPage = () => {
 									</h4>
 									<h5>{convertCurrency(room.price * 23500, 'VND')}</h5>
 									<span className='show-policy' onClick={() => setShowPolicy(true)}>
-										Booking Policies <BiInfoCircle />
+										{t('booking.detail.polices')}
+										<BiInfoCircle />
 									</span>
 								</div>
 							</div>
@@ -211,9 +217,9 @@ const BookingPage = () => {
 				<div className='row'>
 					<div className='col-6'>
 						<div className='summary-price'>
-							<h4>Summary price</h4>
+							<h4>{t('booking.detail.sumPrice')}</h4>
 							<div className='d-flex justify-content-between'>
-								<p>Accommodation charges</p>
+								<p>{t('booking.detail.accommodation')}</p>
 								<div className='price'>
 									<span>
 										<strong>{convertCurrency(totalPrice, 'USD')}</strong>
@@ -222,7 +228,7 @@ const BookingPage = () => {
 								</div>
 							</div>
 							<div className='d-flex justify-content-between'>
-								<p>Taxes 10%</p>
+								<p>{t('booking.detail.taxes')}</p>
 								<div className='price'>
 									<span>
 										<strong>{convertCurrency(totalPrice * 0.1, 'USD')}</strong>
@@ -231,7 +237,7 @@ const BookingPage = () => {
 								</div>
 							</div>
 							<div className='d-flex justify-content-between border-top-main-color'>
-								<p>Total price</p>
+								<p>{t('booking.detail.total')}</p>
 								<div className='price'>
 									<span>
 										<strong>{convertCurrency(totalPrice * 1.1, 'USD')}</strong>
@@ -240,7 +246,7 @@ const BookingPage = () => {
 								</div>
 							</div>
 							<div className='d-flex justify-content-between border-top-main-color'>
-								<p>Deposit</p>
+								<p>{t('booking.detail.deposit')}</p>
 								<div className='price'>
 									<span>
 										<strong>{convertCurrency(totalPrice * 1.1 * 0.5, 'USD')}</strong>
@@ -250,11 +256,11 @@ const BookingPage = () => {
 							</div>
 						</div>
 						<div className='payment'>
-							<h4>Payment</h4>
+							<h4> {t('booking.detail.payment')}</h4>
 							<div className='row'>
 								<div className='mb-3 col-sm-4'>
 									<label htmlFor='payment' className='form-label'>
-										Pay with
+										{t('booking.detail.payWith')}
 									</label>
 									<select
 										className='form-select select-home'
@@ -291,9 +297,9 @@ const BookingPage = () => {
 									onChange={onChangeChecked}
 								/>
 								<label className='form-check-label '>
-									I have read and agree to the{' '}
+									{t('booking.detail.haveRead')}
 									<span className='show-policy' onClick={() => setShowPolicy(true)}>
-										Booking Policies
+										{t('booking.detail.polices')}
 									</span>
 									.
 								</label>
@@ -314,24 +320,24 @@ const BookingPage = () => {
 										)
 									}
 								>
-									Confirm and Book
+									{t('booking.detail.confirm&Book')}
 								</button>
 							</div>
 						</div>
 					</div>
 					<div className='col-6'>
 						<div className='customer-info'>
-							<h4>Customer detail</h4>
+							<h4>{t('booking.detail.customer.title')}</h4>
 							<div className='row'>
 								<div className='form-group mb-32 col-3'>
-									<label htmlFor='gender'>Gender</label>
+									<label htmlFor='gender'>{t('booking.detail.customer.gender.title')}</label>
 									<select className='form-select select-home' id='gender'>
-										<option>Mr</option>
-										<option>Mrs</option>
+										<option>{t('booking.detail.customer.gender.mr')}</option>
+										<option>{t('booking.detail.customer.gender.mrs')}</option>
 									</select>
 								</div>
 								<div className='form-group mb-32 col-9'>
-									<label htmlFor='fname'>First name*</label>
+									<label htmlFor='fname'>{t('booking.detail.customer.fname')}</label>
 									<input
 										type='text'
 										className='form-control input-text-home'
@@ -349,7 +355,7 @@ const BookingPage = () => {
 							</div>
 
 							<div className='form-group mb-32'>
-								<label htmlFor='lname'>Last name*</label>
+								<label htmlFor='lname'>{t('booking.detail.customer.lname')}</label>
 								<input
 									type='text'
 									className='form-control input-text-home'
@@ -365,7 +371,7 @@ const BookingPage = () => {
 								</p> */}
 							</div>
 							<div className='form-group mb-32'>
-								<label htmlFor='email'>Email*</label>
+								<label htmlFor='email'>{t('booking.detail.customer.email')}</label>
 								<input
 									type='email'
 									className='form-control input-text-home'
@@ -382,7 +388,7 @@ const BookingPage = () => {
 							</div>
 							<div className='row'>
 								<div className='form-group mb-32 col-sm-6'>
-									<label htmlFor='phone'>Phone*</label>
+									<label htmlFor='phone'>{t('booking.detail.customer.phone')}</label>
 									<input
 										type='text'
 										className='form-control input-text-home'
@@ -398,7 +404,7 @@ const BookingPage = () => {
 									</p> */}
 								</div>
 								<div className='form-group mb-32 col-sm-6'>
-									<label htmlFor='idNumber'>ID Number*</label>
+									<label htmlFor='idNumber'>{t('booking.detail.customer.idNumber')}</label>
 									<input
 										type='text'
 										className='form-control input-text-home'
@@ -417,7 +423,7 @@ const BookingPage = () => {
 
 							<div className='form-group mb-32'>
 								<label htmlFor='address' className='form-label'>
-									Address
+									{t('booking.detail.customer.address')}
 								</label>
 								<textarea
 									className='form-control input-text-home mb-85'
@@ -432,33 +438,7 @@ const BookingPage = () => {
 					</div>
 				</div>
 			</form>
-			<Modal show={showPolicy} onHide={() => setShowPolicy(false)} size='lg'>
-				<Modal.Header>
-					<Modal.Title>Booking policies</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<div className='policy'>
-						<div className='title'>Deluxe Twin Mountain View</div>
-						<div className='detail'>
-							<p className='item'>
-								<strong>Cancellation:</strong> If cancelled or modified more than 3 days before the
-								date of arrival, no penalty will be charged. If cancelled or modified less than 3
-								days before the date of arrival, the first night will be charged. In case of
-								no-show, the full booking item amount will be charged.
-							</p>
-							<p>
-								<strong>Payment:</strong>No deposit will be charged. Balance due on arrival.
-							</p>
-							<p>
-								<strong>The exchange rates:</strong> 1 USD = 23.500 VND.
-							</p>
-							<p>
-								<strong>Meal included:</strong>Breakfast included.
-							</p>
-						</div>
-					</div>
-				</Modal.Body>
-			</Modal>
+			{showPolicy && <PolicyModal show={showPolicy} onClose={onClosePolicy} />}
 		</div>
 	);
 };

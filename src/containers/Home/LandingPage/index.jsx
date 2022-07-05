@@ -4,43 +4,25 @@ import Spa from './../../../assets/images/spa.png';
 import pinebranch1 from './../../../assets/images/pinebranch1.png';
 import pinebranch2 from './../../../assets/images/pinebranch2.png';
 import * as Room from './../Images/images';
+import { useTranslation } from 'react-i18next';
 
 const LandingPage = () => {
+	const { t } = useTranslation();
 	return (
 		<>
 			<section className='home__header'>
 				<div className='home__header__slogan'>
-					<div className='home__header__slogan__title'>RECONNECT WITH NATURE</div>
-					<div className='home__header__slogan__description'>
-						Fifteen minutes drive from the center of
-						<br />
-						Dalat City is all it takes to get to this holiday haven.
-						<br />
-						Dalat de Charm Village is all about luxury aesthetics
-						<br />
-						and is the perfect sanctuary with a soul.
-					</div>
+					<div className='home__header__slogan__title'>{t('home.slogan1.title')}</div>
+					<div className='home__header__slogan__description'>{t('home.slogan1.desc')}</div>
 				</div>
 			</section>
 			<section className='home__cards'>
 				<div className='home__cards__title'>
 					<div className='home__cards__title__background'>DT</div>
-					<div className='home__cards__title__text'>THE PERFECTION FOR YOUR VACATION</div>
+					<div className='home__cards__title__text'>{t('home.slogan2.title')}</div>
 				</div>
 				<div className='home__cards__container'>
-					<div className='home__cards__container__description'>
-						Boutique standard, 3 stars +
-						<br />
-						Romantic Europe architecture
-						<br />
-						Different room - Unique design
-						<br />
-						Scenic and panoramic view
-						<br />
-						Surrounded with Dalat cool atmosphere
-						<br />
-						Quintessential local cuisine
-					</div>
+					<div className='home__cards__container__description'>{t('home.slogan2.desc')}</div>
 					<div className='home__cards__container__items'>
 						<div className='card-item'>
 							<img
@@ -49,9 +31,9 @@ const LandingPage = () => {
 								className='card-item__image'
 							/>
 							<div className='card-item__information'>
-								<h2 className='card-item__information__title'>DELUXE GOFT VIEW</h2>
+								<h2 className='card-item__information__title'>{t('home.rooms.goft.title')}</h2>
 								<p className='card-item__information__description'>
-									{Room.DeluxeGolfView.shortDesc}
+									{t('home.rooms.goft.shortDesc')}
 								</p>
 							</div>
 						</div>
@@ -62,9 +44,9 @@ const LandingPage = () => {
 								className='card-item__image'
 							/>
 							<div className='card-item__information'>
-								<h2 className='card-item__information__title'>DELUXE MOUNTAIN VIEW</h2>
+								<h2 className='card-item__information__title'>{t('home.rooms.mountain.title')}</h2>
 								<p className='card-item__information__description'>
-									{Room.DeluxeMountainView.shortDesc}
+									{t('home.rooms.mountain.shortDesc')}
 								</p>
 							</div>
 						</div>
@@ -75,16 +57,16 @@ const LandingPage = () => {
 								className='card-item__image'
 							/>
 							<div className='card-item__information'>
-								<h2 className='card-item__information__title'>STUDIO MOUNTAIN VIEW</h2>
+								<h2 className='card-item__information__title'>{t('home.rooms.studio.title')}</h2>
 								<p className='card-item__information__description'>
-									{Room.StudioMountainView.shortDesc}
+									{t('home.rooms.studio.shortDesc')}
 								</p>
 							</div>
 						</div>
 					</div>
 					<div className='home__cards__container__button'>
 						<Link className='home__cards__container__button__link' to='/rooms'>
-							Find out more
+							{t('home.rooms.findOutMore')}
 						</Link>
 					</div>
 				</div>
@@ -100,32 +82,23 @@ const LandingPage = () => {
 					<img className='home__service__content__image' src={Spa} alt='DT Hotel Spa Service' />
 
 					<div className='home__service__content__description'>
-						<h2 className='first'>Comfort Anbience</h2>
-						<p>
-							The first step into the Zen Spa, customer will feel like step into another world with
-							yellow light, relaxing herbal aroma and splendid space as Europe Catsle's smell.
-						</p>
-						<h2 className='second'>Sauna Steam Bath</h2>
-						<p>
-							Zen Spa has private space to pamper your body with massage roo, sauna, jacuzzi, bath
-							room, gym, swimming pool ...
-						</p>
-						<h1>Treat you a spa-cation at the DT</h1>
+						<h2 className='first'>{t('home.spa.first.title')}</h2>
+						<p>{t('home.spa.first.shortDesc')}</p>
+						<h2 className='second'>{t('home.spa.second.title')}</h2>
+						<p>{t('home.spa.second.shortDesc')}</p>
+						<h1>{t('home.spa.third')}</h1>
 					</div>
 				</div>
 				<div className='home__service__button'>
 					<Link className='home__service__button__link' to='/services'>
-						EXPLORE
+						{t('home.spa.explore')}
 					</Link>
 				</div>
 			</section>
 			<section className='home__adventure'>
-				<div className='home__adventure__title'>Your Highland Adventure</div>
+				<div className='home__adventure__title'>{t('home.adventure.title')}</div>
 				<div className='home__adventure__content'>
-					<div className='home__adventure__content__description'>
-						Discover the best of Dalat City with our recommended destination including mountain, sky
-						and water experiences.
-					</div>
+					<div className='home__adventure__content__description'>{t('home.adventure.desc')}</div>
 					<div className='home__adventure__content__cards'>
 						<div className='home__adventure__content__cards__item'>
 							<div className='home__adventure__content__cards__item-content'>
@@ -135,10 +108,9 @@ const LandingPage = () => {
 									alt='Adventure image'
 								/>
 								<p className='adventure_description'>
-									<strong>Bao Dai’s Summer Palace</strong>
+									<strong>{t('home.adventure.first.title')}</strong>
 									<br />
-									Bao Dai was famous for being the last emperor of Vietnam and ascended to the
-									throne was he was just 12 years old.
+									{t('home.adventure.first.shortDesc')}
 								</p>
 							</div>
 						</div>
@@ -150,10 +122,9 @@ const LandingPage = () => {
 									alt='Adventure image'
 								/>
 								<p className='adventure_description'>
-									<strong>Datanla Waterfalls</strong>
+									<strong>{t('home.adventure.second.title')}</strong>
 									<br />
-									Datanla Waterfalls is one of the most famous set of falls in Da Lat and you can
-									easily reach this gushing cataract from the center of town.
+									{t('home.adventure.second.shortDesc')}
 								</p>
 							</div>
 						</div>
@@ -165,10 +136,9 @@ const LandingPage = () => {
 									alt='Adventure image'
 								/>
 								<p className='adventure_description'>
-									<strong>Truc Lam Pagoda</strong>
+									<strong>{t('home.adventure.third.title')}</strong>
 									<br />
-									Truc Lam Pagoda is one of the newest temples in Da Lat but this also means that it
-									is one of the prettiest.
+									{t('home.adventure.third.shortDesc')}
 								</p>
 							</div>
 						</div>

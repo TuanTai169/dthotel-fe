@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import './index.scss';
 import * as Images from './../Images/images';
+import { useTranslation } from 'react-i18next';
 
 const index = () => {
 	var settings = {
@@ -16,10 +17,11 @@ const index = () => {
 		nextArrow: false,
 		prevArrow: false,
 	};
+	const { t } = useTranslation();
 	return (
 		<div>
 			<section className='header'>
-				<div className='header__title'>Service</div>
+				<div className='header__title'>{t('services.title')}</div>
 			</section>
 			<section className='body'>
 				<div className='body__slider'>
@@ -47,10 +49,8 @@ const index = () => {
 					</div>
 				</div>
 				<div className='body__title'>
-					<p className='body__title__0'>Recover yourself at Zen Spa</p>
-					<h2 className='body__title__1'>
-						DT Hotel Zen Spa will take care and regenerate energy for your body.
-					</h2>
+					<p className='body__title__0'>{t('services.content.first.title')}</p>
+					<h2 className='body__title__1'>{t('services.content.first.desc')}</h2>
 					<h1 className='body__title__2'>
 						Spa of <span style={{ color: '#ffce6a' }}>DT Hotel</span>
 					</h1>
@@ -59,30 +59,24 @@ const index = () => {
 					<div className='body__container__card'>
 						<div className='body__container__card__1'>
 							<div className='body__container__card__info'>
-								<h3 className='title'>Body Treatment</h3>
-								<p className='description'>We have therapies to regenerate and restore your body</p>
+								<h3 className='title'>{t('services.content.second.title')}</h3>
+								<p className='description'>{t('services.content.second.desc')}</p>
 							</div>
 						</div>
 					</div>
 					<div className='body__container__card'>
 						<div className='body__container__card__2'>
 							<div className='body__container__card__info'>
-								<h3 className='title'>Facial Treatment</h3>
-								<p className='description'>
-									Take care of your beauty with its natural materials, technical and modern
-									facilities
-								</p>
+								<h3 className='title'>{t('services.content.third.title')}</h3>
+								<p className='description'>{t('services.content.third.desc')}</p>
 							</div>
 						</div>
 					</div>
 					<div className='body__container__card'>
 						<div className='body__container__card__3'>
 							<div className='body__container__card__info'>
-								<h3 className='title'>Sauna & Steam bath</h3>
-								<p className='description'>
-									Saunas are considered a great help in health care and protection. We have a dry
-									and wet bathroom in two separate areas for men and women.
-								</p>
+								<h3 className='title'>{t('services.content.four.title')}</h3>
+								<p className='description'>{t('services.content.four.desc')}</p>
 							</div>
 						</div>
 					</div>
@@ -96,26 +90,19 @@ const index = () => {
 						/>
 
 						<div className='body__service__content__description'>
-							<h2 className='first'>Comfort Anbience</h2>
-							<p>
-								The first step into the Zen Spa, customer will feel like step into another world
-								with yellow light, relaxing herbal aroma and splendid space as Europe Catsle's
-								smell.
-							</p>
-							<h2 className='second'>Sauna Steam Bath</h2>
-							<p>
-								Zen Spa has private space to pamper your body with massage roo, sauna, jacuzzi, bath
-								room, gym, swimming pool ...
-							</p>
+							<h2 className='first'>{t('services.content.five.title')}</h2>
+							<p>{t('services.content.five.desc')}</p>
+							<h2 className='second'>{t('services.content.six.title')}</h2>
+							<p>{t('services.content.six.desc')}</p>
 						</div>
 					</div>
 				</div>
 				<div className='body__button'>
 					<img src='https://samtuyenlamhotel.com.vn/wp-content/themes/taka/images/bg_care_spa.jpg' />
-					<h2 className='body__button__title'>Treat your a Spa-cation</h2>
+					<h2 className='body__button__title'>{t('services.treatASpa.title')}</h2>
 					<div>
 						<Link className='body__button__link' to='/rooms'>
-							Book now
+							{t('services.treatASpa.link')}
 						</Link>
 					</div>
 				</div>

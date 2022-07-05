@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.scss';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import logo from './../../../../assets/images/LogoSwiss.png';
 import instagram from './../../../../assets/images/social_media_icons/Instagram.png';
@@ -7,6 +8,7 @@ import youtube from './../../../../assets/images/social_media_icons/YouTube.png'
 import facebook from './../../../../assets/images/social_media_icons/Facebook.png';
 
 const index = () => {
+	const { t } = useTranslation();
 	return (
 		<div>
 			<section className='footer'>
@@ -15,33 +17,35 @@ const index = () => {
 						<img src={logo} alt='DT Logo' className='header__nav__content__items__logo' />
 					</div>
 					<div className='footer__container__infoterm'>
-						<div className='footer__container__infoterm__title'>Hotel Information</div>
+						<div className='footer__container__infoterm__title'>{t('footer.hotelInformation')}</div>
 						<div className='footer__container__infoterm__items'>
 							<Link className='footer__container__infoterm__item' to='/about-us'>
-								About Us
+								{t('footer.aboutUs')}
 							</Link>
 							<Link className='footer__container__infoterm__item' to='/transfer'>
-								Transfers
+								{t('footer.transfers')}
 							</Link>
 							<Link className='footer__container__infoterm__item' to='/contact'>
-								Contact Us
+								{t('footer.contactUs')}
 							</Link>
 							<Link className='footer__container__infoterm__item' to='/map'>
-								Map
+								{t('footer.map')}
 							</Link>
 						</div>
 					</div>
 					<div className='footer__container__infoterm2'>
-						<div className='footer__container__infoterm2__title'>Terms & Conditions</div>
+						<div className='footer__container__infoterm2__title'>
+							{t('footer.terms&Conditions')}
+						</div>
 						<div className='footer__container__infoterm2__items'>
 							<Link className='footer__container__infoterm2__item' to='/privacy'>
-								Privacy Policy
+								{t('footer.privacyPolicy')}
 							</Link>
 							<Link className='footer__container__infoterm2__item' to='/book-cancel'>
-								Booking & Cancelations
+								{t('footer.booking&Cancellations')}
 							</Link>
 							<Link className='footer__container__infoterm2__item' to='/web-term'>
-								Website Terms
+								{t('footer.websiteTerms')}
 							</Link>
 						</div>
 					</div>

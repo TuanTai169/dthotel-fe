@@ -18,6 +18,20 @@ Link:hover {
 		background-color: $dark-blue;
 		z-index: 1000;
 
+		&__select-language {
+			display: flex;
+			flex-direction: row-reverse;
+			position: relative;
+			top: 20px;
+			right: 20px;
+
+			select {
+				background-color: $main-bg-color;
+				color: $main-text-color;
+				border: none;
+			}
+		}
+
 		&__content {
 			font-weight: 500;
 			padding: 2vw 2vw;
@@ -36,6 +50,7 @@ Link:hover {
 				margin-bottom: 0;
 
 				&__link {
+					text-transform: uppercase;
 					color: $main-text-color;
 					text-decoration: none;
 

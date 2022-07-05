@@ -3,10 +3,10 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './index.scss';
-import DGV from './../../../assets/images/rooms_images/DGV.png';
 import { Link } from 'react-router-dom';
 import './index.scss';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { RoomPrice } from '../../../components/Common/Utils';
 
 const index = () => {
@@ -14,12 +14,13 @@ const index = () => {
 	const settings = {
 		autoplay: true,
 	};
+	const { t } = useTranslation();
 	return (
 		<div>
 			{room && (
 				<>
 					<section className='header'>
-						<div className='header__title'>Rooms Details</div>
+						<div className='header__title'>{t('rooms.details.title')}</div>
 					</section>
 					<section className='body'>
 						<div className='body__roominfo'>
@@ -30,20 +31,23 @@ const index = () => {
 							<div className='body__roominfo__detail'>
 								<div className='body__roominfo__detail__item'>
 									<p>
-										Area: {room.roomType?.size}
+										{t('rooms.details.area')} {room.roomType?.size}
 										<sup>2</sup>
 									</p>
 									<p>
-										Bed: {room.bed?.single > 0 && room.bed?.single + ` single room,`}
+										{t('rooms.details.bed')}{' '}
+										{room.bed?.single > 0 && room.bed?.single + ` single room,`}
 										{room.bed?.double > 0 && room.bed?.double + ` double room`}
 									</p>
-									<p>People: {room.capacity?.adult}</p>
-									<p>View: Mountain, Golf Course</p>
-									<p>Minibar/Fridge: Yes</p>
-									<p>Bathtub/shower: Yes</p>
-									<p>Hot and cold water system: Yes</p>
-									<p>Tea - Coffee - Kettle: Yes</p>
-									<p>Tivi: Yes</p>
+									<p>
+										{t('rooms.details.people')} {room.capacity?.adult}
+									</p>
+									<p>{t('rooms.details.view')}</p>
+									<p>{t('rooms.details.minibar')}</p>
+									<p>{t('rooms.details.bathtub')}</p>
+									<p>{t('rooms.details.hotAndCold')}</p>
+									<p>{t('rooms.details.teaAndCoffee')}</p>
+									<p>{t('rooms.details.tv')}</p>
 									<h1 className='body__roominfo__price'></h1>
 								</div>
 								<div className='body__roominfo__detail__slider'>
@@ -63,7 +67,7 @@ const index = () => {
 											className='text-home-color'
 										/>
 										<Link className='body__button__link top-100' to='/rooms'>
-											<p>Book now</p>
+											<p>{t('rooms.bookNow')}</p>
 										</Link>
 									</div>
 								</div>

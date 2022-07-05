@@ -1,0 +1,225 @@
+{
+	"navBar": {
+		"home": "Trang chủ",
+		"rooms": "Phòng",
+		"services": "Dịch vụ",
+		"aboutUs": "Về chúng tôi"
+	},
+
+	"footer": {
+		"hotelInformation": "Thông tin khách sạn",
+		"aboutUs": "Về chúng tôi",
+		"transfers": "Vận chuyển",
+		"contactUs": "Liên hệ",
+		"map": "Bản đồ",
+		"terms&Conditions": "Điều khoản và điều kiện",
+		"privacyPolicy": "Chính sách bảo mật",
+		"booking&Cancellations": "Đặt trước và hủy bỏ",
+		"websiteTerms": "Điều khoản trang web",
+		"copyright": "Bản quyền © 2022 DTHOTEL"
+	},
+	"home": {
+		"slogan1": {
+			"title": "KẾT NỐI VỚI THIÊN NHIÊN",
+			"desc": "Chỉ mất mười lăm phút lái xe từ trung tâm Thành phố Đà Lạt để đến thiên đường nghỉ dưỡng này. Dalat de Charme Village là tất cả về thẩm mỹ sang trọng và  là nơi tôn nghiêm hoàn hảo cho một tâm hồn."
+		},
+		"slogan2": {
+			"title": "SỰ LỰA CHỌN HOÀN HẢO CHO KÌ NGHỈ CỦA BẠN",
+			"desc": "Tiêu chuẩn Boutique, 3 sao Kiến trúc Châu Âu lãng mạn Phòng khác biệt. Thiết kế độc đáo Cảnh quan và toàn cảnh Được bao quanh bởi bầu không khí mát mẻ Đà Lạt Tinh hoa ẩm thực địa phương."
+		},
+		"rooms": {
+			"goft": {
+				"title": "DELUXE GOFT VIEW",
+				"shortDesc": "DT Resort bố trí nhiều phòng Deluxe Golf View nhìn ra hồ bơi và sân Golf 18 lỗ tiêu chuẩn quốc tế đầy đủ hiện đại, đã trang bị đầy đủ các dịch vụ thiết yếu cho khách hàng, ..."
+			},
+			"mountain": {
+				"title": "DELUXE MOUNTAIN VIEW",
+				"shortDesc": "Nếu bạn muốn có không gian rộng rãi cho gia đình, bạn có thể lựa chọn phòng Family Deluxe Mountain View để tận hưởng kỳ nghỉ trọn vẹn bên gia đình và người thân. Chúng tôi có tổng cộng 4 cặp phòng gia đình (trong đó có 2 phòng Deluxe hướng núi được kết nối với nhau)."
+			},
+			"studio": {
+				"title": "STUDIO MOUNTAIN VIEW",
+				"shortDesc": "DT Resort được bố trí 18 phòng Studio Mountain View, là sự lựa chọn thích hợp nhất cho những gia đình có con nhỏ. Ngoài việc sở hữu tất cả các tiêu chuẩn của phòng hạng sang là loại phòng rộng rãi hơn ..."
+			},
+			"findOutMore": "Tìm hiểu thêm"
+		},
+		"spa": {
+			"first": {
+				"title": "Môi trường thoải mái",
+				"shortDesc": "Bước chân đầu tiên vào Zen Spa, khách hàng sẽ có cảm giác như bước vào một thế giới khác với ánh đèn vàng, hương thơm thảo mộc thư thái và không gian lộng lẫy như mùi của Europe Catsle."
+			},
+			"second": {
+				"title": "Phòng tắm xông hơi sauna",
+				"shortDesc": "Zen Spa có không gian riêng tư để nâng niu cơ thể bạn với massage roo, xông hơi, bể sục, phòng tắm, gym, hồ bơi ..."
+			},
+			"third": "Chiêu đãi bạn một spa-cation tại DT",
+			"explore": "KHÁM PHÁ"
+		},
+		"adventure": {
+			"title": "Cuộc phiêu lưu Tây Nguyên của bạn",
+			"desc": "Khám phá những điều tuyệt vời nhất của Thành phố Đà Lạt với điểm đến được đề xuất của chúng tôi bao gồm trải nghiệm núi non, bầu trời và mặt nước.",
+			"first": {
+				"title": "Cung điện của Bảo Đại",
+				"shortDesc": "Bảo Đại nổi tiếng là vị hoàng đế cuối cùng của Việt Nam và lên ngôi khi mới 12 tuổi..."
+			},
+			"second": {
+				"title": "Thác Datanla",
+				"shortDesc": "Thác Datanla là một trong những thác nổi tiếng nhất ở Đà Lạt và bạn có thể dễ dàng đến được thác nước này từ trung tâm thành phố."
+			},
+			"third": {
+				"title": "Chùa trúc lâm",
+				"shortDesc": "Chùa Trúc Lâm là một trong những ngôi chùa mới nhất ở Đà Lạt nhưng điều này cũng đồng nghĩa với việc nó là một trong những ngôi chùa đẹp nhất."
+			}
+		}
+	},
+	"rooms": {
+		"title": "Phòng",
+		"checkIn&Checkout": "Check-in/Check-out",
+		"childUnder12": "Trẻ dưới 12 tuổi",
+		"childOver12": "Trẻ trên 12 tuổi",
+		"checkAvailability": "Kiểm tra",
+		"bookNow": "Đặt ngay",
+		"for": "cho",
+		"night": "đêm",
+		"room": "phòng",
+		"adult": "Người lớn",
+		"child": "Trẻ em",
+		"details": {
+			"title": "Chi tiết phòng",
+			"area": "Diện tích",
+			"bed": "Giường: ",
+			"people": "Con người: ",
+			"view": "Tầm nhìn: núi, biển",
+			"minibar": "Có trang bị tủ lạnh",
+			"bathtub": "Có phòng tắm",
+			"hotAndCold": "Có hệ thống nước nóng lạnh",
+			"teaAndCoffee": "Có trà - cà phê",
+			"tv": "Ti vi màn hình phẳng"
+		}
+	},
+	"booking": {
+		"notFound": {
+			"content": "Không thể tìm thấy phòng để đặt",
+			"link": "Quay về đặt phòng"
+		},
+		"title": "Chi tiết đặt phòng",
+		"detail": {
+			"checkInDate": "Nhận phòng sau 12 giờ ngày {{checkInDate}} ",
+			"checkOutDate": "Trả phòng trước 12 giờ ngày {{checkOutDate}} until 12:00",
+			"diffDate": "(Đi du lịch vào các ngày khác?)",
+			"freeCancelled": "Miễn phí trả phòng trước ngày",
+			"breakfastIncluded": "Bao bữa sáng",
+			"detail1Room": "Chi tiết: 1 phòng {{rangeDate}} đêm bao gồm giá",
+			"numberOfAdults": "Số người lớn",
+			"numberOfChild": "Số trẻ em",
+			"polices": "Chính sách đặt phòng",
+			"sumPrice": "Tóm tắt giá",
+			"accommodation": "Phí ăn ở",
+			"taxes": "Thuế 10%",
+			"total": "Tổng tiền",
+			"deposit": "Đặt trước",
+			"payment": "Thanh toán",
+			"payWith": "Thanh toán bằng",
+			"haveRead": "Tôi đã đọc và đồng ý với",
+			"confirm&Book": "Xác nhận và Đặt chỗ",
+			"customer": {
+				"title": "Chi tiết khách hàng",
+				"gender": {
+					"title": "Giới tính",
+					"mr": "Anh",
+					"mrs": "Chị"
+				},
+				"fname": "Tên*",
+				"lname": "Họ*",
+				"email": "Email*",
+				"phone": "Số điện thoại*",
+				"idNumber": "Số CCCD*",
+				"address": "Địa chỉ*"
+			}
+		},
+		"policies": {
+			"title": "Deluxe Twin Mountain View",
+			"detail": {
+				"first": {
+					"title": "Hủy phòng:",
+					"desc": "Nếu hoãn / hủy hay thay đổi trước 3 ngày so với ngày nhận phòng, bạn sẽ không bị thu phí. Nếu huỷ đặt hay thay đổi ít hơn 3 ngày trước ngày nhận phòng, bạn sẽ bị thu phí đêm đầu tiên. Trong trường hợp vắng mặt, toàn bộ số tiền đặt phòng sẽ được tính."
+				},
+				"second": {
+					"title": "Thanh toán:",
+					"desc": "Không có tiền đặt cọc sẽ được tính phí. Số dư đến hạn khi đến."
+				},
+				"third": {
+					"title": "Tỷ giá:",
+					"desc": "1 USD = 23.500 VND."
+				},
+				"four": {
+					"title": "Bữa ăn:",
+					"desc": "Đã bao gồm bữa sáng."
+				}
+			}
+		}
+	},
+	"services": {
+		"title": "Dịch vụ",
+		"content": {
+			"first": {
+				"title": "Chăm sóc bản thân tại Zen Spa",
+				"desc": "DT Hotel Zen Spa sẽ chăm sóc và tái tạo năng lượng cho cơ thể bạn."
+			},
+			"second": {
+				"title": "Phục hồi cơ thể",
+				"desc": "Chúng tôi có những liệu pháp để tái tạo và phục hồi cơ thể bạn"
+			},
+			"third": {
+				"title": "Phục hồi da mặt",
+				"desc": "Chăm sóc sắc đẹp của bạn bằng vật liệu tự nhiên, cơ sở vật chất kỹ thuật hiện đại"
+			},
+			"four": {
+				"title": "Xông hơi & xông hơi ướt",
+				"desc": "Phòng xông hơi được coi là một trợ thủ đắc lực trong việc chăm sóc và bảo vệ sức khỏe. Chúng tôi có phòng tắm khô và ướt ở hai khu vực riêng biệt dành cho nam và nữ."
+			},
+			"five": {
+				"title": "Môi trường thoải mái",
+				"desc": "Bước chân đầu tiên vào Zen Spa, khách hàng sẽ có cảm giác như bước vào một thế giới khác với ánh đèn vàng, hương thơm thảo mộc thư thái và không gian lộng lẫy như mùi của Europe Catsle."
+			},
+			"six": {
+				"title": "Phòng tắm xông hơi sauna",
+				"desc": "Zen Spa có không gian riêng tư để nâng niu cơ thể với phòng massage, xông hơi, bể sục, phòng tắm, phòng gym, bể bơi ..."
+			}
+		},
+		"treatASpa": {
+			"title": "Chăm sóc bản thân tại Spa-cation",
+			"link": "Đặt phòng ngay"
+		}
+	},
+	"aboutUs": {
+		"title": "Về chúng tôi",
+		"content": {
+			"first": {
+				"smTitle": "Nơi hoàn hảo",
+				"title": "KHÔNG GIAN ĐẶC BIỆT",
+				"desc": "DT Hotel là khu nghỉ dưỡng nổi tiếng trong Khu du lịch Quốc gia Hồ Tuyền Lâm, được bao bọc bởi những đồi cây ống, thảm cỏ xanh mướt và những đường cong uốn lượn của sân golf."
+			},
+			"second": {
+				"smTitle": "Những lựa chọn tuyệt vời",
+				"title": "TIỆN NGHI SANG TRỌNG",
+				"desc": "Hiện có tổng số 151 phòng được trang bị đầy đủ tiện nghi và thiết kế sang trọng theo Phong cách Châu Âu. Có các loại Deluxe, Grand Deluxe, Executive, Junior Suite, Executive Suite, Presidential Suite, Rooftop Garden Suite và Penthouse 2 phòng ngủ."
+			},
+			"third": {
+				"smTitle": "Tiếp tân thân thiện",
+				"title": "DỊCH VỤ CAO CẤP",
+				"desc": "Chúng tôi cung cấp nhiều tiện nghi hiện đại bao gồm nhà hàng, phòng họp, bể bơi ngoài trời, bể bơi nước nóng trong nhà, spa, phòng tắm hơi, trung tâm thể dục, phòng karaoke, sân tennis và sân gôn xanh 18 lỗ."
+			},
+			"four": {
+				"title": "DT HOTEL - DA LAT",
+				"desc1": "DT Hotel - Dalat được thiết kế theo phong cách kiến trúc Anglo-Normand (kiến trúc của vùng nông thôn Anh - Pháp), có tổng số 151 phòng được trang trí bởi gam màu sáng, tinh tế, đầy đủ tiện nghi tạo cho bạn cảm giác thoải mái và dễ chịu để thư giãn cùng bạn bè và gia đình hoặc đi công tác dài ngày. .",
+				"desc2": "Chúng tôi tọa lạc tại khu du lịch quốc gia hồ Tuyền Lâm, giữa thung lũng Đà Lạt, được bao bọc bởi rừng thông và sân golf xanh mát. Đây là một trong những khu nghỉ dưỡng có không gian thiên nhiên thoáng đãng tại Đà Lạt. Nhìn từ xa, DT Hotel là một tòa lâu đài cổ tích bởi màu sơn trắng và phong cách kiến trúc Châu Âu. Tại Khách Sạn DT Đà Lạt, chúng tôi quan tâm đến từng giây phút nhỏ nhất của khách hàng, chuyến đi săn của bạn là niềm hạnh phúc của chúng tôi. Vì vậy, chúng tôi sẽ cố gắng hết sức để mang đến những dịch vụ tốt nhất với trang thiết bị phù hợp cho các vị khách quý."
+			},
+			"five": {
+				"title1": "Discover our Resort’s",
+				"title2": "PHÒNG THIẾT BỊ VÀ SANG TRỌNG",
+				"desc1": "Chúng tôi cung cấp nhiều loại phòng: Deluxe (King, Twin, Holywood), Deluxe Pool View, Grand Deluxe (King, Twin), Executive Room, Junior Suite, Executive Suite, Presidential Suite, Rooftop Garden Suite và Penthouse. Đặc biệt, Rooftop Garden Suite và Penthouse được tách biệt trên tầng 5 với tầm nhìn đẹp nhất khu nghỉ dưỡng. Tất cả các phòng đều có ban công, trừ phòng Grand Deluxe vì an toàn cho trẻ em.",
+				"desc2": "Chúng tôi trân trọng từng giây phút thư giãn của khách hàng. Phòng ốc rộng rãi và được chăm chút với phong cách tinh tế, trang nhã, ấm áp, được trang bị đầy đủ TV màn hình LED, tủ lạnh, máy lạnh, mini bar, điện thoại, buồng tắm đứng, bồn tắm, nước nóng, an toàn. hộp, máy sấy tóc, trà, cà phê và Wifi miễn phí."
+			}
+		}
+	}
+}

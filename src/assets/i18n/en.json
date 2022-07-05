@@ -1,0 +1,266 @@
+{
+	"navBar": {
+		"home": "Home",
+		"rooms": "Rooms",
+		"services": "Services",
+		"aboutUs": "About Us"
+	},
+	"footer": {
+		"hotelInformation": "Hotel Information",
+		"aboutUs": "About Us",
+		"transfers": "Transfers",
+		"contactUs": "Contact Us",
+		"map": "Map",
+		"terms&Conditions": "Terms & Conditions",
+		"privacyPolicy": "Privacy Policy",
+		"booking&Cancellations": "Booking and Cancellations",
+		"websiteTerms": "Website Terms",
+		"copyright": "COPYRIGHT © 2022 DTHOTEL"
+	},
+	"home": {
+		"slogan1": {
+			"title": "RECONNECT WITH NATURE",
+			"desc": "Fifteen minutes drive from the center of  Dalat City is all it takes to get to this holiday haven. Dalat de Charme Village is all about luxury aesthetics and is the perfect sanctuary with a soul."
+		},
+		"slogan2": {
+			"title": "THE PERFECTION FOR YOUR VACATION",
+			"desc": "Boutique standard, 3 stars + Romantic Europe architecture Different room - Unique design Scenic and panoramic view Surrounded with Dalat cool atmosphere Quintessential local cuisine."
+		},
+		"rooms": {
+			"goft": {
+				"title": "DELUXE GOFT VIEW",
+				"shortDesc": "DT Resort arranged 72 Deluxe Golf View rooms overlooking the pool and the 18-hole golf course of international standard fully modern, which has fully equipped with essential customer service,..."
+			},
+			"mountain": {
+				"title": "DELUXE MOUNTAIN VIEW",
+				"shortDesc": "If you want to have ample space for family, you can choose the Family Deluxe Mountain View room to enjoy the perfect holiday with family and relatives. We have a total of 4 pairs of family rooms (including 2 Deluxe Mountain View connected together)."
+			},
+			"studio": {
+				"title": "STUDIO MOUNTAIN VIEW",
+				"shortDesc": "DT Resort arranged 18 Studio Mountain View rooms, which is the most suitable choice for families with small children. In addition to owning all the standards of the deluxe rooms are more spacious room types..."
+			},
+			"findOutMore": "Find out more"
+		},
+		"spa": {
+			"first": {
+				"title": "Comfort Ambience",
+				"shortDesc": "The first step into the Zen Spa, customer will feel like step into another world with yellow light, relaxing herbal aroma and splendid space as Europe Catsle's smell."
+			},
+			"second": {
+				"title": "Sauna Steam Bath",
+				"shortDesc": "Zen Spa has private space to pamper your body with massage roo, sauna, jacuzzi, bathroom, gym, swimming pool ..."
+			},
+			"third": "Treat you a spa-cation at the DT",
+			"explore": "EXPLORE"
+		},
+		"adventure": {
+			"title": "Your Highland Adventure",
+			"desc": "Discover the best of Dalat City with our recommended destination including mountain, sky and water experiences.",
+			"first": {
+				"title": "Bao Dai’s Summer Palace",
+				"shortDesc": "Bao Dai was famous for being the last emperor of Vietnam and ascended to the throne was he was just 12 years old."
+			},
+			"second": {
+				"title": "Datanla Waterfalls",
+				"shortDesc": "Datanla Waterfalls is one of the most famous set of falls in Da Lat and you can easily reach this gushing cataract from the center of town."
+			},
+			"third": {
+				"title": "Truc Lam Pagoda",
+				"shortDesc": "Truc Lam Pagoda is one of the newest temples in Da Lat but this also means that it is one of the prettiest."
+			}
+		}
+	},
+	"rooms": {
+		"title": "Rooms",
+		"checkIn&Checkout": "Check-in/Check-out",
+		"childUnder12": "Child under 12",
+		"childOver12": "Child over 12",
+		"checkAvailability": "Check availability",
+		"bookNow": "Book Now",
+		"for": "for",
+		"night": "night",
+		"room": "room",
+		"adult": "adult",
+		"child": "child",
+		"details": {
+			"title": "Rooms Details",
+			"area": "Area",
+			"bed": "Bed: ",
+			"people": "People: ",
+			"view": "View: Mountain, Golf Course",
+			"minibar": "Minibar/Fridge: Yes",
+			"bathtub": "Bathtub/shower: Yes",
+			"hotAndCold": "Hot and cold water system: Yes",
+			"teaAndCoffee": "Tea - Coffee - Kettle: Yes",
+			"tv": "Tivi: Yes"
+		}
+	},
+	"booking": {
+		"notFound": {
+			"content": "Couldn't find a room to book",
+			"link": "Go to book"
+		},
+		"title": "Booking Detail",
+		"detail": {
+			"checkInDate": "Check-in: {{checkInDate}} from 14:00",
+			"checkOutDate": "Check-out: {{checkOutDate}} until 12:00",
+			"diffDate": "(Traveling on different dates?)",
+			"freeCancelled": "Free cancellation before",
+			"breakfastIncluded": "Breakfast included",
+			"detail1Room": "Details: 1 room, {{rangeDate}} nights  included in price",
+			"numberOfAdults": "Number of adults",
+			"numberOfChild": "Number of child",
+			"polices": "Booking Policies",
+			"sumPrice": "Summary price",
+			"accommodation": "Accommodation charges",
+			"taxes": "Taxes 10%",
+			"total": "Total price",
+			"deposit": "Deposit",
+			"payment": "Payment",
+			"payWith": "Pay with",
+			"haveRead": "I have read and agree to the",
+			"confirm&Book": "Confirm and Book",
+			"customer": {
+				"title": "Customer detail",
+				"gender": {
+					"title": "Gender",
+					"mr": "Mr",
+					"mrs": "Mrs"
+				},
+				"fname": "First name*",
+				"lname": "Last name*",
+				"email": "Email*",
+				"phone": "Phone*",
+				"idNumber": "ID Number*",
+				"address": "Address*"
+			}
+		},
+		"policies": {
+			"title": "Deluxe Twin Mountain View",
+			"detail": {
+				"first": {
+					"title": "Cancellation:",
+					"desc": "If cancelled or modified more than 3 days before the date of arrival, no penalty will be charged. If cancelled or modified less than 3 days before the date of arrival, the first night will be charged. In case of no-show, the full booking item amount will be charged."
+				},
+				"second": {
+					"title": "Payment:",
+					"desc": "No deposit will be charged. Balance due on arrival."
+				},
+				"third": {
+					"title": "The exchange rates:",
+					"desc": "1 USD = 23.500 VND."
+				},
+				"four": {
+					"title": "Meal included:",
+					"desc": "Breakfast included."
+				}
+			}
+		}
+	},
+	"services": {
+		"title": "Service",
+		"content": {
+			"first": {
+				"title": "Recover yourself at Zen Spa",
+				"desc": "DT Hotel Zen Spa will take care and regenerate energy for your body."
+			},
+			"second": {
+				"title": "Body Treatment",
+				"desc": "We have therapies to regenerate and restore your body"
+			},
+			"third": {
+				"title": "Facial Treatment",
+				"desc": "Take care of your beauty with its natural materials, technical and modern facilities"
+			},
+			"four": {
+				"title": "Sauna & Steam bath",
+				"desc": "Saunas are considered a great help in health care and protection. We have a dry and wet bathroom in two separate areas for men and women."
+			},
+			"five": {
+				"title": "Comfort Anbience",
+				"desc": "The first step into the Zen Spa, customer will feel like step into another world with yellow light, relaxing herbal aroma and splendid space as Europe Catsle's smell."
+			},
+			"six": {
+				"title": "Sauna Steam Bath",
+				"desc": "Zen Spa has private space to pamper your body with massage roo, sauna, jacuzzi, bathroom, gym, swimming pool ..."
+			}
+		},
+		"treatASpa": {
+			"title": "Treat your a Spa-cation",
+			"link": "Book now"
+		}
+	},
+	"aboutUs": {
+		"title": "About Us",
+		"content": {
+			"first": {
+				"smTitle": "Perfect place",
+				"title": "SPECIAL SPACE",
+				"desc": "DT Hotel is the famous resort in Tuyen Lam Lake National Tourist Area, surrounded by pipe tree hills, green grass and rolling curves of the golf course."
+			},
+			"second": {
+				"smTitle": "Great options",
+				"title": "LUXURY ACCOMMODATION",
+				"desc": "We are available total 151 equipped rooms with full facilities and luxury design according to Europe Style. There are Deluxe, Grand Deluxe, Executive, Junior Suite, Executive Suite, Presidential Suite, Rooftop Garden Suite and Penthouse 2 Bedroom."
+			},
+			"third": {
+				"smTitle": "Friendly reception",
+				"title": "LUXURY SERVICES",
+				"desc": "We offers many modern facilities including restaurant, meeting room, outdoor swimming pool, indoor heated swimming pool, spa, sauna, fitness center, karaoke room, tennis court and 18 holes green golf course."
+			},
+			"four": {
+				"title": "DT HOTEL - DA LAT",
+				"desc1": "DT Hotel - Dalat is designed in Anglo-Normand style architecture (architecture of the English-French countryside), a total of 151 rooms are decorated by Bright, sophisticated color, fully equipped to make you feel comfortable and pleasant to relax with friends and family or long business trip.",
+				"desc2": "We located at the Tuyen Lam Lake National Tourist Area, in the middle of the Da Lat valley, surrounded by pine forest and green golf course. This is one of the resorts with open nature space in Da Lat. From a distance, the DT Hotel is a fairytale castle by white paint and European architectural style. At DT Hotel, Dalat we are care about every single moment of customer, your saftifie is our happiness. Therefore, we will try our best to bring the best services with morden equipments to our valued guests."
+			},
+			"five": {
+				"title1": "Discover our Resort’s",
+				"title2": "LUXURY AND EQUIPMENT ROOM",
+				"desc1": "We offer many types room: Deluxe (King, Twin, Holywood), Deluxe Pool View, Grand Deluxe (King, Twin), Executive Room, Junior Suite, Executive Suite, Presidential Suite, Rooftop Garden Suite and Penthouse. In particular, Rooftop Garden Suite and Penthouse are separated on the fifth floor with the most beautiful view of the resort. All rooms have balconies, except the Grand Deluxe rooms because of children safety.",
+				"desc2": "We cherish every relaxing moment of customer.The rooms are spacious and cared for with exquisite style, elegant and warm, fully equipped with LED screen TV, refrigerator, air-conditioner, mini bar, telephone, standing shower , bathtub, hot water, safety box, hairdryer, tea, coffee and free Wifi."
+			}
+		}
+	},
+	"bookingSuccess": {
+		"title": "Booking Receipt",
+		"notFound": {
+			"title": "Couldn't find booking",
+			"link": "Go to book"
+		},
+		"hotel": {
+			"name": "DT Hotel",
+			"street": "1 Vo Van Ngan",
+			"district": "Thu Duc City",
+			"city": "Ho Chi Minh City",
+			"contact": "+84 949 318 956",
+			"email": "nguyentuantai412@gmail.com"
+		},
+		"content": {
+			"dear": "Dear Mr/Mrs. {{name}",
+			"confirm": "Please find below a information-breakdown for the recent booking. Please make a copy for any convenience in the future, and do not hesitate to contact us with any questions.",
+			"thanks": "Many thanks,",
+			"customer": {
+				"fname": "Full name :",
+				"idNumber": "Citizen identity card number :",
+				"phone": "Phone number :",
+				"email": "Email :",
+				"address": "Address :",
+				"rooms": "Rooms :",
+				"checkInDate": "Check-in date :",
+				"checkOutDate": "Check-out date :",
+				"numberOfPeople": "Number of people :",
+				"adult": "Adult : {{adult}}",
+				"child": "Children: {{child}}",
+				"deposit": "Deposit :",
+				"total": "Total price :"
+			},
+			"cancel": {
+				"title": "CANCELLATION AND NO SHOW POLICY",
+				"desc1": "- Up to 21 days before arrival: no charge",
+				"desc2": "- Up to 3 days before arrival: 50% of the total reservation",
+				"desc3": "- Less than 3 days before arrival, noshow or stays that are cut short: 100% of the total reservation"
+			},
+			"download": "Download receipt"
+		}
+	}
+}
